@@ -25,6 +25,10 @@ const upload = multer({
     }
 });
 
+router.get("/:url", getBlog, (req, res) => {
+    res.json(res.blog);
+  });
+
 router.get('/', async function(req, res) {
     try {
         const blogs = await blog.find()
@@ -37,6 +41,25 @@ router.get('/', async function(req, res) {
         res.status(500).json({ message: err.message});
     }
 });
+
+async function getBlog(req, res, next) {
+    try {
+      // Ищем страницу по URL, который указан в строке запроса.
+      const page = await blog.findOne({ url: req.params.url }).exec();      
+      if (page === null) {
+        // Возвращаем 404 ответ сервера, если страница не найдена.
+        return res.status(404).json({ message: "Страницы не существует" });
+      } else {
+        // Передаём контент страницы, если URL найден.
+        res.json(page);
+        next();
+      }
+    } catch (err) {
+      return res.status(500).json({ message: err.message });
+    }
+  }
+
+
 
 router.post("/", async (req, res, next) => {
      let Blog = new blog({

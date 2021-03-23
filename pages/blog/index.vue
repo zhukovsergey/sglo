@@ -1,16 +1,18 @@
 <template>
   <div>
   <div class="blog-block">
-   <p>Блог</p>
+  <div> <h1>Блог</h1></div>
    <div
    class="blog"
    v-for="dat in data1"
-   :key=dat._id><nuxt-link :to="`/blog/${dat.url}`">{{dat.h1}}
+   :key=dat._id><nuxt-link :to="`/blog/${dat.url}`">
+   <div>{{dat.h1}}</div>
    <img
    :src="`/uploads/blog/${dat.coverImageName}`"
-    width="200"/> {{dat.introtext}}
-    {{dat.tag}}
-   </nuxt-link>
+    width="200"/>
+    <div>{{dat.introtext}}</div>
+    <div>{{dat.tag}}</div>
+    </nuxt-link>
    </div></div>
    </div>
 </template>
