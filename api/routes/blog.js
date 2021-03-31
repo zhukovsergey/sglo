@@ -29,17 +29,29 @@ router.get("/:url", getBlog, (req, res) => {
     res.json(res.blog);
   });
 
-router.get('/', async function(req, res) {
+router.get("/", async function(req, res) {
     try {
         const blogs = await blog.find()
         .select("_id h1 title introtext coverImageName url tag created_date")
-        .sort("-created_date")
+        .sort("-created_date")        
         .lean()
         .exec();
        res.json(blogs);
     } catch (err) {
         res.status(500).json({ message: err.message});
     }
+});
+router.get("/a", async function(req, res) {
+  try {
+      const blogs = await blog.find()
+      .select("_id h1 title introtext coverImageName url tag created_date")
+      .sort("-created_date")        
+      .lean()
+      .exec();
+     res.json(blogs);
+  } catch (err) {
+      res.status(500).json({ message: err.message});
+  }
 });
 
 async function getBlog(req, res, next) {

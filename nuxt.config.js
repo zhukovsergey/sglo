@@ -1,4 +1,8 @@
 export default {
+  loading: {
+    color: 'blue',
+    height: '2px'
+  },
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     
@@ -30,8 +34,10 @@ export default {
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
     // https://go.nuxtjs.dev/eslint
-    '@nuxtjs/eslint-module'
-  ],
+    '@nuxtjs/eslint-module',
+    '@nuxtjs/vuetify',
+    "@nuxtjs/svg"
+    ],
   serverMiddleware: [
     '~/api/index.js',
 ],
@@ -39,7 +45,7 @@ export default {
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
     // https://go.nuxtjs.dev/axios
-    '@nuxtjs/axios'  
+    '@nuxtjs/axios'        
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios

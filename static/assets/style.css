@@ -1,30 +1,38 @@
 @font-face{font-family:font; src:url(/assets/plumb-regular.otf) format("truetype"); font-style: 'normal'; font-weight:400;}
 @font-face{font-family:font; src:url(/assets/plumb-bold.otf) format("truetype"); font-style: 'normal'; font-weight:700;}
-html {margin:0; padding:0; font-family: font;}
-.center { width:1500px; margin:0 auto;
+@font-face{font-family:Asessorc; src:url(/assets/Nautilus.otf) format("truetype"); font-style: 'normal'; font-weight:400;}
+@font-face{font-family:Naut; src:url(/assets/Asessorc.otf) format("truetype");}
 
+html {
+  position: relative;
+  min-height: 100%;
+  font-family: 'Asessorc';
+  font-wieght:bold;
+  font-size: 60px;
 }
-header {
-    background-color:rgba(0,0,0,0.9)
+
+.v-toolbar__title {
+  font-family: Asessorc;
+  font-size:2rem !important;
+  color:#714a71;
+  text-align:center;
 }
-header .center {
-    display: flex;
-    justify-content: space-between;
-    color:#fff;
+.v-toolbar__items {  
+  height: 60px !important;
 }
-header .center nav {
-    display:flex;
+
+@media (max-width: 1300px) {
+  .v-toolbar__title {
+    font-size: 1.2rem !important;
+  }
 }
-.header-contacts-name {
-    font-size: 22px;
-}
-header a {
-    font-size:24px;
+.v-main__wrap {
+  background: url(/uploads/blog/cropped-orig-min.png);
 }
 
 .page-enter-active,
 .page-leave-active {
-  transition: opacity 0.5s;
+  transition: opacity 0.3s;
 }
 .page-enter,
 .page-leave-to {
@@ -33,7 +41,7 @@ header a {
 
 .layout-enter-active,
 .layout-leave-active {
-  transition: opacity 0.5s;
+  transition: opacity 0.3s;
 }
 .layout-enter,
 .layout-leave-to {
@@ -80,20 +88,3 @@ header a {
   }
 }
 
-.blog-block {
-  display: flex;
-  flex-wrap:wrap;
-}
-.blog-block .blog {
-  width:20%;
-  padding-top: 4%;
-  text-align: center;
-}
-nav a {
-  color: inherit;
-  text-decoration: none;
-  margin-right: 23px;
-}
-a.nuxt-link-exact-active {
-  color: #00c58e;
-}

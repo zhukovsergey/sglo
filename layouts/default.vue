@@ -1,7 +1,6 @@
 <template>
   <div>
-    <Headercomp/>
-    <Nuxt />
+  <Headercomp/>
   </div>
 </template>
 
