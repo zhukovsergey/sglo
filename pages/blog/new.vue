@@ -8,6 +8,8 @@
     <input v-model="description" type="text" name="description" />
     <label for="url">url</label>
     <input v-model="url" name="url" />
+    <label for="tag">tag</label>
+    <input v-model="tag" name="tag" />
     <label for="introtext">intro</label>
     <input v-model="introtext" type="text" name="introtext" />
     <label for="content">content</label>
@@ -24,6 +26,7 @@ export default {
     title: '',
     description: '',
     url: '',
+    tag: '',
     content: '',
     introtext: ''
   }),
@@ -44,6 +47,7 @@ export default {
         title: this.title,
         description: this.description,
         url: this.url,
+        tag: this.tag,
         content: this.content,
         introtext: this.introtext
       }

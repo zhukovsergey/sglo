@@ -41,9 +41,16 @@ router.get("/", async function(req, res) {
         res.status(500).json({ message: err.message});
     }
 });
-router.get("/a", async function(req, res) {
+router.get("/tag", async function(req, res) {
+  let tagLatin = req.headers.tag;
+  console.log(tagLatin);
   try {
-      const blogs = await blog.find()
+    if (tagLatin == "/blog/national-projects") {
+      var tagCyrillic = "Национальные проекты";
+    }
+      const blogs = await blog.find({
+        tag: tagCyrillic
+      })
       .select("_id h1 title introtext coverImageName url tag created_date")
       .sort("-created_date")        
       .lean()
@@ -80,6 +87,7 @@ router.post("/", async (req, res, next) => {
         description: req.body.description,
         url: req.body.url,
         introtext: req.body.introtext,
+        tag: req.body.tag,
         content: req.body.content
     });
     try {
