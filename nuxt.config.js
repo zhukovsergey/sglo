@@ -35,7 +35,8 @@ export default {
   buildModules: [
     // https://go.nuxtjs.dev/eslint
     '@nuxtjs/eslint-module',
-    '@nuxtjs/vuetify'   
+    '@nuxtjs/vuetify',
+    "@nuxtjs/svg"   
     ],
   serverMiddleware: [
     '~/api/index.js',

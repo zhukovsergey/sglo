@@ -1,5 +1,6 @@
 <template>
   <div class="container">
+   <v-btn class="primary my-md-6" to="/blog/national-projects" nuxt>Национальные проекты</v-btn>
   <v-row>
   <v-col
   v-for="dat in data1"
@@ -13,6 +14,7 @@ max-width="300"
     </v-card-title>
     <v-img
       src="https://cdn.vuetifyjs.com/images/cards/sunshine.jpg"
+      :lazy-src="`https://cdn.vuetifyjs.com/images/cards/sunshine.jpg`"
       height="200px"
     ></v-img>
 
@@ -25,31 +27,17 @@ max-width="300"
 
     <v-card-actions>
       <v-btn
-        color="orange lighten-2"
-        text
+        color="green"
+        danger
+        style="font-size: 16px; text-decoration: none;"
       >
-        Explore
+        ПОДРОБНЕЕ...
       </v-btn>
 
       <v-spacer></v-spacer>
+</v-card-actions>
 
-      <v-btn
-        icon
-        @click="show = !show"
-      >
-        <v-icon>{{ show ? 'mdi-chevron-up' : 'mdi-chevron-down' }}</v-icon>
-      </v-btn>
-    </v-card-actions>
-
-    <v-expand-transition>
-      <div v-show="show">
-        <v-divider></v-divider>
-
-        <v-card-text>
-          {{dat.introtext}}
-        </v-card-text>
-      </div>
-    </v-expand-transition></nuxt-link>
+   </nuxt-link>
   </v-card>
   </v-col>
   </v-row>

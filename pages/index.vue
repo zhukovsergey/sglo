@@ -24,10 +24,11 @@
       </v-sheet>
     </v-carousel-item>
   </v-carousel>
-   </div>
+  </div>
 </template>
 
 <script>
+import axios from 'axios'
 export default {
   head () {
     return {
@@ -37,6 +38,10 @@ export default {
         { hid: 'robots', name: 'robots', content: 'index,follow' }
       ]
     }
+  },
+  async asyncData () {
+    const { data } = await axios.get('http://localhost:3000/api/blog/last10')
+    return { data1: data }
   },
   data: () => ({
     model: 0,

@@ -11,6 +11,10 @@ html {
   font-size: 60px;
 }
 
+.v-toolbar__content {
+  background: url(/uploads/headerback.png);
+    background-size: 100%;
+}
 .v-toolbar__title {
   font-family: Asessorc;
   font-size:2rem !important;

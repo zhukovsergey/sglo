@@ -1,8 +1,9 @@
-const gear = new Vivus(
-    'my-svg',
-    {
-      type: 'delayed',
-      duration: 20000,
-      animTimingFunction: Vivus.EASE
-    }
-  );
+new Vivus(
+  'my-svg',
+  {
+    file: 'http://localhost:3000/uploads/blog/SGLOnew_animated.svg',
+    type: 'delayed',
+    duration: 200,
+    animTimingFunction: Vivus.EASE
+  }
+);

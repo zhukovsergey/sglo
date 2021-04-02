@@ -19,6 +19,9 @@ max-width="300"
      <v-card-subtitle>
       {{dat.introtext}}
     </v-card-subtitle>
+     <v-card-subtitle>
+      {{dat.tag}}
+    </v-card-subtitle>
 
     <v-card-actions>
       <v-btn
@@ -65,14 +68,8 @@ export default {
       ]
     }
   },
-  async asyncData ($this) {
-    const config = {
-      headers: { tag: $this.route.path }
-    }
-    const { data } = await axios.get(
-      'http://localhost:3000/api/blog/tag',
-      config
-    )
+  async asyncData () {
+    const { data } = await axios.get('http://localhost:3000/api/blog/national-projects')
     return { data1: data }
   },
   data: () => ({

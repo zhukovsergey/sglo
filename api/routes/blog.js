@@ -41,25 +41,22 @@ router.get("/", async function(req, res) {
         res.status(500).json({ message: err.message});
     }
 });
-router.get("/tag", async function(req, res) {
-  let tagLatin = req.headers.tag;
-  console.log(tagLatin);
+
+
+/* router.get("/national-projects", async function(req, res) {
   try {
-    if (tagLatin == "/blog/national-projects") {
-      var tagCyrillic = "Национальные проекты";
-    }
-      const blogs = await blog.find({
-        tag: tagCyrillic
-      })
+    
+      const blogs2 = await blog.find()
       .select("_id h1 title introtext coverImageName url tag created_date")
       .sort("-created_date")        
       .lean()
       .exec();
-     res.json(blogs);
+     res.json(blogs2);
+     console.log(blogs2);
   } catch (err) {
       res.status(500).json({ message: err.message});
   }
-});
+}); */
 
 async function getBlog(req, res, next) {
     try {

@@ -9,9 +9,7 @@
 <nuxt-link to="/" style="text-decoration: none;">
       <v-toolbar-title class="mt-md-2 hidden-xs-only">Союз женщин<br> Липецкой области</v-toolbar-title>
       </nuxt-link>
-      <nuxt-link to="/">
-    <span class="subheading"><object class="mt-md-5" width="150" id="my-svg" type="image/svg+xml" data="uploads/blog/SGLOnew_animated.svg"></object></span>
-</nuxt-link>
+      <span class="subheading"><nuxt-link to="/"><img width="150" id="my-svg" src="http://localhost:3000/uploads/blog/SGLOnew_animated.svg?data" /></nuxt-link></span>
 <v-divider
       class="mx-4"
       vertical
@@ -20,19 +18,39 @@
       <v-toolbar-title class="mt-md-2 hidden-xs-only">Союз женщин<br> России</v-toolbar-title>
       </nuxt-link>
       <nuxt-link to="/">
-      <span class="subheading"> <object class="mt-md-5" width="135" id="my-svg" type="image/svg+xml" data="uploads/blog/wuor_animated.svg"></object></span>
+      <span class="subheading"> <img id="my-svg1" width="135" src="http://localhost:3000/uploads/blog/wuor_animated.svg?data" /></object></span>
     </nuxt-link>
     <v-spacer></v-spacer>
 
     <v-toolbar-items class="hidden-sm-and-down" color="#ad6262">
-    <v-btn style="color:#ad6262; font-size: 20px; font-weight: 700; border-radius: 10px;" to="/blog" nuxt>Новости</v-btn>
+    <v-btn
+    elevation="6"
+    class="mx-2"
+    style="color:#ad6262; font-size: 17px; font-weight: 700; border-radius: 30px;"
+    to="/blog"
+    nuxt>
+    <v-icon
+          dark
+          left
+          medium
+          class="ma-2"
+        >
+          mdi-newspaper-variant-multiple
+        </v-icon> Новости</v-btn>
     <v-divider vertical></v-divider>
 
-      <v-btn style="color:#ad6262; font-size: 20px; font-weight: 700; border-radius: 10px;" to="/service" nuxt>Информация</v-btn>
+      <v-btn elevation="6" class="mx-2" style="color:#ad6262; font-size: 17px; font-weight: 700; border-radius: 30px;" to="/service" nuxt><v-icon
+          dark
+          left
+          medium
+          class="ma-2"
+        >
+          mdi-folder-information-outline
+        </v-icon>Информация</v-btn>
 
       <v-divider vertical></v-divider>
 
-      <v-btn style="color:#ad6262; font-size: 20px; font-weight: 700; border-radius: 10px;" to="/keisi" nuxt>Проекты</v-btn>
+      <v-btn elevation="6" class="mx-2" style="color:#ad6262; font-size: 17px; font-weight: 700; border-radius: 30px;" to="/keisi" nuxt>Проекты</v-btn>
 
       <v-divider vertical></v-divider>
     </v-toolbar-items>
@@ -41,7 +59,7 @@
   </v-toolbar>
 
     <v-main class="grey lighten-4">
-    <v-container fluid><center><span class="text-center hidden-xs-only" style="font-family:'Naut'; font-size: 40px; color:#1976d2;">80 лет нашей славной истории</span></center>
+    <v-container fluid><center><span class="text-center hidden-xs-only" style="font-family:'Naut'; font-size: 40px; color:#1976d2;">Наша сила - в единстве. Наше богатство - в многообразии!</span></center>
       <v-row justify="center">
           <v-col
           class="pl-md-8 pt-md-8 mx-lg-auto"
@@ -96,7 +114,12 @@
               rounded="lg"
               min-height="268"
             >
-              <!--  -->
+             <center>
+            <span class="text-md-center" style="font-size:18px;" >Председатель</span>
+            <v-img src="http://localhost:3000/uploads/viprofile.jpg" width="200" class="mt-4"/>
+            <span class="text-md-center" style="font-size:18px;" >Урываева В.И.</span>
+            </center>
+
             </v-sheet>
           </v-col>
         </v-row>
