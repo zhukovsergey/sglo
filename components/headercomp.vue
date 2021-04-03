@@ -118,8 +118,16 @@
             <span class="text-md-center" style="font-size:18px;" >Председатель</span>
             <v-img src="http://localhost:3000/uploads/viprofile.jpg" width="200" class="mt-4"/>
             <span class="text-md-center" style="font-size:18px;" >Урываева В.И.</span>
-            </center>
-
+             <v-divider></v-divider><br>
+             <span class="text-md-center" style="font-size:18px;" >Наши контакты</span></center><br>
+           <div class="ml-4"><v-icon color="red">
+            mdi-phone-outline
+            </v-icon>
+            <span class="text-md-center" style="font-size:18px;" >+7 (4742) 28-12-21</span>
+            <br></v-icon><v-icon color="red">
+            mdi-map-marker
+            </v-icon><span class="text-md-center" style="font-size:18px;" >г. Липецк, ул. Плеханова, д. 33Б</span>
+            </div>
             </v-sheet>
           </v-col>
         </v-row>
