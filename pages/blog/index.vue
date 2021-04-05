@@ -41,9 +41,15 @@ max-width="300"
   </v-card>
   </v-col>
   </v-row>
+  <button v-on:click="prevPagination" v-if="$nuxt.$route.query.page > 1" class="pagination-button">
+  Назад
+  </button>
+  <button v-on:click="nextPagination($nuxt)" class="pagination-button">
+ Далее
+  </button>
+
 </div>
 </template>
-
 <script>
 import axios from 'axios'
 export default {
@@ -60,8 +66,22 @@ export default {
     const { data } = await axios.get('http://localhost:3000/api/blog')
     return { data1: data }
   },
+  methods: {
+    async nextPagination ($nuxt) {
+      const nextPage = parseInt($nuxt.$route.query.page) + 1
+      const pagination = parseInt($nuxt.$route.query.page) + 1
+      const config = {
+        headers: { params: { page: pagination } }
+      }
+      await axios
+        .get('http://localhost:3000/api/blog', config)
+        .then(response => (this.data = response.data))
+      this.$router.push('/blog?page=' + nextPage)
+    }
+  },
   data: () => ({
-    show: false
+    show: false,
+    pagination: ''
   })
 }
 </script>
