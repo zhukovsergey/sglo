@@ -50,7 +50,6 @@ max-width="300"
 
 </div>
 </template>
-
 <script>
 import axios from 'axios'
 export default {
