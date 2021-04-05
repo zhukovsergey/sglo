@@ -30,10 +30,14 @@ router.get("/:url", getBlog, (req, res) => {
   });
 
 router.get("/", async function(req, res) {
+  const pagination=50;
+  const page = req.query.page ? parseInt(req.query.page) : 1;
     try {
         const blogs = await blog.find()
         .select("_id h1 title introtext coverImageName url tag created_date")
-        .sort("-created_date")        
+        .sort("-created_date") 
+        .skip((page - 1) * pagination)  
+        .limit(pagination)     
         .lean()
         .exec();
        res.json(blogs);
