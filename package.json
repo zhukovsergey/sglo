@@ -35,5 +35,17 @@
     "nodemon": "^2.0.7",
     "prettier": "1.19.1",
     "prettier-eslint": "9.0.1"
-  }
+  },
+  "description": "## Build Setup",
+  "main": ".eslintrc.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zhukovsergey/sglo.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zhukovsergey/sglo/issues"
+  },
+  "homepage": "https://github.com/zhukovsergey/sglo#readme"
 }

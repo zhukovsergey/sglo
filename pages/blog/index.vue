@@ -41,6 +41,13 @@ max-width="300"
   </v-card>
   </v-col>
   </v-row>
+   <button v-on:click="prevPagination($nuxt)" v-if="$nuxt.$route.query.page > 1" class="pagination-button">
+  Назад
+  </button>
+  <button v-on:click="nextPagination($nuxt)" class="pagination-button">
+ Далее
+  </button>
+
 </div>
 </template>
 
@@ -59,6 +66,39 @@ export default {
   async asyncData () {
     const { data } = await axios.get('http://localhost:3000/api/blog')
     return { data1: data }
+  },
+  methods: {
+    async nextPagination ($nuxt) {
+      if (isNaN($nuxt.$route.query.page)) {
+        const nextPage = 2
+        const pagination = 2
+        console.log(nextPage)
+        console.log(pagination)
+      }
+      const nextPage = parseInt($nuxt.$route.query.page) + 1
+      const pagination = parseInt($nuxt.$route.query.page) + 1
+      console.log(nextPage)
+      console.log(pagination)
+      const config = {
+        headers: { page: pagination }
+      }
+      await axios
+        .get('http://localhost:3000/api/blog', config)
+        .then(response => (this.blogs = response.blogs))
+      this.$router.push('/blog?page=' + nextPage)
+    },
+    async prevPagination ($nuxt) {
+      const nextPage = parseInt($nuxt.$route.query.page) - 1
+      const pagination = parseInt($nuxt.$route.query.page) - 1
+      const config = {
+        headers: { page: pagination }
+      }
+      await axios
+        .get('http://localhost:3000/api/blog', config)
+        .then(response => (this.blogs = response.blogs))
+      this.$router.push('/blog?page=' + nextPage)
+      console.log(this.blogs)
+    }
   },
   data: () => ({
     show: false
