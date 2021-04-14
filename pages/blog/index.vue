@@ -1,6 +1,7 @@
 <template>
   <div class="container">
    <v-btn class="primary my-md-6" to="/blog/national-projects" nuxt>Национальные проекты</v-btn>
+   <v-btn class="primary my-md-6" to="/blog/education" nuxt>Образование</v-btn>
   <v-row>
   <v-col
   v-for="dat in data1"
@@ -13,13 +14,13 @@ max-width="300"
       {{dat.title}}
     </v-card-title>
     <v-img
-      src="https://cdn.vuetifyjs.com/images/cards/sunshine.jpg"
-      :lazy-src="`https://cdn.vuetifyjs.com/images/cards/sunshine.jpg`"
+      :src="`/uploads/blog/${dat.coverImageName}`"
+      :lazy-src="`/uploads/blog/${dat.coverImageName}`"
       height="200px"
     ></v-img>
 
      <v-card-subtitle>
-      {{dat.introtext}}
+      {{dat.introtext| truncate(60, '...')}}
     </v-card-subtitle>
      <v-card-subtitle>
       {{dat.tag}}
@@ -42,15 +43,13 @@ max-width="300"
   </v-col>
   </v-row>
    <button v-on:click="prevPagination($nuxt)" v-if="$nuxt.$route.query.page > 1" class="pagination-button">
-  Назад
+    Назад
   </button>
   <button v-on:click="nextPagination($nuxt)" class="pagination-button">
  Далее
   </button>
-
-</div>
+  </div>
 </template>
-
 <script>
 import axios from 'axios'
 export default {
@@ -69,6 +68,7 @@ export default {
   },
   methods: {
     async nextPagination ($nuxt) {
+      $nuxt.$route.query.page = 1
       if (isNaN($nuxt.$route.query.page)) {
         const nextPage = 2
         const pagination = 2
@@ -77,14 +77,14 @@ export default {
       }
       const nextPage = parseInt($nuxt.$route.query.page) + 1
       const pagination = parseInt($nuxt.$route.query.page) + 1
-      console.log(nextPage)
-      console.log(pagination)
+      // console.log(nextPage)
+      // console.log(pagination)
       const config = {
         headers: { page: pagination }
       }
       await axios
         .get('http://localhost:3000/api/blog', config)
-        .then(response => (this.blogs = response.blogs))
+        .then(response => (this.data1 = response.data))
       this.$router.push('/blog?page=' + nextPage)
     },
     async prevPagination ($nuxt) {
@@ -95,13 +95,19 @@ export default {
       }
       await axios
         .get('http://localhost:3000/api/blog', config)
-        .then(response => (this.blogs = response.blogs))
+        .then(response => (this.data1 = response.data))
       this.$router.push('/blog?page=' + nextPage)
-      console.log(this.blogs)
+      console.log(this.data2)
+    }
+  },
+  filters: {
+    truncate (text, length, suffix) {
+      return text.substring(0, length) + suffix
     }
   },
   data: () => ({
-    show: false
+    show: false,
+    pagination: ''
   })
 }
 </script>

@@ -32,20 +32,23 @@ router.get("/:url", getBlog, (req, res) => {
 router.get("/", async function(req, res) {
   const pagination=6;
   const page = req.headers.page ? parseInt(req.headers.page) : 1;
-  console.log(req.headers)
-    try {
+  const blogsCounts = await blog.countDocuments();
+  const podschet = blogsCounts / pagination;
+  const blogsCount = parseInt(Math.ceil(podschet));
+  console.log(blogsCount)
+  try {
         const blogs = await blog.find()
         .select("_id h1 title introtext coverImageName url tag created_date")
-        .sort("-created_date")  
+        .sort("-createdDate") 
         .skip((page - 1) * pagination)  
-        .limit(pagination)           
+        .limit(pagination)     
         .lean()
         .exec();
        res.json(blogs);
     } catch (err) {
         res.status(500).json({ message: err.message});
     }
-});
+})
 
 
 /* router.get("/national-projects", async function(req, res) {
@@ -82,7 +85,7 @@ async function getBlog(req, res, next) {
 
 
 
-router.post("/", async (req, res, next) => {
+/* router.post("/", async (req, res, next) => {
      let Blog = new blog({
         h1: req.body.h1,
         title: req.body.title,
@@ -98,5 +101,5 @@ router.post("/", async (req, res, next) => {
     } catch (err) {
         res.status(400).json({ message: err.message});
     }
-});
+}); */
 module.exports = router ;

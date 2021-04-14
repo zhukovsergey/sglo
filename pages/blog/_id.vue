@@ -1,7 +1,8 @@
 <template>
 <div>
-<h1>{{data1.h1}}</h1>
-<span v-html="data1.content"></span>
+<center><h1 class="pt-4 mx-4">{{data1.h1}}</h1></center>
+<img class="mx-8 my-8" style="width:40%; float:left;" :src="`/uploads/blog/${data1.coverImageName}`"/>
+<p class="mx-8 my-8" v-html="data1.content"></p>
 </div>
 </template>
 

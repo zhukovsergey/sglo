@@ -1,20 +1,36 @@
 <template>
   <div class="container">
-    <label for="h1">h1</label>
-    <input v-model="h1" type="text" name="h1" />
-    <label for="title">title</label>
-    <input v-model="title" type="text" name="title" />
-    <label for="description">description</label>
-    <input v-model="description" type="text" name="description" />
-    <label for="url">url</label>
-    <input v-model="url" name="url" />
-    <label for="tag">tag</label>
-    <input v-model="tag" name="tag" />
-    <label for="introtext">intro</label>
-    <input v-model="introtext" type="text" name="introtext" />
-    <label for="content">content</label>
-    <input v-model="content" type="text" name="content" />
-    <button v-on:click="newBlog" >Опубликовать</button>
+   <v-form
+    ref="service"
+    >
+   <v-text-field v-model="h1" label="h1" required name="h1"></v-text-field>
+   <v-text-field v-model="title" label="title" required name="title"></v-text-field>
+   <v-text-field v-model="introtext" label="introtext" required name="introtext"></v-text-field>
+   <v-text-field v-model="description" label="description" required name="description"></v-text-field>
+   <v-text-field v-model="url" label="url" required name="url"></v-text-field>
+   <v-text-field v-model="content" label="content" required name="content"></v-text-field>
+   <v-select
+          :items="items"
+          required
+          label="Выберите тэг"
+          outlined
+          name="tag"
+          v-model="tag"
+        ></v-select>
+  <input
+  v-on:change="handleFileUpload"
+   type="file"
+   name="file"
+   ref="file"
+   />
+   <v-btn
+      color="warning"
+      v-on:click="addFile"
+     >Загрузить</v-btn>
+   <v-btn
+      color="warning"
+      v-on:click="newBlog" >Опубликовать</v-btn>
+    </v-form>
   </div>
 </template>
 
@@ -28,7 +44,8 @@ export default {
     url: '',
     tag: '',
     content: '',
-    introtext: ''
+    introtext: '',
+    items: ['Национальные проекты', 'Здравоохранение', 'Образование', 'Конкурсы']
   }),
   head () {
     return {
@@ -42,16 +59,33 @@ export default {
 
   methods: {
     newBlog () {
-      const formData = {
-        h1: this.h1,
-        title: this.title,
-        description: this.description,
-        url: this.url,
-        tag: this.tag,
-        content: this.content,
-        introtext: this.introtext
-      }
+      const formData = new FormData()
+      const file = this.file
+      formData.append('h1', this.h1)
+      formData.append('title', this.title)
+      formData.append('description', this.description)
+      formData.append('url', this.url)
+      formData.append('tag', this.tag)
+      formData.append('content', this.content)
+      formData.append('introtext', this.introtext)
+      formData.append('file', file)
       axios.post('http://localhost:3000/api/blog', formData)
+    },
+    handleFileUpload () {
+      this.file = this.$refs.file.files[0]
+    },
+    addFile (newAddedFiles) {
+      const formData = new FormData()
+      const file = this.file
+      formData.append('file', file)
+      axios
+        .post('http://localhost:3000/api/upload', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        })
+        .then(response => (this.newAddedFiles = response.data))
+      console.log(formData)
     }
   }
 

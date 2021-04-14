@@ -2,7 +2,6 @@
   <v-app id="inspire">
      <v-toolbar
     color="#e6dde6"
-    light
     height="150px"
     max-height="150px"
       >
@@ -24,6 +23,7 @@
 
     <v-toolbar-items class="hidden-sm-and-down" color="#ad6262">
     <v-btn
+     color="rgb(255 243 243 / 42%)"
     elevation="6"
     class="mx-2"
     style="color:#ad6262; font-size: 17px; font-weight: 700; border-radius: 30px;"
@@ -39,7 +39,13 @@
         </v-icon> Новости</v-btn>
     <v-divider vertical></v-divider>
 
-      <v-btn elevation="6" class="mx-2" style="color:#ad6262; font-size: 17px; font-weight: 700; border-radius: 30px;" to="/service" nuxt><v-icon
+      <v-btn
+      color="rgb(255 243 243 / 42%)"
+      elevation="6"
+      class="mx-2"
+      style="color:#ad6262; font-size: 17px; font-weight: 700; border-radius: 30px;"
+      to="/service"
+      nuxt><v-icon
           dark
           left
           medium
@@ -50,7 +56,13 @@
 
       <v-divider vertical></v-divider>
 
-      <v-btn elevation="6" class="mx-2" style="color:#ad6262; font-size: 17px; font-weight: 700; border-radius: 30px;" to="/keisi" nuxt>Проекты</v-btn>
+      <v-btn
+      color="rgb(255 243 243 / 42%)"
+      elevation="6"
+      class="mx-2"
+      style="color:#ad6262; font-size: 17px; font-weight: 700; border-radius: 30px;"
+      to="/keisi"
+      nuxt>Проекты</v-btn>
 
       <v-divider vertical></v-divider>
     </v-toolbar-items>
@@ -81,13 +93,24 @@
     class="px-md-4 px-sm-4 mx-xs-4"
     width="100%"
     height="150"
+    src="https://www.youtube.com/embed/-bYFOeDYZis"
+    title="YouTube video player"
+    frameborder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowfullscreen>
+    </iframe><v-divider></v-divider><br>
+    <iframe
+    class="px-md-4 px-sm-4 mx-xs-4"
+    width="100%"
+    height="150"
     src="https://www.youtube.com/embed/tqhf8GBE0X4"
     title="YouTube video player"
     frameborder="0"
     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
     allowfullscreen>
     </iframe>
-            </v-sheet>
+    <v-divider></v-divider><br>
+    </v-sheet>
           </v-col>
 
           <v-col
@@ -116,7 +139,7 @@
             >
              <center>
             <span class="text-md-center" style="font-size:18px;" >Председатель</span>
-            <v-img src="http://localhost:3000/uploads/viprofile.jpg" width="200" class="mt-4"/>
+            <v-img src="http://localhost:3000/uploads/viprofile.jpg" width="200" class="mt-4" style="border-radius: 8px;"/>
             <span class="text-md-center" style="font-size:18px;" >Урываева В.И.</span>
              <v-divider></v-divider><br>
              <span class="text-md-center" style="font-size:18px;" >Наши контакты</span></center><br>
@@ -127,6 +150,20 @@
             <br></v-icon><v-icon color="red">
             mdi-map-marker
             </v-icon><span class="text-md-center" style="font-size:18px;" >г. Липецк, ул. Плеханова, д. 33Б</span>
+            <br><a style="text-decoration:none;" href="https://vk.com/sglo48"><v-icon large color="red">
+            mdi-vk
+            </v-icon></a><a style="text-decoration:none;" href="https://www.instagram.com/sglo48/"><v-icon large color="red">
+            mdi-instagram
+            </v-icon></a>
+            </div>
+            <v-divider></v-divider><br>
+            <center><span class="text-md-center" style="font-size:18px;" >Информация</span></center>
+            <div></v-icon><v-icon color="red">
+            mdi-file-document
+            </v-icon><span class="pl-4"><a href="/uploads/ustav.pdf">Устав СЖР</a></span><br>
+            <v-icon color="red">
+            mdi-file-document
+            </v-icon><span class="pl-4"><a href="/uploads/ustavsglo.pdf">Устав СЖЛО</a></span>
             </div>
             </v-sheet>
           </v-col>

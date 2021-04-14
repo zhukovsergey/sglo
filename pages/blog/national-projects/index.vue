@@ -12,7 +12,7 @@ max-width="300"
       {{dat.title}}
     </v-card-title>
     <v-img
-      src="https://cdn.vuetifyjs.com/images/cards/sunshine.jpg"
+      :src="`/uploads/blog/${dat.coverImageName}`"
       height="200px"
     ></v-img>
 
@@ -28,28 +28,12 @@ max-width="300"
         color="orange lighten-2"
         text
       >
-        Explore
+        Подробнее...
       </v-btn>
-
       <v-spacer></v-spacer>
+      </v-card-actions>
 
-      <v-btn
-        icon
-        @click="show = !show"
-      >
-        <v-icon>{{ show ? 'mdi-chevron-up' : 'mdi-chevron-down' }}</v-icon>
-      </v-btn>
-    </v-card-actions>
-
-    <v-expand-transition>
-      <div v-show="show">
-        <v-divider></v-divider>
-
-        <v-card-text>
-          {{dat.introtext}}
-        </v-card-text>
-      </div>
-    </v-expand-transition></nuxt-link>
+    </nuxt-link>
   </v-card>
   </v-col>
   </v-row>

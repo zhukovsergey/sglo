@@ -31,7 +31,7 @@ const blogSchema = new mongoose.Schema({
   },
   tag: {
     type: String,
-    required: false,
+    required: true,
   },
   content: {
     type: String,
@@ -42,7 +42,7 @@ const blogSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
-  coverImageName: []
+  coverImageName: {}
 });
 
 blogSchema.virtual("coverImagePath").get(function() {

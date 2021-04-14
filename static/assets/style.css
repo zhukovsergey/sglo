@@ -52,6 +52,7 @@ html {
   opacity: 0;
 }
 
+
 .slide-bottom-enter-active,
 .slide-bottom-leave-active {
   transition: opacity 0.25s ease-in-out, transform 0.25s ease-in-out;

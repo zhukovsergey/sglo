@@ -3,7 +3,10 @@
    <p>Сервис</p>
    <div
    v-for="dat in data1"
-   :key=dat._id><nuxt-link :to="`/service/${dat.url}`">{{dat.title}}</nuxt-link></div>
+   :key=dat._id><nuxt-link :to="`/service/${dat.url}`">{{dat.title}}
+   <img width="150" :src="`/uploads/service/${dat.coverImageName}`"/>
+   </nuxt-link>
+   </div>
    </div>
 </template>
 
