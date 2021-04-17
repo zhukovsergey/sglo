@@ -37,6 +37,7 @@ max-width="300"
   </v-card>
   </v-col>
   </v-row>
+  <div class="ya-share2" data-curtain data-size="s" data-shape="round" data-services="messenger,vkontakte,facebook,odnoklassniki,telegram,viber,whatsapp"></div>
 </div>
 </template>
 

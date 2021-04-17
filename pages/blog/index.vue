@@ -48,6 +48,7 @@ max-width="300"
   <button v-on:click="nextPagination($nuxt)" class="pagination-button">
  Далее
   </button>
+  <div class="ya-share2" data-curtain data-size="s" data-shape="round" data-services="messenger,vkontakte,facebook,odnoklassniki,telegram,viber,whatsapp"></div>
   </div>
 </template>
 <script>

@@ -82,8 +82,13 @@
               elevation="20"
               rounded="lg"
               min-height="268"
-            ><center>
-            <span class="text-md-center" style="font-size:18px;" > <v-icon
+            ><center><br>
+            <v-divider></v-divider>
+            <span color="secondary">Липецкая областная общественная организация "Союз Женщин Липецкой области" (ЛООО "Союз Женщин Липецкой области").
+            Цель организации- повысить статус женщин в обществе, защита положения и интересов женщин, повышение их роли в общественно-политической, экономической и культурной жизни в Липецкой области.</span>
+            <v-divider></v-divider><br>
+            <span class="text-md-center" style="font-size:18px;" >
+            <v-icon
       medium
       color="light-blue darken-1"
     >
@@ -163,7 +168,10 @@
             </v-icon><span class="pl-4"><a href="/uploads/ustav.pdf">Устав СЖР</a></span><br>
             <v-icon color="red">
             mdi-file-document
-            </v-icon><span class="pl-4"><a href="/uploads/ustavsglo.pdf">Устав СЖЛО</a></span>
+            </v-icon><span class="pl-4"><a href="/uploads/ustavsglo.pdf">Устав СЖЛО</a></span><br>
+            <v-icon color="red">
+            mdi-file-document
+            </v-icon><span class="pl-4"><a href="/uploads/ukaz.pdf">Указ президента</a></span><br>
             </div>
             </v-sheet>
           </v-col>

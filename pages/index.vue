@@ -2,27 +2,20 @@
   <div class="container">
    <p>Главная</p>
 
-   <v-carousel v-model="model">
+  <v-carousel hide-delimiters>
     <v-carousel-item
-      v-for="(color, i) in colors"
-      :key="color"
-    >
-      <v-sheet
-        :color="color"
-        height="100%"
-        tile
-      >
-        <v-row
+      v-for="dat2 in data1"
+      :key="dat2._id"
+      :src="`/uploads/blog/${dat2.coverImageName}`"
+    ><v-row
           class="fill-height"
           align="center"
           justify="center"
         >
-          <div class="display-3">
-            Slide {{ i + 1 }}
+          <div class="display-1 mt-6">
+            {{dat2.h1}}
           </div>
-        </v-row>
-      </v-sheet>
-    </v-carousel-item>
+        </v-row></v-carousel-item>
   </v-carousel>
   <center><h3 class="mt-6">Последние новости</h3></center>
   <v-row no-gutters class="mt-8">
@@ -60,10 +53,12 @@
       </v-card></nuxt-link>
       </v-col>
       </v-row>
+      <yandex-share :services="['vkontakte','facebook','twitter']" counter />
   </div>
 </template>
 
 <script>
+import YandexShare from '@cookieseater/vue-yandex-share'
 import axios from 'axios'
 export default {
   head () {
@@ -74,6 +69,9 @@ export default {
         { hid: 'robots', name: 'robots', content: 'index,follow' }
       ]
     }
+  },
+  components: {
+    YandexShare
   },
   async asyncData () {
     const { data } = await axios.get('http://localhost:3000/api/blog/last10')
