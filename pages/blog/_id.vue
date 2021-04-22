@@ -3,11 +3,25 @@
     <section itemscope itemtype="http://schema.org/Article">
       <center><h1 itemprop="headline" class="pt-4 mx-4">
       {{data1.h1}}</h1></center>
-<div itemscope itemprop="image" itemtype="http://schema.org/ImageObject">
-<img itemprop="url contentUrl" class="mx-8 my-8" style="width:40%; float:left;" :src="`/uploads/blog/${data1.coverImageName}`"/></div>
+<div
+v-for="(filelink, index) in coverImageName"
+:key="filelink.path"
+itemscope
+itemprop="image"
+itemtype="http://schema.org/ImageObject">
+<img v-if="(index === 0)" itemprop="url contentUrl" class="mx-8 my-8" style="width:40%; float:left;" :src="`/uploads/blog/${filelink.filename}`"/></div>
 <article itemprop="articleBody">
 <p class="mx-8 my-8" v-html="data1.content"></p>
-</article>
+<br> <br><br><br><br>
+
+<div
+v-for="(filelink, index) in coverImageName"
+:key="filelink.path"
+itemscope
+itemprop="image"
+itemtype="http://schema.org/ImageObject">
+<img v-if="(index > 0)" itemprop="url contentUrl" class="mx-8 my-8" style="width:40%; float:left;" :src="`/uploads/blog/${filelink.filename}`"/></div>
+ </article>
 <yandex-share :services="['vkontakte','facebook','twitter','odnoklassniki','messenger','whatsapp']" counter /><br>
 </section>
 <div class="admin-form mx-4 mb-4" v-if="adminShow">

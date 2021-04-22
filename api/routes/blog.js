@@ -74,7 +74,7 @@ router.get("/", async function(req, res) {
 
 
 
-router.post("/", upload.single('file'), async (req, res, next) => {
+/* router.post("/", upload.single('file'), async (req, res, next) => {
   const fileName = req.file != null ? req.file.filename : null;
    let Blog = new blog({
       h1: req.body.h1,
@@ -92,7 +92,7 @@ router.post("/", upload.single('file'), async (req, res, next) => {
   } catch (err) {
       res.status(400).json({ message: err.message});
   }
-});
+}); */
 
 /* router.get("/national-projects", async function(req, res) {
   try {

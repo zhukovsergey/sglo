@@ -62,6 +62,11 @@ html {
   opacity: 0;
   transform: translate3d(0, 15px, 0);
 }
+
+.zagolovok {
+  padding: 350px 14px 14px 13px;
+  color: #e1e4ae;
+}
 .bounce-enter-active {
   transform-origin: top;
   animation: bounce-in 0.8s;

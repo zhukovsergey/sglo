@@ -7,15 +7,18 @@
       v-for="dat2 in data1"
       :key="dat2._id"
       :src="`/uploads/blog/${dat2.coverImageName}`"
-    ><v-row
+    >
+    <nuxt-link :to="`blog/${dat2.url}`">
+
+    <v-row
           class="fill-height"
           align="center"
           justify="center"
         >
-          <div class="display-1 mt-6">
+          <div class="display-1 mt-6 mx-3 zagolovok">
             {{dat2.h1}}
           </div>
-        </v-row></v-carousel-item>
+        </v-row></nuxt-link></v-carousel-item>
   </v-carousel>
   <center><h3 class="mt-6">Последние новости</h3></center>
   <v-row no-gutters class="mt-8">
@@ -26,7 +29,7 @@
       >
       <nuxt-link :to="`/blog/${dat.url}`">
       <v-card
-    class="mx-3"
+      class="mx-3"
     max-width="280"
   >
   <v-card-title>

@@ -67,14 +67,16 @@ var storage = multer.diskStorage({
         cb(null,Date.now() + file.originalname);
     }
 });
+
 const upload = multer({
     storage : storage,
     fileFilter: (req, file, callback) => {
         callback(null, imageMimeTypes.includes(file.mimetype));
     }
 });
-app.post("/upload", upload.single('file'), async function (req, res, next) { 
-  console.log(req)
+
+
+app.post("/upload", upload.single('file'), async function (req, res, next) {  
  const newFileName = req.file != null ? req.file : null;
  try {
    await res.json(newFileName);
@@ -83,8 +85,26 @@ app.post("/upload", upload.single('file'), async function (req, res, next) {
  }
 
 });
-app.post("/blog", upload.single('file'), async (req, res, next) => {
+
+app.post('/uploadmulti', upload.array('files', 12), async function (req, res, next) {  
+ 
+  const newFileName = req.files != null ? req.files : null;
+ try {
+   await res.json(newFileName);
+ } catch (err) {
+   res.status(400).json({ message: err.message })
+ }
+
+});
+   
+  // req.files - массив файлов `photos`
+  // req.body сохранит текстовые поля, если они будут
+
+
+app.post("/blog", upload.array('files'), async (req, res, next) => {
   const fileName = req.file != null ? req.file.filename : null;
+  const filesName = req.files != null ? req.files : null;
+  console.log(filesName)
    let Blog = new blog({
       h1: req.body.h1,
       title: req.body.title,
@@ -93,7 +113,8 @@ app.post("/blog", upload.single('file'), async (req, res, next) => {
       url: req.body.url,
       tag: req.body.tag,
       content: req.body.content,
-      coverImageName: fileName    
+      coverImageName: filesName
+      
   });
   try {
       const newBlog = Blog.save();
