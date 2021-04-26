@@ -13,11 +13,18 @@ max-width="300"
 <v-card-title>
       {{dat.title}}
     </v-card-title>
+    <div
+v-for="(filelink, index) in dat.coverImageName"
+:key="filelink.path"
+itemscope
+itemprop="image"
+itemtype="http://schema.org/ImageObject">
     <v-img
-      :src="`/uploads/blog/${dat.coverImageName}`"
-      :lazy-src="`/uploads/blog/${dat.coverImageName}`"
+      v-if="(index == 0)"
+      :src="`/uploads/blog/${filelink.filename}`"
+      :lazy-src="`/uploads/blog/${filelink.filename}`"
       height="200px"
-    ></v-img>
+    ></v-img></div>
 
      <v-card-subtitle>
       {{dat.introtext| truncate(60, '...')}}

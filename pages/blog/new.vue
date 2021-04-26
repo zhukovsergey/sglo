@@ -8,7 +8,26 @@
    <v-text-field v-model="introtext" label="introtext" required name="introtext"></v-text-field>
    <v-text-field v-model="description" label="description" required name="description"></v-text-field>
    <v-text-field v-model="url" label="url" required name="url"></v-text-field>
-   <v-text-field v-model="content" label="content" required name="content"></v-text-field>
+   <editor
+    api-key="octb58ja97o9rwhmbve45apizjpm26aljf3b44lcwxdevaht"
+    v-model="content"
+    :init="{
+       height: 500,
+      menubar: false,
+      plugins: [
+        'advlist autolink lists link image charmap',
+        'searchreplace visualblocks code fullscreen',
+        'print preview anchor insertdatetime media',
+        'paste code help wordcount table'
+      ],
+      toolbar:
+        'undo redo | formatselect | bold italic | \
+        alignleft aligncenter alignright | \
+        bullist numlist outdent indent | help'
+    }"
+  >
+  </editor>
+
    <v-select
           :items="items"
           required
@@ -17,7 +36,14 @@
           name="tag"
           v-model="tag"
         ></v-select>
- <span>Файл для статьи</span>
+
+          <v-textarea
+          name="content"
+          label="content"
+          v-model="content"
+          hint="Hint text"
+          ></v-textarea>
+          <span>Файл для статьи</span>
     <br><br>
    <span>Файлы для фотогалереи</span>
    <input
@@ -39,6 +65,7 @@
 
 <script>
 import axios from 'axios'
+import Editor from '@tinymce/tinymce-vue'
 export default {
   data: () => ({
     h1: '',
@@ -51,6 +78,9 @@ export default {
     introtext: '',
     items: ['Национальные проекты', 'Здравоохранение', 'Образование', 'Конкурсы']
   }),
+  components: {
+    editor: Editor
+  },
   head () {
     return {
       title: 'Создать запись',

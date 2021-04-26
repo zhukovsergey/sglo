@@ -1,18 +1,10 @@
 <template>
+<v-container class="grey lighten-5">
   <div>
     <section itemscope itemtype="http://schema.org/Article">
       <center><h1 itemprop="headline" class="pt-4 mx-4">
       {{data1.h1}}</h1></center>
-<div
-v-for="(filelink, index) in coverImageName"
-:key="filelink.path"
-itemscope
-itemprop="image"
-itemtype="http://schema.org/ImageObject">
-<img v-if="(index === 0)" itemprop="url contentUrl" class="mx-8 my-8" style="width:40%; float:left;" :src="`/uploads/blog/${filelink.filename}`"/></div>
 <article itemprop="articleBody">
-<p class="mx-8 my-8" v-html="data1.content"></p>
-<br> <br><br><br><br>
 
 <div
 v-for="(filelink, index) in coverImageName"
@@ -20,8 +12,42 @@ v-for="(filelink, index) in coverImageName"
 itemscope
 itemprop="image"
 itemtype="http://schema.org/ImageObject">
-<img v-if="(index > 0)" itemprop="url contentUrl" class="mx-8 my-8" style="width:40%; float:left;" :src="`/uploads/blog/${filelink.filename}`"/></div>
- </article>
+<img v-if="(index === 0)" itemprop="url contentUrl" class="mx-8 my-8" style="width:40%; float:left;" :src="`/uploads/blog/${filelink.filename}`"/></div>
+<p class="mx-2 my-8 statestext" v-html="data1.content"></p>
+<br> <br><br> <br>
+<h2 class="text-center">Фотогалерея</h2>
+
+ <v-row>
+    <v-col
+      v-for="(filelink, index) in coverImageName"
+     :key="filelink.path"
+      class="d-flex child-flex"
+      cols="2"
+    >
+      <img
+v-img:group
+v-if="(index >= 0)"
+itemprop="url contentUrl"
+class="mx-8 my-8"
+style="width:15%; float:left;"
+:lazy-src="`/uploads/blog/${filelink.filename}`"
+:src="`/uploads/blog/${filelink.filename}`"/>
+        <template v-slot:placeholder>
+          <v-row
+            class="fill-height ma-0"
+            align="center"
+            justify="center"
+          >
+            <v-progress-circular
+              indeterminate
+              color="grey lighten-5"
+            ></v-progress-circular>
+          </v-row>
+        </template>
+      </v-img>
+    </v-col>
+  </v-row>
+  </article>
 <yandex-share :services="['vkontakte','facebook','twitter','odnoklassniki','messenger','whatsapp']" counter /><br>
 </section>
 <div class="admin-form mx-4 mb-4" v-if="adminShow">
@@ -63,12 +89,25 @@ itemtype="http://schema.org/ImageObject">
 <img width="100" :src="`/uploads/blog/${this.data1.coverImageName}`"/>
 </div>
 </div>
-
+</v-container>
 </template>
 
 <script>
+import Vue from 'vue'
 import axios from 'axios'
 import YandexShare from '@cookieseater/vue-yandex-share'
+import VueImg from 'v-img'
+const vueImgConfig = {
+  // Use `alt` attribute as gallery slide title
+  altAsTitle: true,
+  // Display 'download' button near 'close' that opens source image in new tab
+  sourceButton: true,
+  // Event listener to open gallery will be applied to <img> element
+  openOn: 'click',
+  // Show thumbnails for all groups with more than 1 image
+  thumbnails: true
+}
+Vue.use(VueImg, vueImgConfig)
 export default {
   async asyncData ({ params }) {
     const { data } = await axios.get(`http://localhost:3000/api/blog/${params.id}`)
@@ -87,8 +126,14 @@ export default {
     content: '',
     coverImageName: '',
     tag: '',
+    showLightBox: 'false',
     items: ['Национальные проекты', 'Здравоохранение', 'Образование', 'Конкурсы'],
-    blog: []
+    blog: [],
+    images: [
+      { thumb: 'https://i.wifegeek.com/200426/f9459c52.jpg', src: 'https://i.wifegeek.com/200426/f9459c52.jpg' },
+      { thumb: 'https://i.wifegeek.com/200426/f9459c52.jpg', src: 'https://i.wifegeek.com/200426/f9459c52.jpg' },
+      { thumb: 'https://i.wifegeek.com/200426/f9459c52.jpg', src: 'https://i.wifegeek.com/200426/f9459c52.jpg' }
+    ]
   }),
   beforeMount () {
     this.h1 = this.data1.h1

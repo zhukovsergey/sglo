@@ -186,7 +186,7 @@ export default {
     return {
       script: [
         { hid: 'stripe', src: 'https://cdnjs.cloudflare.com/ajax/libs/vivus/0.4.5/vivus.min.js', defer: true },
-        { hid: 'stripe1', src: '/uploads/script.js', defer: true }
+        { hid: 'stripe1', src: '/uploads/script.js', defer: true } 
       ]
     }
   }
