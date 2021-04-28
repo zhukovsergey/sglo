@@ -38,7 +38,8 @@ export default {
     // https://go.nuxtjs.dev/eslint
     '@nuxtjs/eslint-module',
     '@nuxtjs/vuetify',
-    "@nuxtjs/svg"    
+    "@nuxtjs/svg",
+    '@nuxtjs/pwa'   
     ],
   serverMiddleware: [
     '~/api/index.js',

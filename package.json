@@ -11,9 +11,9 @@
     "lint": "npm run lint:js"
   },
   "dependencies": {
-    "@cookieseater/vue-yandex-share": "^0.2.1",
-    "@morioh/v-lightbox": "^1.0.3",
+    "@cookieseater/vue-yandex-share": "^0.2.1",    
     "@nuxtjs/axios": "^5.12.5",
+    "@nuxtjs/pwa": "^3.3.5",
     "@tinymce/tinymce-vue": "^3.2.8",
     "axios": "^0.21.1",
     "body-parser": "^1.19.0",

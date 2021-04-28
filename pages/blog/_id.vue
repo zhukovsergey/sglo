@@ -14,23 +14,23 @@ itemprop="image"
 itemtype="http://schema.org/ImageObject">
 <img v-if="(index === 0)" itemprop="url contentUrl" class="mx-8 my-8" style="width:40%; float:left;" :src="`/uploads/blog/${filelink.filename}`"/></div>
 <p class="mx-2 my-8 statestext" v-html="data1.content"></p>
-<br> <br><br> <br>
+<br> <br>
 <h2 class="text-center">Фотогалерея</h2>
-
  <v-row>
     <v-col
       v-for="(filelink, index) in coverImageName"
      :key="filelink.path"
       class="d-flex child-flex"
-      cols="2"
+      cols="3"
     >
       <img
 v-img:group
 v-if="(index >= 0)"
 itemprop="url contentUrl"
 class="mx-8 my-8"
-style="width:15%; float:left;"
-:lazy-src="`/uploads/blog/${filelink.filename}`"
+height="140"
+  contain
+ :lazy-src="`/uploads/blog/${filelink.filename}`"
 :src="`/uploads/blog/${filelink.filename}`"/>
         <template v-slot:placeholder>
           <v-row
@@ -59,6 +59,25 @@ style="width:15%; float:left;"
    <v-text-field v-model="introtext" label="introtext" required name="introtext"></v-text-field>
    <v-text-field v-model="description" label="description" required name="description"></v-text-field>
    <v-text-field v-model="url" label="url" required name="url"></v-text-field>
+    <editor
+    api-key="octb58ja97o9rwhmbve45apizjpm26aljf3b44lcwxdevaht"
+    v-model="content"
+    :init="{
+       height: 500,
+      menubar: false,
+      plugins: [
+        'advlist autolink lists link image charmap',
+        'searchreplace visualblocks code fullscreen',
+        'print preview anchor insertdatetime media',
+        'paste code help wordcount table'
+      ],
+      toolbar:
+        'undo redo | formatselect | bold italic | \
+        alignleft aligncenter alignright | \
+        bullist numlist outdent indent | help'
+    }"
+  >
+  </editor>
    <v-text-field v-model="content" label="content" required name="content"></v-text-field>
    <v-select
           :items="items"
@@ -93,6 +112,7 @@ style="width:15%; float:left;"
 </template>
 
 <script>
+import Editor from '@tinymce/tinymce-vue'
 import Vue from 'vue'
 import axios from 'axios'
 import YandexShare from '@cookieseater/vue-yandex-share'
@@ -114,7 +134,8 @@ export default {
     return { data1: data }
   },
   components: {
-    YandexShare
+    YandexShare,
+    editor: Editor
   },
   data: () => ({
     adminShow: true,
@@ -182,7 +203,20 @@ export default {
   },
   head () {
     return {
-      title: this.data1.title
+      title: this.data1.title,
+      meta: [
+        { hid: 'robots', name: 'robots', content: 'index,follow' },
+        {
+          hid: 'description',
+          name: 'description',
+          content: this.data1.introtext
+        },
+        { hid: 'og:type', property: 'og:type', content: 'article' },
+        { hid: 'og:title', property: 'og:title', content: this.data1.title },
+        { hid: 'og:url', property: 'og:url', content: `http://localhost:3000/blog/${this.data1.url}` },
+        { hid: 'og:description', property: 'og:description', content: this.data1.description },
+        { hid: 'og:image', property: 'og:image', content: `http://localhost:3000/uploads/blog/${this.data1.coverImageName[0].filename}` }
+      ]
     }
   }
 }

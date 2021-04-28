@@ -64,8 +64,11 @@ html {
 }
 
 .zagolovok {
-  padding: 350px 14px 14px 13px;
-  color: #e1e4ae;
+  text-decoration:none;
+  color: #d1d667;
+  background-color:rgb(98, 98, 199);
+  padding:3px;
+  border-radius: 5px;
 }
 .bounce-enter-active {
   transform-origin: top;
@@ -98,3 +101,49 @@ html {
   }
 }
 
+
+@media (max-width: 600px) {
+  .ord1 {
+   order: 1;
+ }
+ .ord2 {
+   order: 2;
+ }
+ .ord3 {
+   order: 3;
+ }
+   }
+@media (max-width: 800px) {
+ header .v-toolbar__items {      
+    display:none;
+}
+.v-toolbar__items.navShow {      
+  display:flex;
+}
+  }
+
+  @media (min-width: 200px) and (max-width: 400px) {
+    
+    #my-svg  {
+      width:  100%;
+  }
+  #my-svg1  {
+    width: 95%;
+}
+  }
+  @media (min-width: 800px) and (max-width: 1120px) {
+    .v-btn__content {
+      font-size: 14px;
+    }
+    .v-toolbar__title {
+      font-size: 14px;
+    }
+    #my-svg  {
+      width:  100%;
+  }
+  #my-svg1  {
+    width: 100%;
+}
+  }
+   
+   

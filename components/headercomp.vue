@@ -17,11 +17,10 @@
       <v-toolbar-title class="mt-md-2 hidden-xs-only">Союз женщин<br> России</v-toolbar-title>
       </nuxt-link>
       <nuxt-link to="/">
-      <span class="subheading"> <img id="my-svg1" width="135" src="http://localhost:3000/uploads/blog/wuor_animated.svg?data" /></object></span>
+      <span class="subheading"> <img width="135" id="my-svg1" src="http://localhost:3000/uploads/blog/wuor_animated.svg?data" /></span>
     </nuxt-link>
     <v-spacer></v-spacer>
-
-    <v-toolbar-items class="hidden-sm-and-down" color="#ad6262">
+    <v-toolbar-items color="#ad6262">
     <v-btn
      color="rgb(255 243 243 / 42%)"
     elevation="6"
@@ -67,16 +66,51 @@
       <v-divider vertical></v-divider>
     </v-toolbar-items>
 
-    <v-app-bar-nav-icon class="hidden-md-and-up"></v-app-bar-nav-icon>
-  </v-toolbar>
+    <v-app-bar-nav-icon @click="drawer = true" class="hidden-md-and-up"></v-app-bar-nav-icon>
+</v-toolbar>
+<v-navigation-drawer
+      v-model="drawer"
+      absolute
+      temporary
+    >
+      <v-list
+        nav
+        dense
+      >
+        <v-list-item-group
+          v-model="group"
+          active-class="deep-purple--text text--accent-4"
+        >
+          <v-list-item>
+            <v-list-item-icon>
+              <v-icon>mdi-home</v-icon>
+            </v-list-item-icon>
+            <v-list-item-title><nuxt-link to="/">Главная</nuxt-link></v-list-item-title>
+          </v-list-item>
+          <v-list-item>
+            <v-list-item-icon>
+              <v-icon>mdi-home</v-icon>
+            </v-list-item-icon>
+            <v-list-item-title><nuxt-link to="/blog">Новости</nuxt-link></v-list-item-title>
+          </v-list-item>
 
+          <v-list-item>
+            <v-list-item-icon>
+              <v-icon>mdi-account</v-icon>
+            </v-list-item-icon>
+            <v-list-item-title><nuxt-link to="/service">Информация</nuxt-link></v-list-item-title>
+          </v-list-item>
+        </v-list-item-group>
+      </v-list>
+    </v-navigation-drawer>
     <v-main class="grey lighten-4">
     <v-container fluid><center><span class="text-center hidden-xs-only" style="font-family:'Naut'; font-size: 40px; color:#1976d2;">Наша сила - в единстве. Наше богатство - в многообразии!</span></center>
       <v-row justify="center">
           <v-col
-          class="pl-md-8 pt-md-8 mx-lg-auto"
+          class="pl-md-8 pt-md-8 mx-lg-auto ord2"
             cols="12"
-            sm="2"
+            sm="3"
+            md="2"
           >
             <v-sheet
               elevation="20"
@@ -120,8 +154,9 @@
 
           <v-col
             cols="12"
-            sm="8"
-            class="pt-md-8"
+            sm="6"
+            class="pt-md-8 ord1"
+            md="8"
           >
             <v-sheet
             elevation="20"
@@ -134,8 +169,9 @@
 
           <v-col
             cols="12"
-            sm="2"
-            class="pt-md-8 pr-md-8"
+            sm="3"
+            md="2"
+            class="pt-md-8 pr-md-8 ord3"
           >
             <v-sheet
             elevation="20"
@@ -182,11 +218,18 @@
 </template>
 <script>
 export default {
+  data: () => ({
+    drawer: false,
+    group: null
+  }),
   head () {
     return {
+      meta: [
+        { hid: 'theme-color',property: 'theme-color',name: 'theme-color', content: '#4285f4' }
+      ],
       script: [
         { hid: 'stripe', src: 'https://cdnjs.cloudflare.com/ajax/libs/vivus/0.4.5/vivus.min.js', defer: true },
-        { hid: 'stripe1', src: '/uploads/script.js', defer: true } 
+        { hid: 'stripe1', src: '/uploads/script.js', defer: true }
       ]
     }
   }

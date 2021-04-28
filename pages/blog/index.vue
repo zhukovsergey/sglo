@@ -63,9 +63,9 @@ import axios from 'axios'
 export default {
   head () {
     return {
-      title: 'Блог',
+      title: 'Статьи и новости Союза женщин Липецкой области',
       meta: [
-        { hid: 'description', name: 'description', content: 'Seo optimization' },
+        { hid: 'description', name: 'description', content: 'Актуальные новости и статьи с официального сайта Союза женщин Липецкой области' },
         { hid: 'robots', name: 'robots', content: 'index,follow' }
       ]
     }
