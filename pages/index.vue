@@ -1,6 +1,5 @@
 <template>
   <div class="container">
-   <p>Главная</p>
    <v-carousel hide-delimiters>
   <div
   v-for="dat2 in data1.slice(0, 2)"
@@ -12,6 +11,7 @@
   <v-carousel-item
  v-if="(index < 1)"
  :src="`/uploads/blog/${filelink.filename}`"
+ :lazy-src="`/uploads/blog/${filelink.filename}`"
     >
     <nuxt-link :to="`blog/${dat2.url}`">
 

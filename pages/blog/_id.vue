@@ -1,114 +1,139 @@
 <template>
-<v-container class="grey lighten-5">
-  <div>
-    <section itemscope itemtype="http://schema.org/Article">
-      <center><h1 itemprop="headline" class="pt-4 mx-4">
-      {{data1.h1}}</h1></center>
-<article itemprop="articleBody">
-
-<div
-v-for="(filelink, index) in coverImageName"
-:key="filelink.path"
-itemscope
-itemprop="image"
-itemtype="http://schema.org/ImageObject">
-<img v-if="(index === 0)" itemprop="url contentUrl" class="mx-8 my-8" style="width:40%; float:left;" :src="`/uploads/blog/${filelink.filename}`"/></div>
-<p class="mx-2 my-8 statestext" v-html="data1.content"></p>
-<br> <br>
-<h2 class="text-center">Фотогалерея</h2>
- <v-row>
-    <v-col
-      v-for="(filelink, index) in coverImageName"
-     :key="filelink.path"
-      class="d-flex child-flex"
-      cols="3"
-    >
-      <img
-v-img:group
-v-if="(index >= 0)"
-itemprop="url contentUrl"
-class="mx-8 my-8"
-height="140"
-  contain
- :lazy-src="`/uploads/blog/${filelink.filename}`"
-:src="`/uploads/blog/${filelink.filename}`"/>
-        <template v-slot:placeholder>
-          <v-row
-            class="fill-height ma-0"
-            align="center"
-            justify="center"
+  <v-container class="grey lighten-5">
+    <div>
+      <section itemscope itemtype="http://schema.org/Article">
+        <v-breadcrumbs large>
+          <v-breadcrumbs-item to="/" nuxt>
+            Главная
+          </v-breadcrumbs-item>
+          <v-breadcrumbs-item to="/blog" disabled nuxt>
+            Блог
+          </v-breadcrumbs-item>
+        </v-breadcrumbs>
+        <center>
+          <h1 itemprop="headline" class="pt-4 mx-4">
+            {{ data1.h1 }}
+          </h1>
+        </center>
+        <article itemprop="articleBody">
+          <div
+            v-for="(filelink, index) in coverImageName"
+            :key="filelink.path"
+            itemscope
+            itemprop="image"
+            itemtype="http://schema.org/ImageObject"
           >
-            <v-progress-circular
-              indeterminate
-              color="grey lighten-5"
-            ></v-progress-circular>
+            <img v-if="(index === 0)" itemprop="url contentUrl" class="mx-8 my-8" style="width:40%; float:left;" :src="`/uploads/blog/${filelink.filename}`">
+            </img>
+          </div>
+          <p class="mx-2 my-8 statestext" v-html="data1.content" />
+          <br> <br>
+          <h2 class="text-center">
+            Фотогалерея
+          </h2>
+          <v-row>
+            <v-col
+              v-for="(filelink, index) in coverImageName"
+              :key="filelink.path"
+              class="d-flex child-flex"
+              cols="3"
+            >
+              <img
+                v-if="(index >= 0)"
+                v-img:group
+                itemprop="url contentUrl"
+                class="mx-8 my-8"
+                height="140"
+                contain
+                :lazy-src="`/uploads/blog/${filelink.filename}`"
+                :src="`/uploads/blog/${filelink.filename}`"
+              >
+              <template #placeholder>
+                <v-row
+                  class="fill-height ma-0"
+                  align="center"
+                  justify="center"
+                >
+                  <v-progress-circular
+                    indeterminate
+                    color="grey lighten-5"
+                  />
+                </v-row>
+              </template>
+              </v-img>
+            </v-col>
           </v-row>
-        </template>
-      </v-img>
-    </v-col>
-  </v-row>
-  </article>
-<yandex-share :services="['vkontakte','facebook','twitter','odnoklassniki','messenger','whatsapp']" counter /><br>
-</section>
-<div class="admin-form mx-4 mb-4" v-if="adminShow">
-<v-form
-    ref="service"
-    >
-   <v-text-field v-model="h1" label="h1" required name="h1"></v-text-field>
-   <v-text-field v-model="title" label="title" required name="title"></v-text-field>
-   <v-text-field v-model="introtext" label="introtext" required name="introtext"></v-text-field>
-   <v-text-field v-model="description" label="description" required name="description"></v-text-field>
-   <v-text-field v-model="url" label="url" required name="url"></v-text-field>
-    <editor
-    api-key="octb58ja97o9rwhmbve45apizjpm26aljf3b44lcwxdevaht"
-    v-model="content"
-    :init="{
-       height: 500,
-      menubar: false,
-      plugins: [
-        'advlist autolink lists link image charmap',
-        'searchreplace visualblocks code fullscreen',
-        'print preview anchor insertdatetime media',
-        'paste code help wordcount table'
-      ],
-      toolbar:
-        'undo redo | formatselect | bold italic | \
+        </article>
+        <yandex-share :services="['vkontakte','facebook','twitter','odnoklassniki','messenger','whatsapp']" counter /><br>
+      </section>
+      <div v-if="adminShow" class="admin-form mx-4 mb-4">
+        <v-form
+          ref="service"
+        >
+          <v-text-field v-model="h1" label="h1" required name="h1" />
+          <v-text-field v-model="title" label="title" required name="title" />
+          <v-text-field v-model="introtext" label="introtext" required name="introtext" />
+          <v-text-field v-model="description" label="description" required name="description" />
+          <v-text-field v-model="url" label="url" required name="url" />
+          <editor
+            v-model="content"
+            api-key="octb58ja97o9rwhmbve45apizjpm26aljf3b44lcwxdevaht"
+            :init="{
+              height: 500,
+              menubar: false,
+              plugins: [
+                'advlist autolink lists link image charmap',
+                'searchreplace visualblocks code fullscreen',
+                'print preview anchor insertdatetime media',
+                'paste code help wordcount table'
+              ],
+              toolbar:
+                'undo redo | formatselect | bold italic | \
         alignleft aligncenter alignright | \
         bullist numlist outdent indent | help'
-    }"
-  >
-  </editor>
-   <v-text-field v-model="content" label="content" required name="content"></v-text-field>
-   <v-select
-          :items="items"
-          required
-          label="Выберите тэг"
-          outlined
-          name="tag"
-          v-model="tag"
-          ></v-select>
-        <select  outlined style="boreder: 1px solid grey;" name="tag" v-model="tag">
-        <option value="Национальные проекты">Национальные проекты</option>
-        <option value="Образование">Образование</option>
-        </select>
-  <input
-  v-on:change="handleFileUpload"
-   type="file"
-   name="file"
-   ref="file"
-   />
-   <v-btn
-      color="warning"
-      v-on:click="blogUpdate" >Опубликовать</v-btn>
-      <v-btn
-      color="warning"
-      v-on:click="blogDelete" >Удалить</v-btn>
-    </v-form>
-<br>
-<img width="100" :src="`/uploads/blog/${this.data1.coverImageName}`"/>
-</div>
-</div>
-</v-container>
+            }"
+          />
+          <v-text-field v-model="content" label="content" required name="content" />
+          <v-select
+            v-model="tag"
+            :items="items"
+            required
+            label="Выберите тэг"
+            outlined
+            name="tag"
+          />
+          <select v-model="tag" outlined style="boreder: 1px solid grey;" name="tag">
+            <option value="Национальные проекты">
+              Национальные проекты
+            </option>
+            <option value="Образование">
+              Образование
+            </option>
+          </select>
+          <input
+            ref="file"
+            type="file"
+            name="file"
+            @change="handleFileUpload"
+          >
+          <v-btn
+            color="warning"
+            @click="blogUpdate"
+          >
+            Опубликовать
+          </v-btn>
+          <v-btn
+            color="warning"
+            @click="blogDelete"
+          >
+            Удалить
+          </v-btn>
+        </v-form>
+        <br>
+        <img width="100" :src="`/uploads/blog/${this.data1.coverImageName}`"></img>
+      </div>
+    </div>
+  </v-container>
 </template>
 
 <script>
@@ -129,13 +154,13 @@ const vueImgConfig = {
 }
 Vue.use(VueImg, vueImgConfig)
 export default {
-  async asyncData ({ params }) {
-    const { data } = await axios.get(`http://localhost:3000/api/blog/${params.id}`)
-    return { data1: data }
-  },
   components: {
     YandexShare,
     editor: Editor
+  },
+  async asyncData ({ params }) {
+    const { data } = await axios.get(`http://localhost:3000/api/blog/${params.id}`)
+    return { data1: data }
   },
   data: () => ({
     adminShow: true,
@@ -156,6 +181,24 @@ export default {
       { thumb: 'https://i.wifegeek.com/200426/f9459c52.jpg', src: 'https://i.wifegeek.com/200426/f9459c52.jpg' }
     ]
   }),
+  head () {
+    return {
+      title: this.data1.title,
+      meta: [
+        { hid: 'robots', name: 'robots', content: 'index,follow' },
+        {
+          hid: 'description',
+          name: 'description',
+          content: this.data1.introtext
+        },
+        { hid: 'og:type', property: 'og:type', content: 'article' },
+        { hid: 'og:title', property: 'og:title', content: this.data1.title },
+        { hid: 'og:url', property: 'og:url', content: `http://localhost:3000/blog/${this.data1.url}` },
+        { hid: 'og:description', property: 'og:description', content: this.data1.description },
+        { hid: 'og:image', property: 'og:image', content: `http://localhost:3000/uploads/blog/${this.data1.coverImageName[0].filename}` }
+      ]
+    }
+  },
   beforeMount () {
     this.h1 = this.data1.h1
     this.title = this.data1.title
@@ -199,24 +242,6 @@ export default {
           }
         })
         .then(response => (this.newAddedFiles = response.data))
-    }
-  },
-  head () {
-    return {
-      title: this.data1.title,
-      meta: [
-        { hid: 'robots', name: 'robots', content: 'index,follow' },
-        {
-          hid: 'description',
-          name: 'description',
-          content: this.data1.introtext
-        },
-        { hid: 'og:type', property: 'og:type', content: 'article' },
-        { hid: 'og:title', property: 'og:title', content: this.data1.title },
-        { hid: 'og:url', property: 'og:url', content: `http://localhost:3000/blog/${this.data1.url}` },
-        { hid: 'og:description', property: 'og:description', content: this.data1.description },
-        { hid: 'og:image', property: 'og:image', content: `http://localhost:3000/uploads/blog/${this.data1.coverImageName[0].filename}` }
-      ]
     }
   }
 }
