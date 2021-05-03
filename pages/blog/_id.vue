@@ -1,7 +1,7 @@
 <template>
   <v-container class="grey lighten-5">
     <div>
-      <section itemscope itemtype="http://schema.org/Article">
+       <section itemscope itemtype="http://schema.org/Article">
         <v-breadcrumbs large>
           <v-breadcrumbs-item to="/" nuxt>
             Главная
@@ -12,7 +12,7 @@
         </v-breadcrumbs>
         <center>
           <h1 itemprop="headline" class="pt-4 mx-4">
-            {{ data1.h1 }}
+            {{ data1.h1 }}  {{this.$auth.user}}
           </h1>
         </center>
         <article itemprop="articleBody">
@@ -66,7 +66,7 @@
         </article>
         <yandex-share :services="['vkontakte','facebook','twitter','odnoklassniki','messenger','whatsapp']" counter /><br>
       </section>
-      <div v-if="adminShow" class="admin-form mx-4 mb-4">
+      <div v-if="this.$auth.user == 1" class="admin-form mx-4 mb-4">
         <v-form
           ref="service"
         >
@@ -221,7 +221,13 @@ export default {
         tag: this.tag,
         description: this.description
       }
-      axios.patch(`http://localhost:3000/api/blog/${this.data1.url}`, formData)
+      axios.patch(`http://localhost:3000/api/blog/${this.data1.url}`, formData,
+        {
+          headers: {
+            Authorization: this.$auth.$storage._state['_token.local']
+          }
+        }
+      )
         .then(alert('Статья обновлена'), this.$router.push('/blog'))
     },
     handleFileUpload () {

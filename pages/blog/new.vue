@@ -77,6 +77,7 @@
 import axios from 'axios'
 import Editor from '@tinymce/tinymce-vue'
 export default {
+  middleware: 'auth',
   components: {
     editor: Editor
   },

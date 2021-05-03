@@ -27,8 +27,7 @@ db.once('open', () => console.log('connected444 to database'))
 app.use(bodyParser.json())
 app.use(express.json())
 
-const ServiceRoutes = require('./routes/service')
-const BlogRoutes = require('./routes/blog')
+
 
 app.get('/blog/national-projects', async function (req, res) {
   try {
@@ -148,9 +147,12 @@ app.get('/blog/search', async function (req, res) {
     res.status(500).json({ message: err.message })
   }
 })
-
+const ServiceRoutes = require('./routes/service')
+const BlogRoutes = require('./routes/blog')
+const authRoutes = require('./routes/auth')
 app.use('/service', ServiceRoutes)
 app.use('/blog', BlogRoutes)
+app.use('/auth', authRoutes)
 
 config.dev = process.env.NODE_ENV !== 'production'
 async function start () {

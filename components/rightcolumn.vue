@@ -21,10 +21,10 @@
         <v-icon color="red">
           mdi-phone-outline
         </v-icon>
-        <span class="text-md-center" style="font-size:18px;">+7 (4742) 28-12-21</span>
+        <span class="text-md-center" style="font-size:16px;">+7 (4742) 28-12-21</span>
         <br></v-icon><v-icon color="red">
           mdi-map-marker
-        </v-icon><span class="text-md-center" style="font-size:18px;">г. Липецк, ул. Плеханова, д. 33Б</span>
+        </v-icon><span class="text-md-center" style="font-size:16px;">г. Липецк, ул. Плеханова, д. 33Б</span>
         <br><a style="text-decoration:none;" href="https://vk.com/sglo48"><v-icon large color="red">
           mdi-vk
         </v-icon></a><a style="text-decoration:none;" href="https://www.instagram.com/sglo48/"><v-icon large color="red">

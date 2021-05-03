@@ -2,8 +2,8 @@
   <div>
     <v-toolbar
       color="#e6dde6"
-      height="250px"
-      max-height="250px"
+      height="150px"
+      max-height="150px"
     >
       <nuxt-link to="/" style="text-decoration: none;">
         <v-toolbar-title class="mt-md-2 hidden-xs-only">
@@ -83,7 +83,7 @@
         <input
           id="search"
           v-model="search"
-          class="wiki-search"
+          class="wiki-search search"
           type="search"
           placeholder="Поиск по сайту"
           @blur="destroySearch"

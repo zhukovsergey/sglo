@@ -8,10 +8,10 @@
         Блог
       </v-breadcrumbs-item>
     </v-breadcrumbs>
-    <v-btn class="primary my-md-6" to="/blog/national-projects" nuxt>
+    <v-btn class="primary my-md-6" small to="/blog/national-projects" nuxt>
       Национальные проекты
     </v-btn>
-    <v-btn class="primary my-md-6" to="/blog/education" nuxt>
+    <v-btn class="primary my-md-6" small to="/blog/education" nuxt>
       Образование
     </v-btn>
     <v-row>
