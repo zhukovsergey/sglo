@@ -1,9 +1,19 @@
 <template>
   <v-app id="inspire">
-    <toolbar />
+    <v-container fluid>
+      <toolbar />
 
-    <v-main class="grey lighten-4">
-      <v-container fluid>
+      <v-main>
+        <v-row cols="3" class="mx-2">
+          <v-switch
+            v-model="$vuetify.theme.dark"
+            hint="Этот переключатель со светлого оформления на темное"
+            inset
+            label="Переключатель оформления"
+            persistent-hint
+          />
+        </v-row>
+
         <center>
           <span
             class="text-center hidden-xs-only"
@@ -16,8 +26,8 @@
           <rightcolumn />
         </v-row><br>
         <podval />
-      </v-container>
-    </v-main>
+      </v-main>
+    </v-container>
   </v-app>
 </template>
 <script>

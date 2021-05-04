@@ -1,16 +1,10 @@
 <template>
   <v-col class="pl-md-8 pt-md-8 mx-lg-auto ord2" cols="12" sm="3" md="2">
-    <v-sheet
-      elevation="20"
-      rounded="lg"
-      min-height="268"
-    >
+    <v-sheet elevation="20" rounded="lg" min-height="268">
       <center>
         <br>
         <v-divider />
-        <span
-          color="secondary"
-        >
+        <span class="px-4" style="font-size:14px;" primary color="primary">
           Липецкая областная общественная организация "Союз Женщин Липецкой
           области" (ЛООО "Союз Женщин Липецкой области"). Цель организации-
           повысить статус женщин в обществе, защита положения и интересов

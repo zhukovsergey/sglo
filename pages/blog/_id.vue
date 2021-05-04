@@ -1,5 +1,5 @@
 <template>
-  <v-container class="grey lighten-5">
+  <v-container>
     <div>
        <section itemscope itemtype="http://schema.org/Article">
         <v-breadcrumbs large>
@@ -66,7 +66,7 @@
         </article>
         <yandex-share :services="['vkontakte','facebook','twitter','odnoklassniki','messenger','whatsapp']" counter /><br>
       </section>
-      <div v-if="this.$auth.user == 1" class="admin-form mx-4 mb-4">
+      <div v-if="this.$auth.user == 'zhukov'" class="admin-form mx-4 mb-4">
         <v-form
           ref="service"
         >

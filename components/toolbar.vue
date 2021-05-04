@@ -1,14 +1,16 @@
 <template>
-  <div>
+  <div class="container-fluid">
     <v-toolbar
       color="#e6dde6"
       height="150px"
       max-height="150px"
     >
       <nuxt-link to="/" style="text-decoration: none;">
-        <v-toolbar-title class="mt-md-2 hidden-xs-only">
-          Союз женщин<br> Липецкой области
-        </v-toolbar-title>
+        <v-theme-provider root>
+          <v-toolbar-title class="mt-md-2 hidden-xs-only">
+            Союз женщин<br> Липецкой области
+          </v-toolbar-title>
+        </v-theme-provider>
       </nuxt-link>
       <span class="subheading"><nuxt-link to="/"><img id="my-svg" width="150" src="http://localhost:3000/uploads/blog/SGLOnew_animated.svg?data"></img></nuxt-link></span>
       <v-divider
