@@ -54,9 +54,14 @@
               {{ dat.introtext | truncate(60, '...') }}
             </v-card-subtitle>
             <v-card-actions>
-              <v-btn color="green lighten-2" text>
-                Подробнее...
+              <v-btn
+                color="green"
+                danger
+                style="font-size: 16px; text-decoration: none;"
+              >
+                ПОДРОБНЕЕ...
               </v-btn>
+
               <v-spacer />
             </v-card-actions>
           </v-card>

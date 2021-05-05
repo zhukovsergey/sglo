@@ -44,7 +44,7 @@ router.get('/', async function (req, res) {
   const blogsCount = parseInt(Math.ceil(podschet))
   try {
     const blogs = await blog.find()
-      .select('_id h1 title introtext coverImageName url tag createdDate')
+      .select('_id h1 title introtext coverImageName url tag createdDate views')
       .sort('-createdDate')
       .skip((page - 1) * pagination)
       .limit(pagination)

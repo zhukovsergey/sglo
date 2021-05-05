@@ -13,6 +13,8 @@ const blog = require('./model/blog')
 const path = require('path')
 const service = require('./model/service')
 const fs = require('fs')
+const helmet = require("helmet")
+app.use(helmet())
 
 mongoose.connect('mongodb://localhost:27017/api', {
   useCreateIndex: true,
@@ -30,7 +32,32 @@ app.use(express.json())
 app.get('/blog/national-projects', async function (req, res) {
   try {
     const blogs2 = await blog.find({ tag: 'Национальные проекты' })
-      .select('_id h1 title introtext coverImageName url tag created_date')
+      .select('_id h1 title introtext coverImageName url tag createdDate views')
+      .sort('-createdDate')
+      .lean()
+      .exec()
+    res.json(blogs2)
+  } catch (err) {
+    res.status(500).json({ message: err.message })
+  }
+})
+
+app.get('/blog/photos', async function (req, res) {
+  try {
+    const blogs2 = await blog.find()
+      .select('_id h1 coverImageName createdDate')
+      .sort('-createdDate')
+      .lean()
+      .exec()
+    res.json(blogs2)
+  } catch (err) {
+    res.status(500).json({ message: err.message })
+  }
+})
+app.get('/blog/health', async function (req, res) {
+  try {
+    const blogs2 = await blog.find({ tag: 'Здравоохранение' })
+      .select('_id h1 title introtext coverImageName url tag createdDate views')
       .sort('-createdDate')
       .lean()
       .exec()
@@ -42,7 +69,7 @@ app.get('/blog/national-projects', async function (req, res) {
 app.get('/blog/education', async function (req, res) {
   try {
     const blogs2 = await blog.find({ tag: 'Образование' })
-      .select('_id h1 title introtext coverImageName url tag created_date')
+      .select('_id h1 title introtext coverImageName url tag createdDate views')
       .sort('-createdDate')
       .lean()
       .exec()

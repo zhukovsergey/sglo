@@ -14,12 +14,20 @@
     <v-btn class="primary my-md-6" small to="/blog/education" nuxt>
       Образование
     </v-btn>
+    <v-btn class="primary my-md-6" small to="/blog/health" nuxt>
+      Здравоохранение
+    </v-btn>
     <v-row>
       <v-col v-for="dat in data1" :key="dat._id">
         <v-card class="mx-auto" max-width="300">
+          <span
+            style="float:right; font-size: 12px;"
+            class="px-2"
+          ><v-icon small>mdi-eye</v-icon>{{ dat.views }}</span>
+
           <nuxt-link :to="`/blog/${dat.url}`">
             <v-card-title>
-              {{ dat.title }}
+              {{ dat.h1 }}
             </v-card-title>
             <div
               v-for="(filelink, index) in dat.coverImageName"
@@ -43,6 +51,7 @@
               {{ dat.tag }}
             </v-card-subtitle>
           </nuxt-link><span
+            class="px-2"
             style="font-size: 12px;"
           >Опубликовано:
             {{
@@ -66,16 +75,16 @@
       </v-col>
     </v-row>
     <br>
-    <button
+    <v-btn
       v-if="$nuxt.$route.query.page > 1"
-      class="pagination-button"
+      class="pagination-button primary"
       @click="prevPagination($nuxt)"
     >
       Назад
-    </button>
-    <button class="pagination-button" @click="nextPagination($nuxt)">
+    </v-btn>
+    <v-btn class="pagination-button primary" @click="nextPagination($nuxt)">
       Далее
-    </button>
+    </v-btn>
     <div
       class="ya-share2"
       data-curtain

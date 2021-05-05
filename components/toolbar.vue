@@ -152,6 +152,39 @@
               </nuxt-link>
             </v-list-item-title>
           </v-list-item>
+           <div class="searchblockdrawer">
+        <input
+          id="search"
+          v-model="search"
+          class="wiki-search search"
+          type="search"
+          placeholder="Поиск по сайту"
+          @blur="destroySearch"
+          @input="searchWiki"
+        >
+        </input>
+        <v-icon id="mdisearch" large color="blue darken-2">
+          mdi-magnify
+        </v-icon>
+        <div id="searchresults" class="search-results">
+          <v-card v-if="dataSearch">
+            <div v-for="wiki in dataSearch" :key="wiki._id" class="search-result">
+              <nuxt-link
+                :to="`/blog/${wiki.url}`"
+              >
+                {{ wiki.h1 }}
+              </nuxt-link>
+            </div>
+          </v-card>
+          <v-card v-else-if="searchError">
+            <div ref="error" class="search-results search-error">
+              <div :v-model="searchError" class="search-result" style="padding: 10px">
+                {{ searchError }}
+              </div>
+            </div>
+          </v-card>
+        </div>
+      </div>
         </v-list-item-group>
       </v-list>
     </v-navigation-drawer>

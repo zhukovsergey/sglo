@@ -17,7 +17,6 @@
     <v-btn class="primary my-md-6" small to="/blog/health" nuxt>
       Здравоохранение
     </v-btn>
-
     <v-row>
       <v-col v-for="dat in data1" :key="dat._id">
         <v-card class="mx-auto" max-width="300">
@@ -104,7 +103,7 @@ export default {
     }
   },
   async asyncData () {
-    const { data } = await axios.get('http://localhost:3000/api/blog/education')
+    const { data } = await axios.get('http://localhost:3000/api/blog/health')
     return { data1: data }
   },
   data: () => ({
@@ -113,13 +112,13 @@ export default {
   }),
   head () {
     return {
-      title: 'Статьи на тему "Образование" Союза женщин Липецкой обалсти',
+      title: 'Статьи на тему "Здравоохранение" Союза женщин Липецкой обалсти',
       meta: [
         {
           hid: 'description',
           name: 'description',
           content:
-            'Актуальные новости и статьи на тему Образования с официального сайта Союза женщин Липецкой области'
+            'Актуальные новости и статьи на тему Здравоохранения с официального сайта Союза женщин Липецкой области'
         },
         { hid: 'robots', name: 'robots', content: 'index,follow' }
       ]

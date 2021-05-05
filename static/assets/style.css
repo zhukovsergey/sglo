@@ -79,7 +79,6 @@ header.v-sheet.theme--dark.v-toolbar * {
   color: #333;
 }
 
-
 @media (max-width: 1300px) {
   .v-toolbar__title {
     font-size: 1.2rem !important;
@@ -177,6 +176,9 @@ header.v-sheet.theme--dark.v-toolbar * {
   }
   .v-toolbar__items.navShow {
     display: flex;
+  }
+  .searchblock {
+    display: none;
   }
 }
 
