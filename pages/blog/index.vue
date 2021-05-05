@@ -42,7 +42,14 @@
             <v-card-subtitle>
               {{ dat.tag }}
             </v-card-subtitle>
-
+          </nuxt-link><span
+            style="font-size: 12px;"
+          >Опубликовано:
+            {{
+              $dateFns.format(dat.createdDate, 'dd-MMMM-yyyy', { locale: 'ru' })
+            }}
+          </span>
+          <nuxt-link :to="`/blog/${dat.url}`">
             <v-card-actions>
               <v-btn
                 color="green"
@@ -58,6 +65,7 @@
         </v-card>
       </v-col>
     </v-row>
+    <br>
     <button
       v-if="$nuxt.$route.query.page > 1"
       class="pagination-button"

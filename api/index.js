@@ -27,8 +27,6 @@ db.once('open', () => console.log('connected444 to database'))
 app.use(bodyParser.json())
 app.use(express.json())
 
-
-
 app.get('/blog/national-projects', async function (req, res) {
   try {
     const blogs2 = await blog.find({ tag: 'Национальные проекты' })
@@ -49,6 +47,20 @@ app.get('/blog/education', async function (req, res) {
       .lean()
       .exec()
     res.json(blogs2)
+  } catch (err) {
+    res.status(500).json({ message: err.message })
+  }
+})
+
+app.get('/blog/sitemap', async (req, res) => {
+  try {
+    const blogs = await blog.find()
+      .select('_id url')
+      .lean()
+    blogs.forEach(function (element) {
+      element.path = '/blog/'
+    })
+    await res.json(blogs)
   } catch (err) {
     res.status(500).json({ message: err.message })
   }

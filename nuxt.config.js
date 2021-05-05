@@ -1,3 +1,5 @@
+import axios from "axios"
+
 export default {
   loading: {
     color: 'blue',
@@ -38,7 +40,8 @@ export default {
     '@nuxtjs/eslint-module',
     '@nuxtjs/vuetify',
     '@nuxtjs/svg',
-    '@nuxtjs/pwa'
+    '@nuxtjs/pwa',
+    '@nuxtjs/date-fns'
   ],
   serverMiddleware: [
     '~/api/index.js'
@@ -49,13 +52,42 @@ export default {
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
     '@nuxtjs/component-cache',
-    '@nuxtjs/auth'
+    '@nuxtjs/auth',
+    '@nuxtjs/sitemap',
+    '@nuxtjs/date-fns'
   ],
+  dateFns: {
+    locales: ['ru'],
+    defaultLocale: 'ru-RU'
+  },
+  sitemap: {
+    hostname: "https://союзженщин48.рф",
+    exclude: [
+      "/blog/new",
+      "/service/new"
+    ],
+    defaults: {
+      changefreq: "weekly",
+      priority: 1,
+      lastmod: new Date()
+    },
+    routes: async () => {
+      const { data } = await axios.get(
+        "http://localhost:3000/api/blog/sitemap"
+      );
+      return data.map(page => `${page.path}${page.url}`);
+    }
+  },
  
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {},
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
+    babel:{
+    plugins: [
+      ['@babel/plugin-proposal-private-methods', { loose: true }]
+    ]
+  }
   }
 }

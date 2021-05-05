@@ -77,10 +77,10 @@
 import axios from 'axios'
 import Editor from '@tinymce/tinymce-vue'
 export default {
-  middleware: 'auth',
   components: {
     editor: Editor
   },
+  middleware: 'auth',
   data: () => ({
     h1: '',
     title: '',
@@ -102,7 +102,7 @@ export default {
       title: 'Создать запись',
       meta: [
         { hid: 'description', name: 'description', content: 'Новая запись' },
-        { hid: 'robots', name: 'robots', content: 'index,follow' }
+        { hid: 'robots', name: 'robots', content: 'noindex, nofollow' }
       ]
     }
   },

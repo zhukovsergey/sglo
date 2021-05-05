@@ -1,78 +1,77 @@
-const express = require("express");
-const router = express.Router();
-const blog = require("../model/blog");
-const app = express();
-const multer = require("multer");
-const path = require("path");
-const fs = require("fs");
+const express = require('express')
+const router = express.Router()
+const blog = require('../model/blog')
+const app = express()
+const multer = require('multer')
+const path = require('path')
+const fs = require('fs')
 
-app.use(express.json());
+app.use(express.json())
 
-const uploadPath = path.join("static", blog.coverImageBasePath);
-const imageMimeTypes = ["image/jpeg", "image/png"];
-var storage = multer.diskStorage({
-    destination: function(req, file, cb) {
-        cb(null, uploadPath);
-    },
-    filename: function(req,res,cb) {
-        cb(null,Date.now() + file.originalname);
-    }
-});
+const uploadPath = path.join('static', blog.coverImageBasePath)
+const imageMimeTypes = ['image/jpeg', 'image/png']
+const storage = multer.diskStorage({
+  destination (req, file, cb) {
+    cb(null, uploadPath)
+  },
+  filename (req, res, cb) {
+    cb(null, Date.now() + file.originalname)
+  }
+})
 const upload = multer({
-    storage : storage,
-    fileFilter: (req, file, callback) => {
-        callback(null, imageMimeTypes.includes(file.mimetype));
-    }
-});
+  storage,
+  fileFilter: (req, file, callback) => {
+    callback(null, imageMimeTypes.includes(file.mimetype))
+  }
+})
 
-router.get("/:url", getBlog, (req, res) => {   
-    res.json(res.Blog);    
-  });
+router.get('/:url', getBlog, (req, res) => {
+  res.Blog.views = res.Blog.views + 1
+  res.Blog.save()
+  res.json(res.Blog)
+})
 
-router.delete("/:url", getBlog, async (req, res, next) => {   
-  await res.Blog.remove();
-  next();    
-});
+router.delete('/:url', getBlog, async (req, res, next) => {
+  await res.Blog.remove()
+  next()
+})
 
-router.get("/", async function(req, res) {
-  const pagination=6;
-  const page = req.headers.page ? parseInt(req.headers.page) : 1;
-  const blogsCounts = await blog.countDocuments();
-  const podschet = blogsCounts / pagination;
-  const blogsCount = parseInt(Math.ceil(podschet));  
+router.get('/', async function (req, res) {
+  const pagination = 6
+  const page = req.headers.page ? parseInt(req.headers.page) : 1
+  const blogsCounts = await blog.countDocuments()
+  const podschet = blogsCounts / pagination
+  const blogsCount = parseInt(Math.ceil(podschet))
   try {
-        const blogs = await blog.find()
-        .select("_id h1 title introtext coverImageName url tag created_date")
-        .sort("-createdDate") 
-        .skip((page - 1) * pagination)  
-        .limit(pagination)     
-        .lean()
-        .exec();
-       res.json(blogs);
-    } catch (err) {
-        res.status(500).json({ message: err.message});
-    }
-});
-  router.patch("/:url", getBlog, async (req, res) => {  
-      res.Blog.h1 = req.body.h1,
-      res.Blog.title = req.body.title,
-      res.Blog.description = req.body.description,
-      res.Blog.introtext = req.body.introtext,
-      res.Blog.url = req.body.url,
-      res.Blog.tag = req.body.tag,
-      res.Blog.content = req.body.content         
-     try {
-       const updatedBlog = res.Blog.save();
-       await res.json(updatedBlog);
-      // res.status(200).json({ message: "Страница обновлена" });
-     } catch (err) {
-       //res.status(400).json({ message: err.message }); 
-       console.log(err.message) 
-     }
- 
-});  
-
-
+    const blogs = await blog.find()
+      .select('_id h1 title introtext coverImageName url tag createdDate')
+      .sort('-createdDate')
+      .skip((page - 1) * pagination)
+      .limit(pagination)
+      .lean()
+      .exec()
+    res.json(blogs)
+  } catch (err) {
+    res.status(500).json({ message: err.message })
+  }
+})
+router.patch('/:url', getBlog, async (req, res) => {
+  res.Blog.h1 = req.body.h1,
+  res.Blog.title = req.body.title,
+  res.Blog.description = req.body.description,
+  res.Blog.introtext = req.body.introtext,
+  res.Blog.url = req.body.url,
+  res.Blog.tag = req.body.tag,
+  res.Blog.content = req.body.content
+  try {
+    const updatedBlog = res.Blog.save()
+    await res.json(updatedBlog)
+    // res.status(200).json({ message: "Страница обновлена" });
+  } catch (err) {
+    // res.status(400).json({ message: err.message });
+    console.log(err.message)
+  }
+})
 
 /* router.post("/", upload.single('file'), async (req, res, next) => {
   const fileName = req.file != null ? req.file.filename : null;
@@ -84,7 +83,7 @@ router.get("/", async function(req, res) {
       url: req.body.url,
       tag: req.body.tag,
       content: req.body.content,
-      coverImageName: fileName    
+      coverImageName: fileName
   });
   try {
       const newBlog = Blog.save();
@@ -96,10 +95,10 @@ router.get("/", async function(req, res) {
 
 /* router.get("/national-projects", async function(req, res) {
   try {
-    
+
       const blogs2 = await blog.find()
       .select("_id h1 title introtext coverImageName url tag created_date")
-      .sort("-created_date")        
+      .sort("-created_date")
       .lean()
       .exec();
      res.json(blogs2);
@@ -109,23 +108,21 @@ router.get("/", async function(req, res) {
   }
 }); */
 
-async function getBlog(req, res, next) {
-  let Blog;
-    try {
-      // Ищем страницу по URL, который указан в строке запроса.
-      Blog = await blog.findOne({ url: req.params.url }).exec();      
-      if (Blog === null) {
-        // Возвращаем 404 ответ сервера, если страница не найдена.
-        return res.status(404).json({ message: "Страницы не существует" });
-      }
-    } catch (err) {
-      return res.status(500).json({ message: err.message });
+async function getBlog (req, res, next) {
+  let Blog
+  try {
+    // Ищем страницу по URL, который указан в строке запроса.
+    Blog = await blog.findOne({ url: req.params.url }).exec()
+    if (Blog === null) {
+      // Возвращаем 404 ответ сервера, если страница не найдена.
+      return res.status(404).json({ message: 'Страницы не существует' })
     }
-    res.Blog=Blog;
-        next();
+  } catch (err) {
+    return res.status(500).json({ message: err.message })
   }
-
-
+  res.Blog = Blog
+  next()
+}
 
 /* router.post("/", async (req, res, next) => {
      let Blog = new blog({
@@ -144,4 +141,4 @@ async function getBlog(req, res, next) {
         res.status(400).json({ message: err.message});
     }
 }); */
-module.exports = router ;
+module.exports = router

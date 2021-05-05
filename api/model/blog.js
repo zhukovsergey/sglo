@@ -1,3 +1,4 @@
+const { isNumeric } = require("jquery");
 const mongoose = require("mongoose");
 const path = require("path");
 const coverImageBasePath = "uploads/blog"
@@ -24,6 +25,10 @@ const blogSchema = new mongoose.Schema({
   description: {
     type: String,
     required: true,
+  },
+  views: {
+    type: Number,
+    default:0,
   },
   introtext: {
     type: String,

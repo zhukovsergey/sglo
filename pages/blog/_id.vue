@@ -1,20 +1,24 @@
 <template>
   <v-container>
     <div>
-       <section itemscope itemtype="http://schema.org/Article">
-        <v-breadcrumbs large>
-          <v-breadcrumbs-item to="/" nuxt>
-            Главная
-          </v-breadcrumbs-item>
-          <v-breadcrumbs-item to="/blog" disabled nuxt>
-            Блог
-          </v-breadcrumbs-item>
-        </v-breadcrumbs>
+      <section itemscope itemtype="http://schema.org/Article">
+        <ul class="breadcrumbs">
+          <li class="breadcrumbs-item">
+            <nuxt-link class="breadcrumbs-link" to="/">Главная</nuxt-link>
+          </li>
+          <li class="breadcrumbs-item">
+            <nuxt-link class="breadcrumbs-link" to="/blog">Блог</nuxt-link>
+          </li>
+          <li class="breadcrumbs-item">
+            <span class="breadcrumbs-link  current">{{data1.h1}}</span>
+          </li>
+        </ul>
+
         <center>
           <h1 itemprop="headline" class="pt-4 mx-4">
-            {{ data1.h1 }}  {{this.$auth.user}}
+            {{ data1.h1 }}
           </h1>
-        </center>
+        </center><span style="float:right; font-size: 13px;"><v-icon>mdi-eye</v-icon>{{ data1.views }}</span>
         <article itemprop="articleBody">
           <div
             v-for="(filelink, index) in coverImageName"
@@ -27,42 +31,59 @@
             </img>
           </div>
           <p class="mx-2 my-8 statestext" v-html="data1.content" />
+          <span style="font-size:13px; font-family: monospace;">Дата публикации: {{ $dateFns.format(data1.createdDate, 'dd-MMMM-yyyy', { locale: 'ru' }) }}</span>
+          <v-divider />
           <br> <br>
           <h2 class="text-center">
             Фотогалерея
           </h2>
-          <v-row>
-            <v-col
-              v-for="(filelink, index) in coverImageName"
-              :key="filelink.path"
-              class="d-flex child-flex"
-              cols="3"
-            >
-              <img
-                v-if="(index >= 0)"
-                v-img:group
-                itemprop="url contentUrl"
-                class="mx-8 my-8"
-                height="140"
-                contain
-                :lazy-src="`/uploads/blog/${filelink.filename}`"
-                :src="`/uploads/blog/${filelink.filename}`"
+          <v-container
+            class="fill-height"
+            fluid
+            style="min-height: 234px"
+          >
+            <v-fade-transition mode="out-in">
+              <v-row
+                align="center"
+                justify="center"
               >
-              <template #placeholder>
-                <v-row
-                  class="fill-height ma-0"
-                  align="center"
-                  justify="center"
+                <v-col
+                  v-for="(filelink, index) in coverImageName"
+                  :key="filelink.path"
+                  cols="12"
+                  md="4"
+                  sm="5"
+                  lg="3"
+                  class="d-flex child-flex"
                 >
-                  <v-progress-circular
-                    indeterminate
-                    color="grey lighten-5"
-                  />
-                </v-row>
-              </template>
-              </v-img>
-            </v-col>
-          </v-row>
+                  <img
+                    v-if="(index >= 0)"
+                    v-img:group
+                    itemprop="url contentUrl"
+                    class="px-8 py-8 photogallery"
+                    style="width: 300px; height: auto;"
+                    contain
+                    :lazy-src="`/uploads/blog/${filelink.filename}`"
+                    :src="`/uploads/blog/${filelink.filename}`"
+                  >
+
+                  <template #placeholder>
+                    <v-row
+                      class="fill-height ma-0"
+                      align="center"
+                      justify="center"
+                    >
+                      <v-progress-circular
+                        indeterminate
+                        color="grey lighten-5"
+                      />
+                    </v-row>
+                  </template>
+                  </v-img>
+                </v-col>
+              </v-row>
+            </v-fade-transition>
+          </v-container>
         </article>
         <yandex-share :services="['vkontakte','facebook','twitter','odnoklassniki','messenger','whatsapp']" counter /><br>
       </section>
@@ -153,6 +174,7 @@ const vueImgConfig = {
   thumbnails: true
 }
 Vue.use(VueImg, vueImgConfig)
+
 export default {
   components: {
     YandexShare,
@@ -169,6 +191,7 @@ export default {
     description: '',
     url: '',
     introtext: '',
+    createdDate: '',
     content: '',
     coverImageName: '',
     tag: '',
@@ -208,6 +231,7 @@ export default {
     this.introtext = this.data1.introtext
     this.tag = this.data1.tag
     this.coverImageName = this.data1.coverImageName
+    this.createdDate = this.data1.createdDate
   },
   methods: {
     blogUpdate () {
