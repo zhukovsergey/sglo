@@ -25,10 +25,17 @@ const upload = multer({
   }
 })
 
-router.get('/:url', getBlog, (req, res) => {
-  res.Blog.views = res.Blog.views + 1
-  res.Blog.save()
-  res.json(res.Blog)
+router.get('/:url', getBlog, async (req, res) => {
+//  res.Blog.views = res.Blog.views + 1
+  try {
+    const Bloger = await blog.updateOne({ url: req.params.url }, { $set: { views: res.Blog.views + 1 } })
+    // blog.findOneAndUpdate({ url: req.params.url }, { $set: { blog.views: blog.vews + 1 } })
+    console.log(Bloger)
+    res.Blog.save()
+    res.json(res.Blog)
+  } catch (err) {
+    res.status(500).json({ message: err.message })
+  }
 })
 
 router.delete('/:url', getBlog, async (req, res, next) => {

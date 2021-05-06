@@ -1,5 +1,5 @@
-import axios from "axios"
-
+import axios from 'axios'
+const isDev = process.env.NODE_ENV !== 'production'
 export default {
   loading: {
     color: 'blue',
@@ -56,38 +56,67 @@ export default {
     '@nuxtjs/sitemap',
     '@nuxtjs/date-fns'
   ],
+  router: {
+    prefetchLinks: false
+  },
+  optimization: {
+    minimize: !isDev
+  },
+  ...(!isDev && {
+      html: {
+        minify: {
+          collapseBooleanAttributes: true,
+          decodeEntities: true,
+          minifyCSS: true,
+          minifyJS: true,
+          processConditionalComments: true,
+          removeEmptyAttributes: true,
+          removeRedundantAttributes: true,
+          trimCustomFragments: true,
+          useShortDoctype: true
+        }
+      }
+  }),
+ optimization: {
+      minimize: !isDev
+    },
+  splitChunks: {
+    layouts: true,
+    pages: true,
+    commons: true
+  },
   dateFns: {
     locales: ['ru'],
     defaultLocale: 'ru-RU'
   },
   sitemap: {
-    hostname: "https://союзженщин48.рф",
+    hostname: 'https://союзженщин48.рф',
     exclude: [
-      "/blog/new",
-      "/service/new"
+      '/blog/new',
+      '/service/new'
     ],
     defaults: {
-      changefreq: "weekly",
+      changefreq: 'weekly',
       priority: 1,
       lastmod: new Date()
     },
     routes: async () => {
       const { data } = await axios.get(
-        "http://localhost:3000/api/blog/sitemap"
-      );
-      return data.map(page => `${page.path}${page.url}`);
+        'http://localhost:3000/api/blog/sitemap'
+      )
+      return data.map(page => `${page.path}${page.url}`)
     }
   },
- 
+
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {},
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
-    babel:{
-    plugins: [
-      ['@babel/plugin-proposal-private-methods', { loose: true }]
-    ]
-  }
+    babel: {
+      plugins: [
+        ['@babel/plugin-proposal-private-methods', { loose: true }]
+      ]
+    }
   }
 }

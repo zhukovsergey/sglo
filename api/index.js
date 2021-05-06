@@ -135,7 +135,6 @@ app.post('/uploadmulti', upload.array('files', 12), async function (req, res, ne
 app.post('/blog', upload.array('files'), async (req, res, next) => {
   const fileName = req.file != null ? req.file.filename : null
   const filesName = req.files != null ? req.files : null
-  console.log(filesName)
   const Blog = new blog({
     h1: req.body.h1,
     title: req.body.title,
@@ -181,7 +180,6 @@ app.get('/blog/search', async function (req, res) {
       .lean()
       .exec()
     res.json(blogs4)
-    console.log(res)
   } catch (err) {
     res.status(500).json({ message: err.message })
   }

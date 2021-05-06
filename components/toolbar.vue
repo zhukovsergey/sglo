@@ -1,7 +1,7 @@
 <template>
   <div class="container-fluid">
     <v-toolbar
-      color="#e6dde6"
+      color="#f5eff5"
       height="150px"
       max-height="150px"
     >

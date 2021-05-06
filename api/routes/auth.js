@@ -20,7 +20,6 @@ app.use(
         path: '/api/auth/login'
     })
 )
-console.log(process.env);
 router.post("/login",  async (req, res) => { 
     if (
         req.body.user ===process.env.AUTH_USER &&
