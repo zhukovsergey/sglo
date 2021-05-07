@@ -4,14 +4,58 @@
       <toolbar />
 
       <v-main>
-        <v-row cols="3" class="mx-2">
-          <v-switch
-            v-model="$vuetify.theme.dark"
-            hint="Этот переключатель со светлого оформления на темное"
-            inset
-            label="Переключатель оформления"
-            persistent-hint
-          />
+        <v-row>
+          <v-col cols="12" sm="6" md="3">
+            <v-switch
+              v-model="$vuetify.theme.dark"
+              hint="Этот переключатель со светлого оформления на темное"
+              inset
+              label="Переключатель оформления"
+              persistent-hint
+            />
+          </v-col>
+          <v-col cols="12" sm="5" md="6" lg="4" class="mx-2 mt-2">
+            <div class="searchblock">
+              <v-text-field
+                id="search"
+                v-model="search"
+                hide-details
+                label="Поиск по сайту"
+                class="wiki-search search"
+                type="search"
+                @blur="destroySearch"
+                @input="searchWiki"
+              />
+              <div id="searchresults" class="search-results">
+                <v-card v-if="dataSearch.length">
+                  <div
+                    v-for="wiki in dataSearch"
+                    :key="wiki._id"
+                    class="search-result"
+                  >
+                    <nuxt-link :to="`/blog/${wiki.url}`">
+                      {{ wiki.h1 }}
+                    </nuxt-link>
+                  </div>
+                </v-card>
+                <v-card v-else>
+                  <div
+                    ref="error"
+                    class="search-results search-error"
+                    style="display:none;"
+                  >
+                    <div
+                      :v-model="searchError"
+                      class="search-result"
+                      style="padding: 10px"
+                    >
+                      {{ searchError }}
+                    </div>
+                  </div>
+                </v-card>
+              </div>
+            </div>
+          </v-col>
         </v-row>
 
         <center>
@@ -31,6 +75,7 @@
   </v-app>
 </template>
 <script>
+import axios from 'axios'
 import podval from './podval.vue'
 import toolbar from './toolbar.vue'
 import leftcolumn from './leftcolumn.vue'
@@ -44,6 +89,11 @@ export default {
     rightcolumn,
     podval
   },
+  data: () => ({
+    search: '',
+    dataSearch: '',
+    searchError: ''
+  }),
   head () {
     return {
       htmlAttrs: { lang: 'ru' },
@@ -64,6 +114,39 @@ export default {
         },
         { hid: 'stripe1', src: '/uploads/script.js', defer: true }
       ]
+    }
+  },
+  methods: {
+    async searchWiki () {
+      if (this.search.length > 2) {
+        this.searchError = 'Ничего не найдено'
+        const config = {
+          params: { searchText: this.search }
+        }
+        await axios
+          .get('http://localhost:3000/api/blog/search', config)
+          .then(response => (this.dataSearch = response.data))
+      } else if (this.search.length > 0 && this.search.length < 3) {
+        this.dataSearch = []
+        if (this.$refs.error) {
+          this.$refs.error.style.display = 'block'
+          this.searchError = 'Минимальная длина запроса 3 символа'
+        }
+      } else if (this.search.length < 1) {
+        this.dataSearch = []
+        this.searchError = 'Введите запрос'
+        if (this.$refs.error) {
+          this.$refs.error.style.display = 'none'
+        }
+      }
+    },
+    destroySearch () {
+      const v = this
+      setTimeout(function () {
+        v.dataSearch = ''
+        v.searchError = ''
+        v.search = ''
+      }, 500)
     }
   }
 }

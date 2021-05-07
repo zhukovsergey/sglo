@@ -81,39 +81,6 @@
         <v-divider vertical />
       </v-toolbar-items><br>
       <v-app-bar-nav-icon class="hidden-md-and-up" @click="drawer = true" />
-      <div class="searchblock">
-        <input
-          id="search"
-          v-model="search"
-          class="wiki-search search"
-          type="search"
-          placeholder="Поиск по сайту"
-          @blur="destroySearch"
-          @input="searchWiki"
-        >
-        </input>
-        <v-icon id="mdisearch" large color="blue darken-2">
-          mdi-magnify
-        </v-icon>
-        <div id="searchresults" class="search-results">
-          <v-card v-if="dataSearch">
-            <div v-for="wiki in dataSearch" :key="wiki._id" class="search-result">
-              <nuxt-link
-                :to="`/blog/${wiki.url}`"
-              >
-                {{ wiki.h1 }}
-              </nuxt-link>
-            </div>
-          </v-card>
-          <v-card v-else-if="searchError">
-            <div ref="error" class="search-results search-error">
-              <div :v-model="searchError" class="search-result" style="padding: 10px">
-                {{ searchError }}
-              </div>
-            </div>
-          </v-card>
-        </div>
-      </div>
     </v-toolbar>
     <v-navigation-drawer v-model="drawer" absolute temporary>
       <v-list nav dense>
@@ -125,7 +92,7 @@
             <v-list-item-icon>
               <v-icon>mdi-home</v-icon>
             </v-list-item-icon>
-            <v-list-item-title>
+            <v-list-item-title class="text-button">
               <nuxt-link to="/">
                 Главная
               </nuxt-link>
@@ -135,7 +102,7 @@
             <v-list-item-icon>
               <v-icon>mdi-home</v-icon>
             </v-list-item-icon>
-            <v-list-item-title>
+            <v-list-item-title class="text-button">
               <nuxt-link to="/blog">
                 Новости
               </nuxt-link>
@@ -146,45 +113,51 @@
             <v-list-item-icon>
               <v-icon>mdi-account</v-icon>
             </v-list-item-icon>
-            <v-list-item-title>
+            <v-list-item-title class="text-button">
               <nuxt-link to="/service">
                 Информация
               </nuxt-link>
             </v-list-item-title>
           </v-list-item>
-           <div class="searchblockdrawer">
-        <input
-          id="search"
-          v-model="search"
-          class="wiki-search search"
-          type="search"
-          placeholder="Поиск по сайту"
-          @blur="destroySearch"
-          @input="searchWiki"
-        >
-        </input>
-        <v-icon id="mdisearch" large color="blue darken-2">
-          mdi-magnify
-        </v-icon>
-        <div id="searchresults" class="search-results">
-          <v-card v-if="dataSearch">
-            <div v-for="wiki in dataSearch" :key="wiki._id" class="search-result">
-              <nuxt-link
-                :to="`/blog/${wiki.url}`"
-              >
-                {{ wiki.h1 }}
-              </nuxt-link>
+          <div class="searchblock2">
+            <v-text-field
+              id="search"
+              v-model="search"
+              label="Поиск по сайту"
+              class="wiki-search search"
+              type="search"
+              @blur="destroySearch"
+              @input="searchWiki"
+            />
+            <div id="searchresults" class="search-results">
+              <v-card v-if="dataSearch.length">
+                <div
+                  v-for="wiki in dataSearch"
+                  :key="wiki._id"
+                  class="search-result"
+                >
+                  <nuxt-link :to="`/blog/${wiki.url}`">
+                    {{ wiki.h1 }}
+                  </nuxt-link>
+                </div>
+              </v-card>
+              <v-card v-else>
+                <div
+                  ref="error"
+                  class="search-results search-error"
+                  style="display:none;"
+                >
+                  <div
+                    :v-model="searchError"
+                    class="search-result"
+                    style="padding: 10px"
+                  >
+                    {{ searchError }}
+                  </div>
+                </div>
+              </v-card>
             </div>
-          </v-card>
-          <v-card v-else-if="searchError">
-            <div ref="error" class="search-results search-error">
-              <div :v-model="searchError" class="search-result" style="padding: 10px">
-                {{ searchError }}
-              </div>
-            </div>
-          </v-card>
-        </div>
-      </div>
+          </div>
         </v-list-item-group>
       </v-list>
     </v-navigation-drawer>
@@ -217,14 +190,14 @@ export default {
       } else if (this.search.length > 0 && this.search.length < 3) {
         this.dataSearch = []
         if (this.$refs.error) {
-          this.$refs.error.style.display = 'none'
+          this.$refs.error.style.display = 'block'
           this.searchError = 'Минимальная длина запроса 3 символа'
         }
       } else if (this.search.length < 1) {
         this.dataSearch = []
-        this.searchError = 'Ввудите запрос'
+        this.searchError = 'Введите запрос'
         if (this.$refs.error) {
-          this.$refs.error.style.display = 'none'
+          this.$refs.error.style.display = 'block'
         }
       }
     },

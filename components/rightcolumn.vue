@@ -11,11 +11,11 @@
       min-height="268"
     >
       <center>
-        <span class="text-md-center" style="font-size:18px;">Председатель</span>
+        <span class="text-md-center" style="font-size:23px; font-family: 'Asessorc';">Председатель</span>
         <v-img src="http://localhost:3000/uploads/viprofile.jpg" lazy-src="http://localhost:3000/uploads/viprofile.jpg" width="200" class="mt-4" style="border-radius: 8px;" />
         <span class="text-md-center" style="font-size:18px;">Урываева В.И.</span>
         <v-divider /><br>
-        <span class="text-md-center" style="font-size:18px;">Наши контакты</span>
+        <span class="text-md-center" style="font-size:23px; font-family: 'Asessorc';">Наши контакты</span>
       </center><br>
       <div class="ml-4">
         <v-icon color="red">
@@ -32,7 +32,7 @@
         </v-icon></a>
       </div>
       <v-divider /><br>
-      <center><span class="text-md-center" style="font-size:18px;">Информация</span></center>
+      <center><span class="text-md-center" style="font-size:23px; font-family: 'Asessorc';">Информация</span></center>
       <div>
         <v-icon color="red">
           mdi-file-document

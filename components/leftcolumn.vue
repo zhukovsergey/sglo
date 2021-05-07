@@ -12,7 +12,10 @@
           культурной жизни в Липецкой области.
         </span>
         <v-divider /><br>
-        <span class="text-md-center" style="font-size:18px;">
+        <span
+          class="text-md-center"
+          style="font-size:23px; font-family: 'Asessorc';"
+        >
           <v-icon medium color="light-blue darken-1">
             mdi-camera
           </v-icon>

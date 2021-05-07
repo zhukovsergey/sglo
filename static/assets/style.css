@@ -115,10 +115,11 @@ header.v-sheet.theme--dark.v-toolbar * {
   opacity: 0;
   transform: translate3d(0, 15px, 0);
 }
-.searchblock {
-  position: absolute;
-  margin-top: 125px;
-  margin-left: 80%;
+.search-result {
+  background-color: beige;
+}
+input#search {
+  width: 89%;
 }
 
 .zagolovok {
