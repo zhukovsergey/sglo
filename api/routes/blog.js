@@ -63,13 +63,14 @@ router.get('/', async function (req, res) {
   }
 })
 router.patch('/:url', getBlog, async (req, res) => {
+  console.log(req)
   res.Blog.h1 = req.body.h1,
   res.Blog.title = req.body.title,
   res.Blog.description = req.body.description,
   res.Blog.introtext = req.body.introtext,
-  res.Blog.url = req.body.url,
   res.Blog.tag = req.body.tag,
-  res.Blog.content = req.body.content
+  res.Blog.content = req.body.content,
+  res.Blog.coverImageName = req.body.coverImageName
   try {
     const updatedBlog = res.Blog.save()
     await res.json(updatedBlog)

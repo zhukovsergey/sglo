@@ -12,7 +12,7 @@
     >
       <center>
         <span class="text-md-center" style="font-size:23px; font-family: 'Asessorc';">Председатель</span>
-        <v-img src="http://localhost:3000/uploads/viprofile.jpg" lazy-src="http://localhost:3000/uploads/viprofile.jpg" width="200" class="mt-4" style="border-radius: 8px;" />
+        <img src="http://localhost:3000/uploads/viprofile.jpg" lazy-src="http://localhost:3000/uploads/viprofile.jpg" width="200" class="mt-4" style="border-radius: 8px;">
         <span class="text-md-center" style="font-size:18px;">Урываева В.И.</span>
         <v-divider /><br>
         <span class="text-md-center" style="font-size:23px; font-family: 'Asessorc';">Наши контакты</span>
