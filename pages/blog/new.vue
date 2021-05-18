@@ -1,8 +1,20 @@
 <template>
   <div class="container">
     <v-form ref="service">
-      <v-text-field v-model="h1" label="h1" required name="h1" />
-      <v-text-field v-model="title" label="title" required name="title" />
+      <v-text-field
+        v-model="h1"
+        label="h1"
+        required
+        name="h1"
+        @keyup="translite()"
+      />
+      <v-text-field
+        id="title"
+        v-model="title"
+        label="title"
+        required
+        name="title"
+      />
       <v-text-field
         v-model="introtext"
         label="introtext"
@@ -17,7 +29,7 @@
         name="description"
       />
 
-      <v-text-field v-model="url" label="url" required name="url" />
+      <v-text-field id="url" v-model="url" label="url" required name="url" />
 
       <editor
         v-model="content"
@@ -76,6 +88,7 @@
 <script>
 import axios from 'axios'
 import Editor from '@tinymce/tinymce-vue'
+import scripts from '~/uploads/translit.js'
 export default {
   components: {
     editor: Editor
@@ -85,7 +98,6 @@ export default {
     h1: '',
     title: '',
     description: '',
-    url: '',
     tag: '',
     content: '',
     files: [],
@@ -126,6 +138,9 @@ export default {
       axios.post('http://localhost:3000/api/blog', formData, {
         headers: { 'Content-Type': 'multipart/form-data' }
       })
+    },
+    translite () {
+      this.url = scripts.translite(this.h1)
     },
     handleFileUpload () {
       this.file = this.$refs.file.files[0]

@@ -5,7 +5,7 @@
 
       <v-main>
         <v-row>
-          <v-col cols="12" sm="6" md="3">
+          <v-col cols="10" sm="6" md="3" xs="8">
             <v-switch
               v-model="$vuetify.theme.dark"
               hint="Этот переключатель со светлого оформления на темное"
@@ -14,7 +14,7 @@
               persistent-hint
             />
           </v-col>
-          <v-col cols="12" sm="5" md="6" lg="4" class="mx-2 mt-2">
+          <v-col sm="5" md="6" lg="4" xs="4" class="mx-2 mt-2">
             <div class="searchblock">
               <v-text-field
                 id="search"
@@ -97,14 +97,6 @@ export default {
   head () {
     return {
       htmlAttrs: { lang: 'ru' },
-      meta: [
-        {
-          hid: 'theme-color',
-          property: 'theme-color',
-          name: 'theme-color',
-          content: '#4285f4'
-        }
-      ],
       script: [
         {
           hid: 'stripe',

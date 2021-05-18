@@ -28,12 +28,12 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
-    { src: '~/plugins/tinymce.js' }
+    { src: '~/plugins/tinymce.js' },
+    { src: '~/plugins/photoswipe.js', ssr: false }
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
-
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
     // https://go.nuxtjs.dev/eslint
@@ -63,23 +63,23 @@ export default {
     minimize: !isDev
   },
   ...(!isDev && {
-      html: {
-        minify: {
-          collapseBooleanAttributes: true,
-          decodeEntities: true,
-          minifyCSS: true,
-          minifyJS: true,
-          processConditionalComments: true,
-          removeEmptyAttributes: true,
-          removeRedundantAttributes: true,
-          trimCustomFragments: true,
-          useShortDoctype: true
-        }
+    html: {
+      minify: {
+        collapseBooleanAttributes: true,
+        decodeEntities: true,
+        minifyCSS: true,
+        minifyJS: true,
+        processConditionalComments: true,
+        removeEmptyAttributes: true,
+        removeRedundantAttributes: true,
+        trimCustomFragments: true,
+        useShortDoctype: true
       }
+    }
   }),
- optimization: {
-      minimize: !isDev
-    },
+  optimization: {
+    minimize: !isDev
+  },
   splitChunks: {
     layouts: true,
     pages: true,
@@ -108,7 +108,7 @@ export default {
     }
   },
 
-  // Axios module configuration: https://go.nuxtjs.dev/config-axios  
+  // Axios module configuration: https://go.nuxtjs.dev/config-axios
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {

@@ -122,6 +122,10 @@ input#search {
   width: 89%;
 }
 
+.contentarticle {
+  min-height: 400px;
+}
+
 .zagolovok {
   text-decoration: none;
   color: #d1d667;
