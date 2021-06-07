@@ -56,6 +56,27 @@
               </div>
             </div>
           </v-col>
+          <v-col class="pt-2 mx-2 float: right;" md="3">
+            <div class="weather">
+              <p style="font-family:'font'; font-size: 18px;" solo>
+                Погода в Липецке:
+
+                {{ temperature }}
+              </p>
+              <v-img
+                style="
+                padding-top:
+                -20px;
+                "
+                :src="`http://openweathermap.org/img/wn/${weathericon}@2x.png`"
+                :lazy-src="
+                  `http://openweathermap.org/img/wn/${weathericon}@2x.png`
+                "
+                height="90"
+                contain
+              />
+            </div>
+          </v-col>
         </v-row>
 
         <center>
@@ -89,10 +110,14 @@ export default {
     rightcolumn,
     podval
   },
+
   data: () => ({
     search: '',
     dataSearch: '',
-    searchError: ''
+    searchError: '',
+    temperature: '',
+    mainweather: '',
+    weathericon: ''
   }),
   head () {
     return {
@@ -107,6 +132,10 @@ export default {
         { hid: 'stripe1', src: '/uploads/script.js', defer: true }
       ]
     }
+  },
+  mounted () {
+    this.weather()
+    console.log(this.temperature)
   },
   methods: {
     async searchWiki () {
@@ -132,6 +161,16 @@ export default {
         }
       }
     },
+    async weather () {
+      const res = await axios.get(
+        'https://api.openweathermap.org/data/2.5/weather?q=Lipetsk,ru&appid=375b5b72defecfdfccfa090d50f49db4'
+      )
+      this.temperature = Math.round(res.data.main.temp - 273) + '°C'
+      this.mainweather = res.data.weather[0].description
+      this.weathericon = res.data.weather[0].icon
+      console.log(res)
+    },
+
     destroySearch () {
       const v = this
       setTimeout(function () {

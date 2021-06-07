@@ -1,30 +1,21 @@
 <template>
   <div class="container">
     <v-carousel hide-delimiters>
-      <div v-for="dat2 in data1.slice(0, 2)" :key="dat2._id">
-        <div
-          v-for="(filelink, index) in dat2.coverImageName"
-          :key="filelink.path"
-        >
-          <v-carousel-item
-            v-if="index < 1"
-            :src="`/uploads/blog/${filelink.filename}`"
-            :lazy-src="`/uploads/blog/${filelink.filename}`"
-          >
-            <nuxt-link :to="`blog/${dat2.url}`">
-              <v-row
-                class="fill-height"
-                align-items="end"
-                justify="center"
-                align-content="end"
-              >
-                <div class="display-1 mt-6 mx-3 zagolovok">
-                  {{ dat2.h1 }}
-                </div>
-              </v-row>
-            </nuxt-link>
-          </v-carousel-item>
-        </div>
+      <div v-for="dat2 in sliders.slice(0, 2)" :key="dat2.src">
+        <v-carousel-item :src="dat2.src" :lazy-src="dat2.src">
+          <nuxt-link :to="dat2.kuda">
+            <v-row
+              class="fill-height"
+              align-items="end"
+              justify="center"
+              align-content="end"
+            >
+              <div class="display-1 mt-6 mx-3 zagolovok">
+                {{ dat2.text }}
+              </div>
+            </v-row>
+          </nuxt-link>
+        </v-carousel-item>
       </div>
     </v-carousel>
     <center>
@@ -90,7 +81,20 @@ export default {
   },
   data: () => ({
     model: 0,
-    colors: ['primary', 'secondary', 'yellow darken-2', 'red', 'orange']
+    colors: ['primary', 'secondary', 'yellow darken-2', 'red', 'orange'],
+    sliders: [
+      {
+        src: '/uploads/slider/1.png',
+        text: 'ЖЕНЩИНЫ ПОКОРЯЮТ ПОЭТИЧЕСКИЙ ОЛИМП',
+        kuda: 'ssilka'
+      },
+      {
+        src: '/uploads/slider/2.png',
+        text:
+          'Подведение итогов межрегионального поэтического конкурса имени Майи Румянцевой',
+        kuda: 'ssilka'
+      }
+    ]
   }),
   head () {
     return {

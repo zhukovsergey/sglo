@@ -5,6 +5,7 @@ const app = express()
 const multer = require('multer')
 const path = require('path')
 const fs = require('fs')
+const { updateOne } = require('../model/blog')
 
 app.use(express.json())
 
@@ -30,7 +31,6 @@ router.get('/:url', getBlog, async (req, res) => {
   try {
     const Bloger = await blog.updateOne({ url: req.params.url }, { $set: { views: res.Blog.views + 1 } })
     // blog.findOneAndUpdate({ url: req.params.url }, { $set: { blog.views: blog.vews + 1 } })
-    console.log(Bloger)
     res.Blog.save()
     res.json(res.Blog)
   } catch (err) {
@@ -63,7 +63,6 @@ router.get('/', async function (req, res) {
   }
 })
 router.patch('/:url', getBlog, async (req, res) => {
-  console.log(req)
   res.Blog.h1 = req.body.h1,
   res.Blog.title = req.body.title,
   res.Blog.description = req.body.description,
@@ -81,6 +80,59 @@ router.patch('/:url', getBlog, async (req, res) => {
   }
 })
 
+router.post('/:url/comment', getBlog, async (req, res, next) => {
+  res.Blog.comments.push(req.body)
+  try {
+    
+    const updatedBlog = res.Blog.save()
+    await res.json(updatedBlog)
+    // res.status(200).json({ message: "Страница обновлена" });
+  } catch (err) {
+    // res.status(400).json({ message: err.message });
+    console.log(err.message)
+  }
+})
+
+router.patch('/:url/comment', getBlog, async (req, res) => {
+  for (const i in res.Blog.comments) {
+    // console.log(res.Blog.comments[i]._id)
+    // console.log(req.body.active + 'боди')
+    if (res.Blog.comments[i]._id == req.body.active) {
+      console.log('Совпадение')
+      res.Blog.comments[i].active = true
+    }
+  }
+
+  // console.log(req)
+  // console.log(res.Blog.comments)
+  try {
+    const updatedBlog = res.Blog.save()
+    await res.json(updatedBlog)
+    // res.status(200).json({ message: "Страница обновлена" });
+  } catch (err) {
+    // res.status(400).json({ message: err.message });
+    console.log(err.message)
+  }
+})
+
+router.patch('/:url/comment/del', getBlog, async (req, res, next) => {
+   for (const i in res.Blog.comments) {
+    // console.log(res.Blog.comments[i]._id)
+    // console.log(req.body.active + 'боди')
+    if (res.Blog.comments[i]._id == req.body.active) {
+      console.log(res.Blog.comments)
+      res.Blog.comments.splice(i, 1)
+    }
+  }
+  try {
+    const updatedBlog = res.Blog.save()
+    await res.json(updatedBlog)
+    // res.status(200).json({ message: "Страница обновлена" });
+  } catch (err) {
+    // res.status(400).json({ message: err.message });
+    console.log(err.message)
+  }
+})
 /* router.post("/", upload.single('file'), async (req, res, next) => {
   const fileName = req.file != null ? req.file.filename : null;
    let Blog = new blog({

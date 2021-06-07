@@ -3,7 +3,7 @@
     <v-form ref="service">
       <v-text-field
         v-model="h1"
-        label="h1"
+        label="Заголовок статьи"
         required
         name="h1"
         @keyup="translite()"
@@ -11,25 +11,34 @@
       <v-text-field
         id="title"
         v-model="title"
-        label="title"
-        required
+        label=""
         name="title"
+        hidden
+        disabled
       />
       <v-text-field
         v-model="introtext"
-        label="introtext"
-        required
+        label="Короткое описание"
         name="introtext"
+        required
       />
 
       <v-text-field
         v-model="description"
-        label="description"
-        required
+        label="Описание"
         name="description"
+        hidden
+        disabled
       />
 
-      <v-text-field id="url" v-model="url" label="url" required name="url" />
+      <v-text-field
+        id="url"
+        v-model="url"
+        label="Ссылка (Это поле формируется афтоматически)"
+        required
+        name="url"
+        disabled
+      />
 
       <editor
         v-model="content"
@@ -75,9 +84,7 @@
         multiple
         @change="handleFileUploads"
       >
-      <v-btn color="warning" @click="addFiles">
-        Загрузить файлы для галереи
-      </v-btn>
+
       <v-btn color="warning" @click="newBlog">
         Опубликовать
       </v-btn>
@@ -142,6 +149,7 @@ export default {
     translite () {
       this.url = scripts.translite(this.h1)
     },
+
     handleFileUpload () {
       this.file = this.$refs.file.files[0]
     },

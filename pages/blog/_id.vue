@@ -12,8 +12,17 @@
       class="px-4 py-2"
       style="float: left; width: 300px;"
       :src="`/uploads/blog/${data1.coverImageName[0].filename}`"
+      :lazy-src="`/uploads/blog/${data1.coverImageName[0].filename}`"
+      :alt="data1.h1"
     >
     <div class="contentarticle px-4" v-html="data1.content" />
+    <span
+      class="px-2"
+      style="font-size: 12px;"
+    >Опубликовано:
+      {{ $dateFns.format(data1.createdDate, 'dd-MMMM-yyyy', { locale: 'ru' }) }}
+    </span>
+
     <div class="galleriglobal">
       <h2 class="text-center py-2">
         Фотогалерея
@@ -41,11 +50,16 @@
             :key="index"
             v-pswp="`/uploads/blog/${src.filename}`"
             :src="`/uploads/blog/${src.filename}`"
+            :lazy-src="`/uploads/blog/${src.filename}`"
             style="width: 200px"
             class="px-8 py-8 photogallery"
           >
         </Photoswipe>
       </div>
+
+      <br><br>
+      <v-divider />
+
       <div v-if="this.$auth.user == 'zhukov'" class="admin-form mx-4 mb-4">
         <v-text-field v-model="h1" label="h1" required name="h1" />
         <v-text-field v-model="title" label="title" required name="title" />
@@ -126,6 +140,88 @@
         </v-btn>
       </div>
     </div>
+    <div class="comments">
+      <h3>Комментарии</h3>
+      <form>
+        <v-text-field v-model="fio" name="fio" label="Ваше имя" required />
+
+        <v-textarea
+          v-model="comment"
+          name="comment"
+          label="Ваш комментарий"
+          required
+        />
+
+        <v-btn color="warning" @click="newComment">
+          Опубликовать
+        </v-btn>
+      </form>
+      <div
+        v-for="(comm, index) in data1.comments"
+        :key="comm._id"
+        class="comment-list"
+      >
+        <v-card
+          v-if="$store.state.auth.user == 'zhukov' || comm.active"
+          class="mx-auto mt-4"
+          max-width="90%"
+        >
+          <div v-if="index < pageSize">
+            <v-card-text>
+              <div>
+                <span
+                  class="px-2"
+                  style="font-size: 12px;"
+                >Опубликовано:
+
+                  {{
+                    $dateFns.format(comm.createdDatecom, 'dd-MMMM-yyyy', {
+                      locale: 'ru'
+                    })
+                  }}
+                </span>
+              </div>
+              <p class="title text--primary">
+                Имя: {{ comm.fio }}
+              </p>
+              <v-divider inset />
+
+              <div class="text--primary">
+                {{ comm.comment }}
+              </div>
+              <span
+                v-if="$store.state.auth.user == 'zhukov'"
+              >Активен :{{ comm.active }}</span>
+              <v-checkbox
+                v-if="$store.state.auth.user == 'zhukov'"
+                v-model="modcomment"
+                label="опубликовать"
+                name="modcomment"
+                :value="comm._id"
+                @change="moderatecom"
+              />
+              <v-checkbox
+                v-if="$store.state.auth.user == 'zhukov'"
+                v-model="commid"
+                label="Удалить"
+                name="commentDel"
+                :value="comm._id"
+                @change="commentDelete"
+              />
+            </v-card-text>
+          </div>
+        </v-card>
+      </div>
+    </div>
+    <br>
+    <v-btn
+      v-if="data1.comments.length > 4"
+      depressed
+      color="primary"
+      @click="pageSize += pageSize"
+    >
+      Показать еще...
+    </v-btn>
   </div>
 </template>
 
@@ -168,7 +264,17 @@ export default {
     content: '',
     coverImageName: '',
     tag: '',
+    loadMore: true, // прокрутка комментов
+    page: 1, // прокрутка комментов
+    pageSize: 4, // прокрутка комментов
+    images: [], // прокрутка комментов
+    commentsToShow: 3,
     showLightBox: 'false',
+    fio: '',
+    comment: '',
+    commentid: '',
+    modcomment: false,
+    commid: '',
     items: [
       'Национальные проекты',
       'Здравоохранение',
@@ -207,6 +313,7 @@ export default {
       ]
     }
   },
+
   beforeMount () {
     this.h1 = this.data1.h1
     this.title = this.data1.title
@@ -217,6 +324,7 @@ export default {
     this.tag = this.data1.tag
     this.coverImageName = this.data1.coverImageName
     this.createdDate = this.data1.createdDate
+    this.data1.comments = this.data1.comments.reverse()
   },
   methods: {
     blogUpdate (newAddedFiless) {
@@ -234,12 +342,29 @@ export default {
         description: this.description
       }
       axios
-        .patch(`http://localhost:3000/api/blog/${this.data1.url}`, formData)
+        .patch(`http://localhost:3000/api/blog/${this.data1.url}`, formData, {
+          headers: {
+            Authorization: this.$auth.$storage._state['_token.local']
+          }
+        })
         .then(alert('Статья обновлена'), this.$router.push('/blog'))
     },
     handleFileUploads () {
       this.files = this.$refs.files.files
     },
+    moderatecom () {
+      const formData = {
+        active: this.modcomment,
+        id: this.commentid
+      }
+      axios
+        .patch(
+          `http://localhost:3000/api/blog/${this.data1.url}/comment`,
+          formData
+        )
+        .then(alert('Статья обновлена'))
+    },
+
     blogDelete () {
       axios
         .delete(`http://localhost:3000/api/blog/${this.data1.url}`)
@@ -247,6 +372,30 @@ export default {
           alert(`Статья ${this.data1.h1} удалена`),
           this.$router.push('/blog')
         )
+    },
+    commentDelete () {
+      const formData = { active: this.commid, id: this.commentid }
+
+      axios
+        .patch(
+          `http://localhost:3000/api/blog/${this.data1.url}/comment/del`,
+          formData
+        )
+        .then(alert('Комментарий удален'))
+      location.reload()
+    },
+    newComment () {
+      const formData = {
+        comment: this.comment,
+        fio: this.fio
+      }
+
+      axios.post(
+        `http://localhost:3000/api/blog/${this.data1.url}/comment`,
+        formData
+      )
+
+      location.reload()
     },
     addFiles () {
       const formData = new FormData()

@@ -31,7 +31,14 @@ export default {
     { src: '~/plugins/tinymce.js' },
     { src: '~/plugins/photoswipe.js', ssr: false }
   ],
-
+  pwa: {
+    manifest: {
+      name: 'Союз женщин Липецкой области',
+      short_name: 'SGLO',
+      lang: 'ru',
+      display: 'standalone'
+    }
+  },
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
@@ -41,11 +48,15 @@ export default {
     '@nuxtjs/vuetify',
     '@nuxtjs/svg',
     '@nuxtjs/pwa',
-    '@nuxtjs/date-fns'
+    '@nuxtjs/date-fns',
+    '@aceforth/nuxt-optimized-images'
   ],
   serverMiddleware: [
     '~/api/index.js'
   ],
+  optimizedImages: {
+    optimizeImages: true
+  },
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [

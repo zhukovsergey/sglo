@@ -12,10 +12,11 @@
     >
       <center>
         <span class="text-md-center" style="font-size:23px; font-family: 'Asessorc';">Председатель</span>
-        <img src="http://localhost:3000/uploads/viprofile.jpg" lazy-src="http://localhost:3000/uploads/viprofile.jpg" width="200" class="mt-4" style="border-radius: 8px;">
+        <v-img src="http://localhost:3000/uploads/viprofile.jpg" lazy-src="http://localhost:3000/uploads/viprofile.jpg" class="mt-4" style="border-radius: 8px; width: 100%;" />
         <span class="text-md-center" style="font-size:18px;">Урываева В.И.</span>
         <v-divider /><br>
         <span class="text-md-center" style="font-size:23px; font-family: 'Asessorc';">Наши контакты</span>
+        </v-img>
       </center><br>
       <div class="ml-4">
         <v-icon color="red">

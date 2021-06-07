@@ -39,7 +39,7 @@ const scripts = {
     const str = h1
       .replace(/[ъь]+/g, '')
       .replace(/й/g, 'i')
-      .replace(/[ _.,!?№&;:#%()*"']/g, '-')
+      .replace(/[ _.,!?№&;:#%()*"'«»]/g, '-')
     for (let i = 0; i < str.length; i++) {
       nStr.push(
         ru[str[i]] ||
