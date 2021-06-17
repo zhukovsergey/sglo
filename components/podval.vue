@@ -75,7 +75,7 @@ export default {
 
   methods: {
     async randCitate () {
-      const res = await axios.get('http://localhost:3000/uploads/citates.json')
+      const res = await axios.get('https://zabbix.etalon48.com/uploads/citates.json')
 
       const nOfFollowers = res.data
       this.citates = nOfFollowers

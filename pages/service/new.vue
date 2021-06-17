@@ -53,7 +53,7 @@ export default {
       formData.append('url', this.url)
       formData.append('content', this.content)
       formData.append('file', file)
-      axios.post('http://localhost:3000/api/service', formData)
+      axios.post('https://zabbix.etalon48.com/api/service', formData)
     },
     handleFileUpload () {
       this.file = this.$refs.file.files[0]
@@ -63,7 +63,7 @@ export default {
       const file = this.file
       formData.append('file', file)
       axios
-        .post('http://localhost:3000/api/upload', formData, {
+        .post('https://zabbix.etalon48.com/api/upload', formData, {
           headers: {
             'Content-Type': 'multipart/form-data'
           }

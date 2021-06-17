@@ -67,7 +67,7 @@ const vueImgConfig = {
 Vue.use(VueImg, vueImgConfig)
 export default {
   async asyncData () {
-    const { data } = await axios.get('http://localhost:3000/api/blog/photos')
+    const { data } = await axios.get('https://zabbix.etalon48.com/api/blog/photos')
     return { data1: data }
   },
   head () {

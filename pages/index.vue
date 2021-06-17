@@ -76,7 +76,7 @@ export default {
     }
   },
   async asyncData () {
-    const { data } = await axios.get('http://localhost:3000/api/blog/last10')
+    const { data } = await axios.get('https://zabbix.etalon48.com/api/blog/last10')
     return { data1: data }
   },
   data: () => ({
@@ -85,14 +85,14 @@ export default {
     sliders: [
       {
         src: '/uploads/slider/1.png',
-        text: 'ЖЕНЩИНЫ ПОКОРЯЮТ ПОЭТИЧЕСКИЙ ОЛИМП',
-        kuda: 'ssilka'
+        text: 'Информирование жителей Воловского района о вакцинации',
+        kuda: 'blog/informirovanie-zhitelei-volovskogo-raiona-o-vakcinacii'
       },
       {
         src: '/uploads/slider/2.png',
         text:
-          'Подведение итогов межрегионального поэтического конкурса имени Майи Румянцевой',
-        kuda: 'ssilka'
+          'Вокруг света без билета',
+        kuda: 'blog/vokrug-sveta-bez-bileta'
       }
     ]
   }),

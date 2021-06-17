@@ -103,7 +103,7 @@ export default {
     }
   },
   async asyncData () {
-    const { data } = await axios.get('http://localhost:3000/api/blog/health')
+    const { data } = await axios.get('https://zabbix.etalon48.com/api/blog/health')
     return { data1: data }
   },
   data: () => ({
@@ -139,7 +139,7 @@ export default {
         headers: { page: pagination }
       }
       await axios
-        .get('http://localhost:3000/api/blog', config)
+        .get('https://zabbix.etalon48.com/api/blog', config)
         .then(response => (this.data1 = response.data))
       this.$router.push('/blog?page=' + nextPage)
     },
@@ -150,7 +150,7 @@ export default {
         headers: { page: pagination }
       }
       await axios
-        .get('http://localhost:3000/api/blog', config)
+        .get('https://zabbix.etalon48.com/api/blog', config)
         .then(response => (this.data1 = response.data))
       this.$router.push('/blog?page=' + nextPage)
       console.log(this.data2)

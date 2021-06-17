@@ -68,6 +68,7 @@ router.patch('/:url', getBlog, async (req, res) => {
   res.Blog.description = req.body.description,
   res.Blog.introtext = req.body.introtext,
   res.Blog.tag = req.body.tag,
+  res.Blog.url = req.body.url,
   res.Blog.content = req.body.content,
   res.Blog.coverImageName = req.body.coverImageName
   try {

@@ -17,7 +17,7 @@
     <v-btn class="primary my-md-6" small to="/blog/health" nuxt>
       Здравоохранение
     </v-btn>
-    <v-row>
+    <v-row no-gutters>
       <v-col v-for="dat in data1" :key="dat._id">
         <v-card class="mx-auto" max-width="300">
           <span
@@ -25,8 +25,8 @@
             class="px-2"
           ><v-icon small>mdi-eye</v-icon>{{ dat.views }}</span>
 
-          <nuxt-link :to="`/blog/${dat.url}`">
-            <v-card-title>
+          <nuxt-link :to="`/blog/${dat.url}`" style="text-decoration:none;">
+            <v-card-title class="text-center" style="display:block; font-size: 21px; min-height: 128px;">
               {{ dat.h1 }}
             </v-card-title>
             <div
@@ -46,9 +46,10 @@
 
             <v-card-subtitle>
               {{ dat.introtext | truncate(60, '...') }}
-            </v-card-subtitle>
+            </v-card-subtitle><center>
+            <hr size="1" calss="text-center" style="width: 75%; color: #d5e6f7;"></hr></center>
             <v-card-subtitle>
-              {{ dat.tag }}
+              Тема: {{ dat.tag }}
             </v-card-subtitle>
           </nuxt-link><span
             class="px-2"
@@ -103,7 +104,7 @@ export default {
     }
   },
   async asyncData () {
-    const { data } = await axios.get('http://localhost:3000/api/blog')
+    const { data } = await axios.get('https://zabbix.etalon48.com/api/blog')
     return { data1: data }
   },
   data: () => ({
@@ -139,7 +140,7 @@ export default {
         headers: { page: pagination }
       }
       await axios
-        .get('http://localhost:3000/api/blog', config)
+        .get('https://zabbix.etalon48.com/api/blog', config)
         .then(response => (this.data1 = response.data))
       this.$router.push('/blog?page=' + nextPage)
     },
@@ -150,7 +151,7 @@ export default {
         headers: { page: pagination }
       }
       await axios
-        .get('http://localhost:3000/api/blog', config)
+        .get('https://zabbix.etalon48.com/api/blog', config)
         .then(response => (this.data1 = response.data))
       this.$router.push('/blog?page=' + nextPage)
       console.log(this.data2)
@@ -159,4 +160,8 @@ export default {
 }
 </script>
 
-<style></style>
+<style scoped>
+.v-card__title {
+    padding: 18px;
+}
+</style>

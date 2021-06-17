@@ -1,9 +1,11 @@
 <template>
   <div class="container">
-    <v-form ref="service">
+    <v-form ref="service" v-model="valid">
       <v-text-field
         v-model="h1"
+        :rules="nameRules"
         label="Заголовок статьи"
+        counter=""
         required
         name="h1"
         @keyup="translite()"
@@ -11,13 +13,13 @@
       <v-text-field
         id="title"
         v-model="title"
-        label=""
+        :rules="nameRules"
+        label="Заголовк для поисковика"
         name="title"
-        hidden
-        disabled
-      />
+        />
       <v-text-field
         v-model="introtext"
+        :rules="nameRules"
         label="Короткое описание"
         name="introtext"
         required
@@ -25,16 +27,14 @@
 
       <v-text-field
         v-model="description"
-        label="Описание"
+        :rules="nameRules"
+        label="Описание для поисковика"
         name="description"
-        hidden
-        disabled
-      />
-
+        />
       <v-text-field
         id="url"
         v-model="url"
-        label="Ссылка (Это поле формируется афтоматически)"
+        label="Ссылка (Это поле формируется автоматически)"
         required
         name="url"
         disabled
@@ -45,12 +45,14 @@
         api-key="octb58ja97o9rwhmbve45apizjpm26aljf3b44lcwxdevaht"
         :init="{
           height: 500,
-          menubar: false,
+          menubar: 'file edit view insert format tools table tc help',
+          language: 'ru',
           plugins: [
             'advlist autolink lists link image charmap',
             'searchreplace visualblocks code fullscreen',
             'print preview anchor insertdatetime media',
-            'paste code help wordcount table'
+            'paste code help wordcount table textcolor colorpicker hr',
+            'insertdatetime media nonbreaking save table contextmenu directionality'
           ],
           toolbar:
             'undo redo | formatselect | bold italic | \
@@ -61,54 +63,69 @@
 
       <v-select
         v-model="tag"
+        :rules="[v => !!v || 'Тэг не выбран']"
         :items="items"
         required
         label="Выберите тэг"
         outlined
         name="tag"
-      />
+        />
 
       <v-textarea
+      :rules="[value => value.length >= 15 || 'Длина текста меньше 15 символов']"
         v-model="content"
         name="content"
-        label="content"
+        label="Текст статьи"
         hint="Hint text"
       />
-      <span>Файл для статьи</span>
       <br><br>
       <span>Файлы для фотогалереи</span>
-      <input
-        id="files"
-        ref="files"
-        type="file"
-        multiple
-        @change="handleFileUploads"
-      >
 
-      <v-btn color="warning" @click="newBlog">
+      <v-file-input
+      v-model="files"
+      :rules="[value => value.length >= 1 || 'Файлы не выбраны']"
+      show-size
+      accept="image/png, image/jpeg, image/bmp"
+      id="files"
+      placeholder="Загрузите файлы"
+    label="Загрузите файлы"
+    multiple
+    prepend-icon="mdi-paperclip"
+  >
+  </v-file-input>
+  <v-btn color="warning" @click="newBlog" :disabled="!valid">
         Опубликовать
       </v-btn>
     </v-form>
-  </div>
-</template>
+    </div>
+    </template>
 
 <script>
 import axios from 'axios'
 import Editor from '@tinymce/tinymce-vue'
 import scripts from '~/uploads/translit.js'
+
 export default {
   components: {
     editor: Editor
   },
   middleware: 'auth',
   data: () => ({
+    valid: true,
     h1: '',
     title: '',
     description: '',
+    url: '',
     tag: '',
     content: '',
     files: [],
     introtext: '',
+    rules: [
+      value => !!value || 'Вставьте фото для статьи'],
+    nameRules: [
+      v => !!v || 'Заголовок обязателен',
+      v => v.length >= 10 || 'Слишком короткий заголовок'
+    ],
     items: [
       'Национальные проекты',
       'Здравоохранение',
@@ -142,27 +159,30 @@ export default {
       formData.append('content', this.content)
       formData.append('introtext', this.introtext)
       formData.append('file', file)
-      axios.post('http://localhost:3000/api/blog', formData, {
+      axios.post('https://zabbix.etalon48.com/api/blog', formData, {
         headers: { 'Content-Type': 'multipart/form-data' }
       })
+        .then(this.$toast.success('Статья добавлена', { duration: 3000 }), this.$router.push('/blog'))
     },
     translite () {
       this.url = scripts.translite(this.h1)
     },
-
     handleFileUpload () {
       this.file = this.$refs.file.files[0]
     },
-    handleFileUploads () {
-      this.files = this.$refs.files.files
-      console.log(this.files[0])
-    },
+    // handleFileUploads () {
+    //   this.files = this.$refs.files.files
+    // },
+    // handleFileUploads1 () {
+    //   console.log(this)
+    //   console.log(this.files)
+    // },
     addFile (newAddedFiles) {
       const formData = new FormData()
       const file = this.file
       formData.append('file', file)
       axios
-        .post('http://localhost:3000/api/upload', formData, {
+        .post('https://zabbix.etalon48.com/api/upload', formData, {
           headers: {
             'Content-Type': 'multipart/form-data'
           }
@@ -176,7 +196,7 @@ export default {
         formData.append('files', file)
       }
       axios
-        .post('http://localhost:3000/api/uploadmulti', formData, {
+        .post('https://zabbix.etalon48.com/api/uploadmulti', formData, {
           headers: {
             'Content-Type': 'multipart/form-data'
           }

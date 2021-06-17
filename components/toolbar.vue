@@ -12,7 +12,7 @@
           </v-toolbar-title>
         </v-theme-provider>
       </nuxt-link>
-      <span class="subheading"><nuxt-link to="/"><img id="my-svg" width="150" src="http://localhost:3000/uploads/blog/SGLOnew_animated.svg?data"></img></nuxt-link></span>
+      <span class="subheading"><nuxt-link to="/"><img id="my-svg" width="150" src="https://zabbix.etalon48.com/uploads/blog/SGLOnew_animated.svg?data"></img></nuxt-link></span>
       <v-divider
         class="mx-4"
         vertical
@@ -23,7 +23,7 @@
         </v-toolbar-title>
       </nuxt-link>
       <nuxt-link to="/">
-        <span class="subheading"> <img id="my-svg1" width="135" src="http://localhost:3000/uploads/blog/wuor_animated.svg?data"></span>
+        <span class="subheading"> <img id="my-svg1" width="135" src="https://zabbix.etalon48.com/uploads/blog/wuor_animated.svg?data"></span>
       </nuxt-link>
       <v-spacer />
       <v-toolbar-items color="#ad6262">
@@ -185,7 +185,7 @@ export default {
           params: { searchText: this.search }
         }
         await axios
-          .get('http://localhost:3000/api/blog/search', config)
+          .get('https://zabbix.etalon48.com/api/blog/search', config)
           .then(response => (this.dataSearch = response.data))
       } else if (this.search.length > 0 && this.search.length < 3) {
         this.dataSearch = []

@@ -8,14 +8,18 @@
         style="float:right; font-size: 13px;"
       ><v-icon>mdi-eye</v-icon>{{ data1.views }}</span>
     </div>
+    <picture>
+    <source type="image/webp" :srcset="`/uploads/blog/${data1.coverImageName[0].filename.slice(0,-4) }.webp`">
+     <source type="image/jpeg" :srcset="`/uploads/blog/${data1.coverImageName[0].filename}`">
     <img
-      class="px-4 py-2"
-      style="float: left; width: 300px;"
-      :src="`/uploads/blog/${data1.coverImageName[0].filename}`"
-      :lazy-src="`/uploads/blog/${data1.coverImageName[0].filename}`"
-      :alt="data1.h1"
+    class="px-4 py-2"
+    style="float: left; width: 300px;"
+    :src="`/uploads/blog/${data1.coverImageName[0].filename}`"
+    v-lazy="`/uploads/blog/${data1.coverImageName[0].filename}`"
+    :alt="data1.h1"
     >
-    <div class="contentarticle px-4" v-html="data1.content" />
+</picture>
+<div class="contentarticle px-4" v-html="data1.content" />
     <span
       class="px-2"
       style="font-size: 12px;"
@@ -29,6 +33,7 @@
       </h2>
 
       <div
+        v-lazy-container="{ selector: 'img' }"
         class="photogallery"
         style="display: flex; flex-wrap: wrap; justify-content: center"
       >
@@ -45,21 +50,23 @@
           ></img>
         </div>-->
         <Photoswipe rotate bubble lazy>
-          <img
-            v-for="(src, index) in data1.coverImageName"
-            :key="index"
-            v-pswp="`/uploads/blog/${src.filename}`"
-            :src="`/uploads/blog/${src.filename}`"
-            :lazy-src="`/uploads/blog/${src.filename}`"
-            style="width: 200px"
-            class="px-8 py-8 photogallery"
-          >
+        <picture
+          v-for="(src, index) in data1.coverImageName"
+         :key="index">
+    <source type="image/webp" :srcset="`/uploads/blog/${src.filename.slice(0,-4) }.webp`">
+     <source type="image/jpeg" :srcset="`/uploads/blog/${src.filename}`">
+    <img
+    v-pswp="`/uploads/blog/${src.filename}`"
+    :data-src="`/uploads/blog/${src.filename}`"
+    style="width: 200px"
+    v-lazy="`/uploads/blog/${src.filename}`"
+    class="px-8 py-8 photogallery">
+</picture>
         </Photoswipe>
-      </div>
-
+        </div>
       <br><br>
       <v-divider />
-
+       <yandex-share :services="['vkontakte', 'facebook', 'twitter,odnoklassniki,telegram,whatsapp']" counter />
       <div v-if="this.$auth.user == 'zhukov'" class="admin-form mx-4 mb-4">
         <v-text-field v-model="h1" label="h1" required name="h1" />
         <v-text-field v-model="title" label="title" required name="title" />
@@ -226,11 +233,11 @@
 </template>
 
 <script>
+import YandexShare from '@cookieseater/vue-yandex-share'
 import Editor from '@tinymce/tinymce-vue'
 import Vue from 'vue'
 import axios from 'axios'
 import VueImg from 'v-img'
-
 const vueImgConfig = {
   // Use `alt` attribute as gallery slide title
   altAsTitle: true,
@@ -244,11 +251,12 @@ const vueImgConfig = {
 Vue.use(VueImg, vueImgConfig)
 export default {
   components: {
-    editor: Editor
+    editor: Editor,
+    YandexShare
   },
   async asyncData ({ params }) {
     const { data } = await axios.get(
-      `http://localhost:3000/api/blog/${params.id}`
+      `https://zabbix.etalon48.com/api/blog/${params.id}`
     )
     return { data1: data }
   },
@@ -298,7 +306,7 @@ export default {
         {
           hid: 'og:url',
           property: 'og:url',
-          content: `http://localhost:3000/blog/${this.data1.url}`
+          content: `https://zabbix.etalon48.com/blog/${this.data1.url}`
         },
         {
           hid: 'og:description',
@@ -308,12 +316,16 @@ export default {
         {
           hid: 'og:image',
           property: 'og:image',
-          content: `http://localhost:3000/uploads/blog/${this.data1.coverImageName[0].filename}`
+          content: `https://zabbix.etalon48.com/uploads/blog/${this.data1.coverImageName[0].filename}`
         }
       ]
     }
   },
-
+  filters: {
+    truncate (text, length) {
+      return text.substring(0, text.length - 4)
+    }
+  },
   beforeMount () {
     this.h1 = this.data1.h1
     this.title = this.data1.title
@@ -342,7 +354,7 @@ export default {
         description: this.description
       }
       axios
-        .patch(`http://localhost:3000/api/blog/${this.data1.url}`, formData, {
+        .patch(`https://zabbix.etalon48.com/api/blog/${this.data1.url}`, formData, {
           headers: {
             Authorization: this.$auth.$storage._state['_token.local']
           }
@@ -359,7 +371,7 @@ export default {
       }
       axios
         .patch(
-          `http://localhost:3000/api/blog/${this.data1.url}/comment`,
+          `https://zabbix.etalon48.com/api/blog/${this.data1.url}/comment`,
           formData
         )
         .then(alert('Статья обновлена'))
@@ -367,7 +379,7 @@ export default {
 
     blogDelete () {
       axios
-        .delete(`http://localhost:3000/api/blog/${this.data1.url}`)
+        .delete(`https://zabbix.etalon48.com/api/blog/${this.data1.url}`)
         .then(
           alert(`Статья ${this.data1.h1} удалена`),
           this.$router.push('/blog')
@@ -378,7 +390,7 @@ export default {
 
       axios
         .patch(
-          `http://localhost:3000/api/blog/${this.data1.url}/comment/del`,
+          `https://zabbix.etalon48.com/api/blog/${this.data1.url}/comment/del`,
           formData
         )
         .then(alert('Комментарий удален'))
@@ -391,7 +403,7 @@ export default {
       }
 
       axios.post(
-        `http://localhost:3000/api/blog/${this.data1.url}/comment`,
+        `https://zabbix.etalon48.com/api/blog/${this.data1.url}/comment`,
         formData
       )
 
@@ -404,7 +416,7 @@ export default {
         formData.append('files', file)
       }
       axios
-        .post('http://localhost:3000/api/uploadmulti', formData, {
+        .post('https://zabbix.etalon48.com/api/uploadmulti', formData, {
           headers: {
             'Content-Type': 'multipart/form-data'
           }

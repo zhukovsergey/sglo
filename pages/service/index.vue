@@ -49,7 +49,7 @@ export default {
     }
   },
   async asyncData () {
-    const { data } = await axios.get('http://localhost:3000/api/service')
+    const { data } = await axios.get('https://zabbix.etalon48.com/api/service')
     return { data1: data }
   }
 }

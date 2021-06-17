@@ -12,11 +12,9 @@
     >
       <center>
         <span class="text-md-center" style="font-size:23px; font-family: 'Asessorc';">Председатель</span>
-        <v-img src="http://localhost:3000/uploads/viprofile.jpg" lazy-src="http://localhost:3000/uploads/viprofile.jpg" class="mt-4" style="border-radius: 8px; width: 100%;" />
-        <span class="text-md-center" style="font-size:18px;">Урываева В.И.</span>
+        <v-img src="https://zabbix.etalon48.com/uploads/viprofile.jpg" lazy-src="https://zabbix.etalon48.com/uploads/viprofile.jpg" class="mt-4" style="border-radius: 8px; width: 100%;" />     <span class="text-md-center" style="font-size:18px;">Урываева В.И.</span>
         <v-divider /><br>
         <span class="text-md-center" style="font-size:23px; font-family: 'Asessorc';">Наши контакты</span>
-        </v-img>
       </center><br>
       <div class="ml-4">
         <v-icon color="red">
@@ -45,6 +43,100 @@
           mdi-file-document
         </v-icon><span class="pl-4"><a href="/uploads/ukaz.pdf">Указ президента</a></span><br>
       </div>
+       <v-dialog
+      v-model="dialog"
+      max-width="500px"
+      style="background:white;"
+    >
+      <template v-slot:activator="{ on, attrs }">
+        <v-btn
+          color="primary"
+          dark
+          v-bind="attrs"
+          v-on="on"
+        >
+          Отправить сообщение
+        </v-btn><br><v-divider></v-divider>
+      </template>
+      <v-card>
+        <v-card-title>Отправка сообщения</v-card-title>
+        <v-divider></v-divider>
+        <v-card-text>
+          <v-form
+    ref="form"
+    v-model="valid"
+    lazy-validation
+  >
+    <v-text-field
+      v-model="namefio"
+      name="namefio"
+      :counter="10"
+      :rules="nameRules"
+      label="Имя"
+      required
+    ></v-text-field>
+
+    <v-text-field
+      v-model="email"
+      :rules="emailRules"
+      name="email"
+      label="E-mail"
+      required
+    ></v-text-field>
+
+     <v-textarea
+         v-model="mailtext"
+         :rules="[v => !!v || 'Текст не введен']"
+          name="mailtext"
+          label="Текст сообщения"
+          value="Текст сообщения."
+        ></v-textarea>
+          <v-btn
+      color="warning"
+      @click="sendForm()"
+    >
+      Отправить
+    </v-btn><br><br>
+        </v-form>
+        </v-card-text>
+        <v-divider></v-divider>
+      </v-card>
+    </v-dialog>
+    <br><br>
     </v-sheet>
   </v-col>
 </template>
+
+<script>
+import axios from 'axios'
+export default {
+  data: () => ({
+    mailtext: '',
+    namefio: '',
+    email: '',
+    dialogm1: '',
+    dialog: false,
+    valid: true,
+    nameRules: [
+      v => !!v || 'Имя обязательно',
+      v => (v && v.length <= 10) || 'Имя должно быть меньше 10 символов'
+    ],
+    emailRules: [
+      v => !!v || 'E-mail обязателен',
+      v => /.+@.+\..+/.test(v) || 'E-mail неправильный'
+    ],
+    select: null
+  }),
+  methods: {
+    sendForm () {
+      const formData = {
+        email: this.email,
+        namefio: this.namefio,
+        mailtext: this.mailtext
+      }
+      axios.post('https://zabbix.etalon48.com/api/contact', formData)
+        .then(alert('Успешно отправлено'))
+    }
+  }
+}
+</script>

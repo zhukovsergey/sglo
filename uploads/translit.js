@@ -1,6 +1,8 @@
 const scripts = {
   translite (h1) {
     const ru = {
+      1: '1',
+      2: '2',
       а: 'a',
       б: 'b',
       в: 'v',

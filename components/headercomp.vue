@@ -63,18 +63,19 @@
 
                 {{ temperature }}
               </p>
-              <v-img
-                style="
-                padding-top:
-                -20px;
-                "
-                :src="`http://openweathermap.org/img/wn/${weathericon}@2x.png`"
-                :lazy-src="
-                  `http://openweathermap.org/img/wn/${weathericon}@2x.png`
-                "
-                height="90"
-                contain
-              />
+               <picture>
+    <source type="image/webp" :srcset="`/uploads/weathericons/${weathericon}@2x.webp`">
+     <source type="image/png" :srcset="`/uploads/weathericons/${weathericon}@2x.png`">
+    <img
+    class="px-4 py-2"
+    style="padding-top: -20px;"
+    :src="`/uploads/weathericons/${weathericon}@2x.png`"
+    :lazy-src="`/uploads/weathericons/${weathericon}@2x.png`"
+    alt="Погода"
+    height="90"
+    contain
+    >
+</picture>
             </div>
           </v-col>
         </v-row>
@@ -145,7 +146,7 @@ export default {
           params: { searchText: this.search }
         }
         await axios
-          .get('http://localhost:3000/api/blog/search', config)
+          .get('https://zabbix.etalon48.com/api/blog/search', config)
           .then(response => (this.dataSearch = response.data))
       } else if (this.search.length > 0 && this.search.length < 3) {
         this.dataSearch = []

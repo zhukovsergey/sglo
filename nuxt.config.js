@@ -1,10 +1,14 @@
 import axios from 'axios'
 const isDev = process.env.NODE_ENV !== 'production'
 export default {
+	server: {
+    port: 5000,
+    host: "localhost",
+  },
   loading: {
     color: 'blue',
     height: '2px'
-  },
+  }, 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     htmlAttrs: {
@@ -20,27 +24,31 @@ export default {
       { rel: 'stylesheet', type: 'text/css', href: '/assets/style.css' }
     ]
   },
+ pwa: {
+    manifest: {
+      name: "Союз женщин Липецкой области",
+      lang: "ru",
+      theme_color: "#000000",
+      description: "Союз женщин Липецкой области",
+    },
+  },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
 
   ],
+  telemetry: false,
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
     { src: '~/plugins/tinymce.js' },
-    { src: '~/plugins/photoswipe.js', ssr: false }
+    { src: '~/plugins/photoswipe.js', ssr: false },
+    { src: '~/plugins/vue-lazyload', ssr: false }
   ],
-  pwa: {
-    manifest: {
-      name: 'Союз женщин Липецкой области',
-      short_name: 'SGLO',
-      lang: 'ru',
-      display: 'standalone'
-    }
-  },
+  
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
+
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
     // https://go.nuxtjs.dev/eslint
@@ -48,16 +56,12 @@ export default {
     '@nuxtjs/vuetify',
     '@nuxtjs/svg',
     '@nuxtjs/pwa',
-    '@nuxtjs/date-fns',
-    '@aceforth/nuxt-optimized-images'
+    '@nuxtjs/date-fns',    
+    '@aceforth/nuxt-optimized-images'     
   ],
-  serverMiddleware: [
+    serverMiddleware: [
     '~/api/index.js'
-  ],
-  optimizedImages: {
-    optimizeImages: true
-  },
-
+  ], 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
     // https://go.nuxtjs.dev/axios
@@ -65,32 +69,37 @@ export default {
     '@nuxtjs/component-cache',
     '@nuxtjs/auth',
     '@nuxtjs/sitemap',
-    '@nuxtjs/date-fns'
+    '@nuxtjs/date-fns',
+    '@nuxtjs/toast',
+    'nuxt-imagemin'   
   ],
-  router: {
+  optimizedImages: {
+    optimizeImages: true
+  },
+router: {
     prefetchLinks: false
   },
   optimization: {
     minimize: !isDev
   },
   ...(!isDev && {
-    html: {
-      minify: {
-        collapseBooleanAttributes: true,
-        decodeEntities: true,
-        minifyCSS: true,
-        minifyJS: true,
-        processConditionalComments: true,
-        removeEmptyAttributes: true,
-        removeRedundantAttributes: true,
-        trimCustomFragments: true,
-        useShortDoctype: true
+      html: {
+        minify: {
+          collapseBooleanAttributes: true,
+          decodeEntities: true,
+          minifyCSS: true,
+          minifyJS: true,
+          processConditionalComments: true,
+          removeEmptyAttributes: true,
+          removeRedundantAttributes: true,
+          trimCustomFragments: true,
+          useShortDoctype: true
+        }
       }
-    }
   }),
-  optimization: {
-    minimize: !isDev
-  },
+ optimization: {
+      minimize: !isDev
+    },
   splitChunks: {
     layouts: true,
     pages: true,
@@ -113,13 +122,17 @@ export default {
     },
     routes: async () => {
       const { data } = await axios.get(
-        'http://localhost:3000/api/blog/sitemap'
+        'https://zabbix.etalon48.com/api/blog/sitemap'
       )
       return data.map(page => `${page.path}${page.url}`)
     }
   },
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
+  axios: { proxy: true},
+  proxy: {
+	"/api/": "https://zabbix.etalon48.com"  
+  },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
@@ -127,6 +140,6 @@ export default {
       plugins: [
         ['@babel/plugin-proposal-private-methods', { loose: true }]
       ]
-    }
+    }     
   }
 }

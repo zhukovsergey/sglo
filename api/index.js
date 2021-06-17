@@ -1,4 +1,5 @@
 const express = require('express')
+const nodemailer = require('nodemailer');
 const consola = require('consola')
 const { Nuxt, Builder } = require('nuxt')
 const app = express()
@@ -16,6 +17,10 @@ const fs = require('fs')
 const helmet = require("helmet")
 app.use(helmet())
 
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true}));
+app.use(express.json());
+
 mongoose.connect('mongodb://localhost:27017/api', {
   useCreateIndex: true,
   useNewUrlParser: true,
@@ -30,6 +35,40 @@ db.once('open', () => console.log('connected444 to database'))
 app.use(bodyParser.json())
 app.use(express.json())
 
+app.post('/contact', async (req, res) => {
+  const namefio = req.body.namefio;
+  const mailtext= req.body.mailtext;
+ const  email= req.body.email;
+ const  url = req.headers.referer;
+  sendMail(namefio, mailtext, email, url);  
+  await res.status(201).json('Сообщение отправлено');
+  });
+  const sendMail = async (namefio, mailtext, email, url) => {
+    let transporter = await nodemailer.createTransport({
+        host: "smtp.yandex.ru",
+        port: 465,
+        secure: true,
+        auth: {
+            user: "zhukov@etalon48.com",
+            pass: "zhukov06061988"
+        }
+    });
+    transporter.sendMail({
+        from: 'zhukov@etalon48.com',
+        to: 'zhukov@etalon48.com',
+        subject: 'Сообщение с сайта Союза женщин Липецкой области',
+        html:
+        "Имя: " +
+         namefio +
+          "<br>Текст: " + 
+          mailtext + 
+          "<br>Почта: " + 
+          email +
+          "<br>Страница: " +
+          url
+    });
+
+}
 app.get('/blog/national-projects', async function (req, res) {
   try {
     const blogs2 = await blog.find({ tag: 'Национальные проекты' })
@@ -188,9 +227,11 @@ app.get('/blog/search', async function (req, res) {
 const ServiceRoutes = require('./routes/service')
 const BlogRoutes = require('./routes/blog')
 const authRoutes = require('./routes/auth')
+
 app.use('/service', ServiceRoutes)
 app.use('/blog', BlogRoutes)
 app.use('/auth', authRoutes)
+
 
 config.dev = process.env.NODE_ENV !== 'production'
 async function start () {
