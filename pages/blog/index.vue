@@ -8,25 +8,28 @@
         Блог
       </v-breadcrumbs-item>
     </v-breadcrumbs>
-    <v-btn class="primary my-md-6" small to="/blog/national-projects" nuxt>
+     <v-btn class="primary my-md-6 my-sm-2 my-xs-2" small to="/blog" nuxt>
+      Все
+    </v-btn>
+    <v-btn class="primary my-md-6 my-sm-2 my-xs-2" small to="/blog/national-projects" nuxt>
       Национальные проекты
     </v-btn>
-    <v-btn class="primary my-md-6" small to="/blog/education" nuxt>
+    <v-btn class="primary my-md-6 my-sm-2 my-xs-2" small to="/blog/education" nuxt>
       Образование
     </v-btn>
-    <v-btn class="primary my-md-6" small to="/blog/health" nuxt>
+    <v-btn class="primary my-md-6 my-sm-2 my-xs-2" small to="/blog/health" nuxt>
       Здравоохранение
     </v-btn>
     <v-row no-gutters>
       <v-col v-for="dat in data1" :key="dat._id">
-        <v-card class="mx-auto" max-width="300">
+        <v-card class="mx-auto my-4" max-width="320">
           <span
             style="float:right; font-size: 12px;"
             class="px-2"
           ><v-icon small>mdi-eye</v-icon>{{ dat.views }}</span>
 
           <nuxt-link :to="`/blog/${dat.url}`" style="text-decoration:none;">
-            <v-card-title class="text-center" style="display:block; font-size: 21px; min-height: 128px;">
+            <v-card-title class="text-center">
               {{ dat.h1 }}
             </v-card-title>
             <div
@@ -41,7 +44,20 @@
                 :src="`/uploads/blog/${filelink.filename}`"
                 :lazy-src="`/uploads/blog/${filelink.filename}`"
                 height="200px"
-              />
+              >
+              <template v-slot:placeholder>
+          <v-row
+            class="fill-height ma-0"
+            align="center"
+            justify="center"
+          >
+            <v-progress-circular
+              indeterminate
+              color="grey lighten-5"
+            ></v-progress-circular>
+          </v-row>
+        </template>
+              </v-img>
             </div>
 
             <v-card-subtitle>

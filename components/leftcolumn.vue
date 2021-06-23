@@ -44,6 +44,27 @@
         allowfullscreen
       />
       <v-divider /><br>
+      <center>
+      <span
+          class="text-md-center"
+          style="font-family: 'Asessorc';
+          width: 100%; font-size: 22px; "
+        >
+          <v-icon medium color="light-blue darken-1">
+            mdi-notification-clear-all
+          </v-icon>
+          Категории
+        </span><br>
+        <div style="width: 100%; margin-left: 5px;">
+      <nuxt-link style="text-decoration: none;" class="mx-1 my-md-1 my-sm-2" small to="/blog/national-projects">
+      Национальные проекты
+    </nuxt-link><br>
+    <nuxt-link style="text-decoration: none;" class=" mx-2 my-md-1 my-sm-2" small to="/blog/education" nuxt>
+      Образование
+    </nuxt-link><br>
+    <nuxt-link style="text-decoration: none;" class=" mx-2 my-md-1 my-sm-2" small to="/blog/health" nuxt>
+      Здравоохранение
+    </nuxt-link></div></center>
     </v-sheet>
   </v-col>
 </template>

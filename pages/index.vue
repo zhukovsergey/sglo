@@ -23,6 +23,7 @@
         Последние новости
       </h3>
     </center>
+    <v-divider></v-divider>
     <v-row no-gutters class="mt-8">
       <v-col v-for="dat in data1" :key="dat._id" class="my-2">
         <nuxt-link :to="`/blog/${dat.url}`">
@@ -86,7 +87,7 @@ export default {
       {
         src: '/uploads/slider/1.png',
         text: 'Информирование жителей Воловского района о вакцинации',
-        kuda: 'blog/informirovanie-zhitelei-volovskogo-raiona-o-vakcinacii'
+        kuda: '/blog/vakcina-edinstvennyi-nadezhnyi-sposob-izbezhat-zarazheniya'
       },
       {
         src: '/uploads/slider/2.png',

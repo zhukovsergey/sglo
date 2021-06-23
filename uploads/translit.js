@@ -41,6 +41,8 @@ const scripts = {
     const str = h1
       .replace(/[ъь]+/g, '')
       .replace(/й/g, 'i')
+      .replace(/- /g, '')
+      .replace(/ -/g, '')
       .replace(/[ _.,!?№&;:#%()*"'«»]/g, '-')
     for (let i = 0; i < str.length; i++) {
       nStr.push(

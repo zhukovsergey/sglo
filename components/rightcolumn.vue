@@ -48,15 +48,18 @@
       max-width="500px"
       style="background:white;"
     >
-      <template v-slot:activator="{ on, attrs }">
+      <template v-slot:activator="{ on, attrs }"><center>
         <v-btn
+        class="submitmail"
+        block
           color="primary"
           dark
           v-bind="attrs"
           v-on="on"
+          style="width: 90%; max-width: 200px; font-size: 0.8em;"
         >
           Отправить сообщение
-        </v-btn><br><v-divider></v-divider>
+        </v-btn></center><br><v-divider></v-divider>
       </template>
       <v-card>
         <v-card-title>Отправка сообщения</v-card-title>
@@ -102,7 +105,7 @@
         <v-divider></v-divider>
       </v-card>
     </v-dialog>
-    <br><br>
+    <br>
     </v-sheet>
   </v-col>
 </template>

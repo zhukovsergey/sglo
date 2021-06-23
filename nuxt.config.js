@@ -43,7 +43,9 @@ export default {
   plugins: [
     { src: '~/plugins/tinymce.js' },
     { src: '~/plugins/photoswipe.js', ssr: false },
-    { src: '~/plugins/vue-lazyload', ssr: false }
+    { src: '~/plugins/vue-lazyload', ssr: false },
+    { src: '~/plugins/yashare', ssr: false },
+
   ],
   
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -57,7 +59,8 @@ export default {
     '@nuxtjs/svg',
     '@nuxtjs/pwa',
     '@nuxtjs/date-fns',    
-    '@aceforth/nuxt-optimized-images'     
+    '@aceforth/nuxt-optimized-images'
+        
   ],
     serverMiddleware: [
     '~/api/index.js'
@@ -71,10 +74,11 @@ export default {
     '@nuxtjs/sitemap',
     '@nuxtjs/date-fns',
     '@nuxtjs/toast',
-    'nuxt-imagemin'   
+    'nuxt-imagemin'      
   ],
+  
   optimizedImages: {
-    optimizeImages: true
+    optimizeImages: true   
   },
 router: {
     prefetchLinks: false
@@ -115,6 +119,7 @@ router: {
       '/blog/new',
       '/service/new'
     ],
+    
     defaults: {
       changefreq: 'weekly',
       priority: 1,

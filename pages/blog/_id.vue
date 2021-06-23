@@ -7,26 +7,29 @@
       <span
         style="float:right; font-size: 13px;"
       ><v-icon>mdi-eye</v-icon>{{ data1.views }}</span>
-    </div>
+    </div> <div class="maincontentofarticle">
+    <div class="singlepicture" style="float:left; margin-right: 20px;">
     <picture>
     <source type="image/webp" :srcset="`/uploads/blog/${data1.coverImageName[0].filename.slice(0,-4) }.webp`">
      <source type="image/jpeg" :srcset="`/uploads/blog/${data1.coverImageName[0].filename}`">
     <img
-    class="px-4 py-2"
-    style="float: left; width: 300px;"
+    class="px-2 py-2"
+    style="width: 300px;"
     :src="`/uploads/blog/${data1.coverImageName[0].filename}`"
+    :data-src="`/uploads/blog/${data1.coverImageName[0].filename}`"
+    :lazy-src="`/uploads/blog/${data1.coverImageName[0].filename}`"
     v-lazy="`/uploads/blog/${data1.coverImageName[0].filename}`"
     :alt="data1.h1"
-    >
-</picture>
-<div class="contentarticle px-4" v-html="data1.content" />
+    />
+</picture></div>
+<div class="contentarticle px-4" v-html="data1.content" /></div>
     <span
       class="px-2"
       style="font-size: 12px;"
     >Опубликовано:
       {{ $dateFns.format(data1.createdDate, 'dd-MMMM-yyyy', { locale: 'ru' }) }}
     </span>
-
+ <br>
     <div class="galleriglobal">
       <h2 class="text-center py-2">
         Фотогалерея
@@ -50,23 +53,44 @@
           ></img>
         </div>-->
         <Photoswipe rotate bubble lazy>
-        <picture
-          v-for="(src, index) in data1.coverImageName"
-         :key="index">
+        <v-row>
+    <v-col
+      v-for="(src, index) in data1.coverImageName"
+      :key="index"
+      class="d-flex child-flex"
+      cols="6"
+      sm="3"
+      md="3"
+      xs="6"
+    >
+        <picture>
     <source type="image/webp" :srcset="`/uploads/blog/${src.filename.slice(0,-4) }.webp`">
      <source type="image/jpeg" :srcset="`/uploads/blog/${src.filename}`">
-    <img
+    <v-img
     v-pswp="`/uploads/blog/${src.filename}`"
+    :lazy-src="`/uploads/blog/${src.filename}`"
+    :src="`/uploads/blog/${src.filename}`"
     :data-src="`/uploads/blog/${src.filename}`"
-    style="width: 200px"
+    style="width: 150px"
     v-lazy="`/uploads/blog/${src.filename}`"
-    class="px-8 py-8 photogallery">
-</picture>
+    class="px-2 py-8 photogallery"> <template v-slot:placeholder>
+          <v-row
+            class="fill-height ma-0"
+            align="center"
+            justify="center"
+          >
+            <v-progress-circular
+              indeterminate
+              color="grey lighten-5"
+            ></v-progress-circular>
+          </v-row>
+        </template></v-img></picture></v-col>
+  </v-row>
         </Photoswipe>
         </div>
       <br><br>
       <v-divider />
-       <yandex-share :services="['vkontakte', 'facebook', 'twitter,odnoklassniki,telegram,whatsapp']" counter />
+       <yandex-share :services="['vkontakte', 'facebook', 'twitter,odnoklassniki,telegram,whatsapp']" :image="`https://zabbix.etalon48.com/uploads/blog/${this.data1.coverImageName[0].filename}`" :title="data1.title" :description="data1.description" counter />
       <div v-if="this.$auth.user == 'zhukov'" class="admin-form mx-4 mb-4">
         <v-text-field v-model="h1" label="h1" required name="h1" />
         <v-text-field v-model="title" label="title" required name="title" />
@@ -233,11 +257,11 @@
 </template>
 
 <script>
-import YandexShare from '@cookieseater/vue-yandex-share'
 import Editor from '@tinymce/tinymce-vue'
 import Vue from 'vue'
 import axios from 'axios'
 import VueImg from 'v-img'
+
 const vueImgConfig = {
   // Use `alt` attribute as gallery slide title
   altAsTitle: true,
@@ -251,8 +275,7 @@ const vueImgConfig = {
 Vue.use(VueImg, vueImgConfig)
 export default {
   components: {
-    editor: Editor,
-    YandexShare
+    editor: Editor
   },
   async asyncData ({ params }) {
     const { data } = await axios.get(
@@ -303,6 +326,7 @@ export default {
         },
         { hid: 'og:type', property: 'og:type', content: 'article' },
         { hid: 'og:title', property: 'og:title', content: this.data1.title },
+        { hid: 'apple-mobile-web-app-title', property: 'apple-mobile-web-app-title', content: this.data1.title },
         {
           hid: 'og:url',
           property: 'og:url',
@@ -406,8 +430,17 @@ export default {
         `https://zabbix.etalon48.com/api/blog/${this.data1.url}/comment`,
         formData
       )
-
+      this.sendNoticeComment()
       location.reload()
+    },
+    sendNoticeComment () {
+      const formData = {
+        email: 'zhukov@etalon48.com Оставлен новый комментарий',
+        namefio: this.fio,
+        mailtext: this.comment
+      }
+      axios.post('https://zabbix.etalon48.com/api/contact', formData)
+        .then(alert('Успешно отправлено'))
     },
     addFiles () {
       const formData = new FormData()

@@ -19,7 +19,8 @@
     </v-btn>
 
     <v-row>
-      <v-col v-for="dat in data1" :key="dat._id">
+      <v-col v-for="(dat, index) in data1" :key="dat._id">
+      <div v-if="index < pageSize">
         <v-card class="mx-auto" max-width="300">
           <span
             style="float:right; font-size: 12px;"
@@ -72,19 +73,17 @@
               <v-spacer />
             </v-card-actions>
           </nuxt-link>
-        </v-card>
+        </v-card></div>
       </v-col>
     </v-row>
     <br>
     <v-btn
-      v-if="$nuxt.$route.query.page > 1"
-      class="pagination-button primary"
-      @click="prevPagination($nuxt)"
+      v-if="data1.length > 6"
+      depressed
+      color="primary"
+      @click="pageSize += pageSize"
     >
-      Назад
-    </v-btn>
-    <v-btn class="pagination-button primary" @click="nextPagination($nuxt)">
-      Далее
+      Показать еще...
     </v-btn>
     <div
       class="ya-share2"
@@ -109,7 +108,10 @@ export default {
   },
   data: () => ({
     show: false,
-    pagination: ''
+    pagination: '',
+    loadMore: true, // прокрутка комментов
+    page: 1, // прокрутка комментов
+    pageSize: 6 // прокрутка комментов
   }),
   head () {
     return {
@@ -126,36 +128,6 @@ export default {
     }
   },
   methods: {
-    async nextPagination ($nuxt) {
-      $nuxt.$route.query.page = 1
-      if (isNaN($nuxt.$route.query.page)) {
-        const nextPage = 2
-        const pagination = 2
-        console.log(nextPage)
-        console.log(pagination)
-      }
-      const nextPage = parseInt($nuxt.$route.query.page) + 1
-      const pagination = parseInt($nuxt.$route.query.page) + 1
-      const config = {
-        headers: { page: pagination }
-      }
-      await axios
-        .get('https://zabbix.etalon48.com/api/blog', config)
-        .then(response => (this.data1 = response.data))
-      this.$router.push('/blog?page=' + nextPage)
-    },
-    async prevPagination ($nuxt) {
-      const nextPage = parseInt($nuxt.$route.query.page) - 1
-      const pagination = parseInt($nuxt.$route.query.page) - 1
-      const config = {
-        headers: { page: pagination }
-      }
-      await axios
-        .get('https://zabbix.etalon48.com/api/blog', config)
-        .then(response => (this.data1 = response.data))
-      this.$router.push('/blog?page=' + nextPage)
-      console.log(this.data2)
-    }
   }
 }
 </script>

@@ -40,6 +40,7 @@ app.post('/contact', async (req, res) => {
   const mailtext= req.body.mailtext;
  const  email= req.body.email;
  const  url = req.headers.referer;
+ console.log(req);
   sendMail(namefio, mailtext, email, url);  
   await res.status(201).json('Сообщение отправлено');
   });

@@ -47,7 +47,10 @@ p {
 .theme--dark.v-toolbar.v-sheet {
   background-color: #272727 !important;
 }
-
+.theme--light.v-footer {
+  background-color: #475edf !important;
+  color: rgba(0, 0, 0, 0.87);  
+}
 header.v-sheet.theme--dark.v-toolbar * {
   color: white;
 }
@@ -89,7 +92,9 @@ header.v-sheet.theme--dark.v-toolbar * {
 .v-main__wrap {
   background: url(/uploads/blog/cropped-orig-min.png);
 }
-
+a.v-btn:hover i {
+  transform: rotate(360deg);
+}
 .page-enter-active,
 .page-leave-active {
   transition: opacity 0.3s;
@@ -125,13 +130,28 @@ input#search {
 }
 
 .contentarticle {
-  min-height: 300px;
-  font-size: 16px;
-}
-.v-card__title {    
-    word-break: normal !important;
+  min-height: 375px;
+  font-size: 16px;  
 }
 
+/* Код для адаптации видео */
+.video {
+  position:relative;
+  padding-bottom:56.25%;
+  padding-top:30px;
+  height:0;
+  overflow:hidden;
+  }
+  .video iframe, .video object, .video embed {
+  position: absolute; top: 0; left: 0;
+  width: 100%;
+  height: 100%; }
+  /* Конец кода для адаптации видео */
+.v-card__title {  
+  word-break: normal !important;
+  font-size: 17px !important;
+  line-height: normal !important;
+}
 .zagolovok {
   text-decoration: none;
   color: #d1d667;
@@ -201,10 +221,7 @@ input#search {
     width: 95%;
   }
 }
-@media (min-width: 800px) and (max-width: 1120px) {
-  .v-btn__content {
-    font-size: 14px;
-  }
+@media (min-width: 800px) and (max-width: 1120px) {  
   .v-toolbar__title {
     font-size: 14px;
   }
@@ -233,5 +250,10 @@ input#search {
     background: none !important;
     background-size: 53%;
     background-position: 100px 43px;
+  }
+}
+@media (min-width: 800px) and (max-width: 1444px) {
+  .submitmail {
+   font-size: 12px;
   }
 }

@@ -1,5 +1,21 @@
 <template>
   <div class="container-fluid">
+   <div
+       v-if="$store.state.auth.user == 'zhukov'"
+              >
+      <v-btn
+      style="position: fixed;  z-index: 99; right: 2%; bottom: 2%;"
+        color="indigo"
+        to="/blog/new"
+        nuxt
+        fab
+        dark
+        bottom
+      ><v-icon dark>
+        mdi-plus
+      </v-icon>
+      </v-btn>
+    </div>
     <v-toolbar
       color="#f5eff5"
       height="150px"
@@ -12,7 +28,16 @@
           </v-toolbar-title>
         </v-theme-provider>
       </nuxt-link>
-      <span class="subheading"><nuxt-link to="/"><img id="my-svg" width="150" src="https://zabbix.etalon48.com/uploads/blog/SGLOnew_animated.svg?data"></img></nuxt-link></span>
+      <span class="subheading"><nuxt-link to="/">
+      <img
+      id="my-svg"
+      width="150"
+      src="https://zabbix.etalon48.com/uploads/blog/SGLOnew_animated.svg?data"
+      lazy-src="https://zabbix.etalon48.com/uploads/blog/SGLOnew_animated.svg?data"
+      data-src="https://zabbix.etalon48.com/uploads/blog/SGLOnew_animated.svg?data"
+      alt="Логотип Союза женщин Липецкой области"
+      >
+      </img></nuxt-link></span>
       <v-divider
         class="mx-4"
         vertical
@@ -23,7 +48,7 @@
         </v-toolbar-title>
       </nuxt-link>
       <nuxt-link to="/">
-        <span class="subheading"> <img id="my-svg1" width="135" src="https://zabbix.etalon48.com/uploads/blog/wuor_animated.svg?data"></span>
+        <span class="subheading"> <img id="my-svg1" width="135" src="https://zabbix.etalon48.com/uploads/blog/wuor_animated.svg?data" alt="Логотип Союза женщин России"></span>
       </nuxt-link>
       <v-spacer />
       <v-toolbar-items color="#ad6262">
@@ -31,7 +56,7 @@
           color="rgb(255 243 243 / 42%)"
           elevation="6"
           class="mx-2"
-          style="color:#ad6262; font-size: 17px; font-weight: 700; border-radius: 30px;"
+          style="color:#ad6262; font-size: 17px; font-weight: 700; border-radius: 14px;"
           to="/blog"
           nuxt
         >
@@ -51,7 +76,7 @@
           color="rgb(255 243 243 / 42%)"
           elevation="6"
           class="mx-2"
-          style="color:#ad6262; font-size: 17px; font-weight: 700; border-radius: 30px;"
+          style="color:#ad6262; font-size: 17px; font-weight: 700; border-radius: 14px;"
           to="/service"
           nuxt
         >
@@ -71,13 +96,12 @@
           color="rgb(255 243 243 / 42%)"
           elevation="6"
           class="mx-2"
-          style="color:#ad6262; font-size: 17px; font-weight: 700; border-radius: 30px;"
+          style="color:#ad6262; font-size: 17px; font-weight: 700; border-radius: 14px;"
           to="/keisi"
           nuxt
         >
           Проекты
         </v-btn>
-
         <v-divider vertical />
       </v-toolbar-items><br>
       <v-app-bar-nav-icon class="hidden-md-and-up" @click="drawer = true" />

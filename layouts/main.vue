@@ -15,7 +15,7 @@ export default {
   head () {
     return {
       link: [
-        { rel: 'canonical', href: 'http://localhost:3000' + this.$route.path }
+        { rel: 'canonical', href: 'http://zabbix.etalon48.com' + this.$route.path }
       ]
     }
   }
