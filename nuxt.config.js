@@ -27,9 +27,11 @@ export default {
  pwa: {
     manifest: {
       name: "Союз женщин Липецкой области",
+      short_name: "Союз женщин Липецк",
+      display: 'fullscreen',
       lang: "ru",
       theme_color: "#000000",
-      description: "Союз женщин Липецкой области",
+      description: "Союз женщин Липецкой области - официальное приложение",
     },
   },
 
@@ -45,6 +47,7 @@ export default {
     { src: '~/plugins/photoswipe.js', ssr: false },
     { src: '~/plugins/vue-lazyload', ssr: false },
     { src: '~/plugins/yashare', ssr: false },
+    { src: '~/plugins/pwa-update.js',ssr: false }
 
   ],
   
@@ -76,17 +79,29 @@ export default {
     '@nuxtjs/toast',
     'nuxt-imagemin'      
   ],
+  toast: {
+    position: 'top-center'    
+},
   
   optimizedImages: {
-    optimizeImages: true   
+    optimizeImages: true,
+    webp: {
+      preset: 'default',
+      quality: 75,
+    },
+    optipng: {
+      optimizationLevel: 3,
+    },
+    mozjpeg: {
+      quality: 80,
+    }   
   },
 router: {
     prefetchLinks: false
   },
   optimization: {
-    minimize: !isDev
-  },
-  ...(!isDev && {
+    minimize: true
+  }, 
       html: {
         minify: {
           collapseBooleanAttributes: true,
@@ -100,7 +115,7 @@ router: {
           useShortDoctype: true
         }
       }
-  }),
+  ,
  optimization: {
       minimize: !isDev
     },

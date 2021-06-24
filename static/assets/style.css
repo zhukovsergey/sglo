@@ -3,22 +3,26 @@
   src: url(/assets/plumb-regular.otf) format('truetype');
   font-style: 'normal';
   font-weight: 400;
+  font-display: swap
 }
 @font-face {
   font-family: font;
   src: url(/assets/plumb-bold.otf) format('truetype');
   font-style: 'normal';
   font-weight: 700;
+  font-display: swap
 }
 @font-face {
   font-family: Asessorc;
   src: url(/assets/Nautilus.otf) format('truetype');
   font-style: 'normal';
   font-weight: 400;
+  font-display: swap
 }
 @font-face {
   font-family: Naut;
   src: url(/assets/Asessorc.otf) format('truetype');
+  font-display: swap
 }
 
 html {
@@ -157,7 +161,7 @@ input#search {
   color: #d1d667;
   background-color: rgb(98, 98, 199);
   padding: 3px;
-  border-radius: 5px;
+  border-radius: 5px; 
 }
 .bounce-enter-active {
   transform-origin: top;
@@ -232,6 +236,20 @@ input#search {
     width: 100%;
   }
 }
+
+@media (min-width: 100px) and (max-width: 800px) {  
+  .logincard {
+    display:none;
+  }
+  
+}
+@media (min-width: 800px) and (max-width: 900px) {  
+  .v-toolbar__items > a {
+    font-size: 13px !important;
+  }
+  
+}
+
 
 .weather {
   display: flex;

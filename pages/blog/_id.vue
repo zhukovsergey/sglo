@@ -172,7 +172,13 @@
       </div>
     </div>
     <div class="comments">
-      <h3>Комментарии</h3>
+    <v-badge
+    v-if="data1.comments.length > 0"
+     color="green"
+     :content="data1.comments.length"
+    >
+      <h3>Комментарии</h3></v-badge>
+      <h3 v-if="data1.comments.length == 0">Комментарии</h3>
       <form>
         <v-text-field v-model="fio" name="fio" label="Ваше имя" required />
 

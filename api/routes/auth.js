@@ -8,6 +8,7 @@ const jsonwebtoken = require('jsonwebtoken');
 const { param } = require("./service");
 const cookieParser = require('cookie-parser');
 require('dotenv').config()
+const users = require('../model/users')
 
 app.use(express.json());
 app.use(cookieParser());
@@ -20,21 +21,33 @@ app.use(
         path: '/api/auth/login'
     })
 )
-router.post("/login",  async (req, res) => { 
+router.post("/login",  async (req, res) => {     
     if (
         req.body.user ===process.env.AUTH_USER &&
         req.body.password === process.env.AUTH_PASSWORD
-    ) {   
+    )     
+    {   
     await jsonwebtoken.sign({ user: req.body.user}, process.env.TOKEN, async function(err, token) {
     await res.json({token: token, user: req.body.user});
      });
-  } else {
+  } 
+  else if (
+    req.body.user ===process.env.AUTH_ZADONSK &&
+    req.body.password === process.env.AUTH_PASSWORD_ZADONSK 
+  ) {
+    await jsonwebtoken.sign({ user: req.body.user}, process.env.TOKEN, async function(err, token) {
+        await res.json({token: token, user: req.body.user});
+         }); 
+  }
+  else {
       await res.status(403).json({ message: 'Ошибка авторизации' });
   }
   });
-  router.post("/logout",  async (req, res) => {    
-     
-});
+
+
+  router.post("/logout", (req, res) => {
+    res.json("Вы успешно вышли");
+  });
 
 router.get('/user', async (req, res) => {
     const razdelit = req.headers.authorization.split('Bearer ')[1]

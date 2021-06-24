@@ -1,12 +1,36 @@
 <template>
   <div class="container-fluid">
+  <div class="logincard" style="position: absolute;  z-index: 99; right: 2%; top: 13px;">
+  <span v-if="this.$auth.loggedIn" ><v-icon large>mdi-account</v-icon> {{$store.state.auth.user}} </span>
+  <v-btn
+  v-if="this.$auth.loggedIn"
+  text
+  small
+  @click="logout"
+  >
+  <v-icon medium>mdi-logout</v-icon> Выйти
+  </v-btn>
+  <v-btn
+  v-if="this.$auth.loggedIn==false"
+  text
+  small
+  nuxt
+  to="/login"
+  >
+  <v-icon medium>mdi-login-variant</v-icon> Войти
+  </v-btn>
+  </div>
    <div
-       v-if="$store.state.auth.user == 'zhukov'"
+       v-if="this.$auth.loggedIn"
               >
+              <v-tooltip top>
+              <template v-slot:activator="{ on, attrs }">
       <v-btn
       style="position: fixed;  z-index: 99; right: 2%; bottom: 2%;"
         color="indigo"
         to="/blog/new"
+        v-bind="attrs"
+        v-on="on"
         nuxt
         fab
         dark
@@ -15,6 +39,9 @@
         mdi-plus
       </v-icon>
       </v-btn>
+        </template>
+      <span>Новая статья</span>
+    </v-tooltip>
     </div>
     <v-toolbar
       color="#f5eff5"
@@ -107,6 +134,17 @@
       <v-app-bar-nav-icon class="hidden-md-and-up" @click="drawer = true" />
     </v-toolbar>
     <v-navigation-drawer v-model="drawer" absolute temporary>
+     <div style="position: relative;  z-index: 99; right: 2%; top: 13px;" class="mx-4">
+  <span v-if="this.$auth.loggedIn" ><v-icon large>mdi-account</v-icon> {{$store.state.auth.user}} </span>
+  <v-btn
+  v-if="this.$auth.loggedIn"
+  text
+  small
+  @click="logout"
+  >
+  <v-icon medium>mdi-logout</v-icon> Выйти
+  </v-btn>
+  </div>
       <v-list nav dense>
         <v-list-item-group
           v-model="group"
@@ -232,8 +270,20 @@ export default {
         v.searchError = ''
         v.search = ''
       }, 500)
+    },
+    async logout () {
+      try {
+        await this.$auth.logout()
+        await this.$toasted.show('<span style="font-family: coursive; font-size: 23px;">Успешно вышли</span>', {
+          theme: 'bubble',
+          position: 'top-center',
+          duration: 4000
+        })
+        location.reload()
+      } catch (err) {
+        console.log(err)
+      }
     }
-
   }
 }
 </script>

@@ -8,16 +8,16 @@
         Блог
       </v-breadcrumbs-item>
     </v-breadcrumbs>
-     <v-btn class="primary my-md-6 my-sm-2 my-xs-2" small to="/blog" nuxt>
+     <v-btn class="primary my-md-6 my-sm-2 mt-2" small to="/blog" nuxt>
       Все
     </v-btn>
-    <v-btn class="primary my-md-6 my-sm-2 my-xs-2" small to="/blog/national-projects" nuxt>
+    <v-btn class="primary my-md-6 my-sm-2 mt-2" small to="/blog/national-projects" nuxt>
       Национальные проекты
     </v-btn>
-    <v-btn class="primary my-md-6 my-sm-2 my-xs-2" small to="/blog/education" nuxt>
+    <v-btn class="primary my-md-6 my-sm-2 mt-2" small to="/blog/education" nuxt>
       Образование
     </v-btn>
-    <v-btn class="primary my-md-6 my-sm-2 my-xs-2" small to="/blog/health" nuxt>
+    <v-btn class="primary my-md-6 my-sm-2 mt-2" small to="/blog/health" nuxt>
       Здравоохранение
     </v-btn>
     <v-row no-gutters>
@@ -37,7 +37,7 @@
               :key="filelink.path"
               itemscope
               itemprop="image"
-              itemtype="http://schema.org/ImageObject"
+              itemtype="https://schema.org/ImageObject"
             >
               <v-img
                 v-if="index == 0"

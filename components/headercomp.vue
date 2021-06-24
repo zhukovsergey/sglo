@@ -63,9 +63,6 @@
 
                 {{ temperature }}
               </p>
-               <picture>
-    <source type="image/webp" :srcset="`/uploads/weathericons/${weathericon}@2x.webp`">
-     <source type="image/png" :srcset="`/uploads/weathericons/${weathericon}@2x.png`">
     <img
     class="px-4 py-2"
     style="padding-top: -20px;"
@@ -75,7 +72,6 @@
     height="90"
     contain
     >
-</picture>
             </div>
           </v-col>
         </v-row>

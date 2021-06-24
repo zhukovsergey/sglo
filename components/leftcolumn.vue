@@ -22,6 +22,7 @@
           Видео
         </span>
       </center>
+      <v-lazy>
       <iframe
         class="px-md-4 px-sm-4 mx-xs-4"
         width="100%"
@@ -31,8 +32,9 @@
         frameborder="0"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
         allowfullscreen
-      />
+      /></v-lazy>
       <v-divider /><br>
+      <v-lazy>
       <iframe
         class="px-md-4 px-sm-4 mx-xs-4"
         width="100%"
@@ -42,7 +44,7 @@
         frameborder="0"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
         allowfullscreen
-      />
+      /></v-lazy>
       <v-divider /><br>
       <center>
       <span

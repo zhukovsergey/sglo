@@ -12,7 +12,7 @@
     >
       <center>
         <span class="text-md-center" style="font-size:23px; font-family: 'Asessorc';">Председатель</span>
-        <v-img src="https://zabbix.etalon48.com/uploads/viprofile.jpg" lazy-src="https://zabbix.etalon48.com/uploads/viprofile.jpg" class="mt-4" style="border-radius: 8px; width: 100%;" />     <span class="text-md-center" style="font-size:18px;">Урываева В.И.</span>
+        <v-lazy><v-img src="https://zabbix.etalon48.com/uploads/viprofile.jpg" lazy-src="https://zabbix.etalon48.com/uploads/viprofile.jpg" class="mt-4" style="border-radius: 8px; width: 100%;" /></v-lazy>     <span class="text-md-center" style="font-size:18px;">Урываева В.И.</span>
         <v-divider /><br>
         <span class="text-md-center" style="font-size:23px; font-family: 'Asessorc';">Наши контакты</span>
       </center><br>
