@@ -28,7 +28,7 @@
     <v-divider></v-divider>
     <v-row no-gutters class="mt-8">
       <v-col v-for="dat in data1" :key="dat._id" class="my-2">
-        <nuxt-link :to="`/blog/${dat.url}`">
+        <nuxt-link :to="`/blog/${dat.url}`" style="text-decoration: none;">
           <v-card class="mx-3" max-width="280">
             <v-card-title>
               {{ dat.h1 }}
@@ -43,8 +43,8 @@
                 :lazy-src="`/uploads/blog/${filelink.filename}`"
                 height="200px"
               /> -->
-             <picture v-if="index == 0">
-    <source type="image/webp" :srcset="`/uploads/blog/${filelink.filename.slice(0,-4) }.webp`">
+             <picture v-if="index == 0 && !dat.thumb">
+    <source type="image/webp" :srcset="`/uploads/blog/${filelink.filename.split('.')[0] }.webp`">
      <source type="image/jpeg" :srcset="`/uploads/blog/${filelink.filename}`">
     <img
     style="object-fit:cover; width:100%; height: 200px; min-width: 250px;"
@@ -65,9 +65,56 @@
   </template>
 </v-img>-->
             </div>
+            <div
+              v-for="(filelink, index) in dat.thumb"
+              :key="filelink"
+            >
+             <!--<v-img
+                v-if="index == 0"
+                :src="`/uploads/blog/${filelink.filename}`"
+                :lazy-src="`/uploads/blog/${filelink.filename}`"
+                height="200px"
+              /> -->
+             <picture v-if="index == 0 && dat.thumb">
+    <source type="image/webp" :srcset="`/${filelink.split('.')[0] }.webp`">
+     <source type="image/jpeg" :srcset="`/${filelink}`">
+    <img
+    style="object-fit:cover; width:100%; height: 200px; min-width: 250px;"
+    class="px-2 py-2"
+    :src="`/${filelink}`"
+    :data-src="`/${filelink}`"
+    :lazy-src="`/${filelink}`"
+    v-lazy="`/${filelink}`"
+    :alt="data1.h1"
+    /></picture>
+
+   <!-- <v-img
+    height="200px"
+    v-if="index == 0"
+    :src="`/uploads/blog/${filelink.filename}`">
+  <template #sources>
+    <source :srcset="`/uploads/blog/${filelink.filename.slice(0,-4) }.webp`">
+  </template>
+</v-img>-->
+            </div>
             <v-card-subtitle>
               {{ dat.introtext | truncate(60, '...') }}
+            </v-card-subtitle><center>
+            <hr size="1" calss="text-center" style="width: 75%; color: #d5e6f7;"></hr></center>
+            <v-card-subtitle>
+              Тема: {{ dat.tag }}
             </v-card-subtitle>
+            <span class="px-2" v-if="dat.region">
+             <v-icon small>mdi-map-marker</v-icon> {{ dat.region }}
+            </span> <br>
+              <span
+            class="px-2"
+            style="font-size: 12px;"
+          >Опубликовано:
+            {{
+              $dateFns.format(dat.createdDate, 'dd-MMMM-yyyy', { locale: 'ru' })
+            }}
+          </span>
             <v-card-actions>
               <v-btn
                 color="green"
@@ -76,7 +123,6 @@
               >
                 ПОДРОБНЕЕ...
               </v-btn>
-
               <v-spacer />
             </v-card-actions>
           </v-card>

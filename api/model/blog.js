@@ -35,6 +35,9 @@ const blogSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  region: {
+    type: String  
+  },
   content: {
     type: String,
     required: true
@@ -52,7 +55,8 @@ const blogSchema = new mongoose.Schema({
     default: Date.now
   },
   coverImageName: {},
-  coverImagesName: {}
+  coverImagesName: {},
+  thumb: {}
 
 })
 

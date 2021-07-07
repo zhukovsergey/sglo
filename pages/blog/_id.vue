@@ -5,12 +5,16 @@
         {{ data1.h1 }}
       </h1>
       <span
+      v-if="data1.region"
+        style="float:right; font-size: 13px;"
+      ><v-icon>mdi-map-marker</v-icon> {{ data1.region }}</span><br>
+      <span
         style="float:right; font-size: 13px;"
       ><v-icon>mdi-eye</v-icon>{{ data1.views }}</span>
     </div> <div class="maincontentofarticle">
     <div class="singlepicture" style="float:left; margin-right: 20px;">
     <picture>
-    <source type="image/webp" :srcset="`/uploads/blog/${data1.coverImageName[0].filename.slice(0,-4) }.webp`">
+    <source type="image/webp" :srcset="`/uploads/blog/${data1.coverImageName[0].filename.split('.')[0] }.webp`">
      <source type="image/jpeg" :srcset="`/uploads/blog/${data1.coverImageName[0].filename}`">
     <img
     class="px-2 py-2"
@@ -138,6 +142,15 @@
           label="Выберите тэг"
           outlined
           name="tag"
+        />
+        <v-select
+        v-model="region"
+        :rules="[v => !!v || 'Район не выбран']"
+        :items="regions"
+        required
+        label="Выберите район"
+        outlined
+        name="region"
         />
         <select
           v-model="tag"
@@ -301,6 +314,7 @@ export default {
     content: '',
     coverImageName: '',
     tag: '',
+    region: '',
     loadMore: true, // прокрутка комментов
     page: 1, // прокрутка комментов
     pageSize: 4, // прокрутка комментов
@@ -317,6 +331,28 @@ export default {
       'Здравоохранение',
       'Образование',
       'Конкурсы'
+    ],
+    regions: [
+      'г. Липецк',
+      'г. Елец',
+      'Липецкий район',
+      'Елецкий район',
+      'Воловский район',
+      'Грязинский район',
+      'Данковский район',
+      'Добринский район',
+      'Добровский район',
+      'Долгоруковский район',
+      'Задонский район',
+      'Измалковский район',
+      'Краснинский район',
+      'Лебедянский район',
+      'Лев-Толстовский район',
+      'Становлянский район',
+      'Тербунский район',
+      'Усманский район',
+      'Хлевенский район',
+      'Чаплыгинский район'
     ],
     blog: []
   }),
@@ -361,6 +397,7 @@ export default {
     this.title = this.data1.title
     this.description = this.data1.description
     this.url = this.data1.url
+    this.region = this.data1.region
     this.content = this.data1.content
     this.introtext = this.data1.introtext
     this.tag = this.data1.tag
@@ -381,6 +418,7 @@ export default {
         url: this.url,
         content: this.content,
         tag: this.tag,
+        region: this.region,
         description: this.description
       }
       axios

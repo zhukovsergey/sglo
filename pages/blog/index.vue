@@ -20,6 +20,34 @@
     <v-btn class="primary my-md-6 my-sm-2 mt-2" small to="/blog/health" nuxt>
       Здравоохранение
     </v-btn>
+    <div>
+    <v-menu
+    auto
+      :close-on-click="closeOnClick"
+      transition="scale-transition"
+      style="margin-top: 5px;"
+    >
+      <template v-slot:activator="{ on, attrs }">
+        <v-btn
+          color="teal"
+          dark
+          v-bind="attrs"
+          v-on="on"
+        >
+         <v-icon>mdi-format-align-center</v-icon> Выбор района
+        </v-btn>
+      </template>
+
+      <v-list>
+        <v-list-item
+          v-for="item in regions"
+          :key="item.name"
+          link
+        >
+          <v-list-item-title><nuxt-link :to="`/blog/${item.url}`">{{ item.name }}</nuxt-link></v-list-item-title>
+        </v-list-item>
+      </v-list>
+    </v-menu></div>
     <v-row no-gutters>
       <v-col v-for="dat in data1" :key="dat._id">
         <v-card class="mx-auto my-4" max-width="320">
@@ -27,11 +55,11 @@
             style="float:right; font-size: 12px;"
             class="px-2"
           ><v-icon small>mdi-eye</v-icon>{{ dat.views }}</span>
-
           <nuxt-link :to="`/blog/${dat.url}`" style="text-decoration:none;">
             <v-card-title class="text-center">
               {{ dat.h1 }}
             </v-card-title>
+            <div v-if="!dat.thumb">
             <div
               v-for="(filelink, index) in dat.coverImageName"
               :key="filelink.path"
@@ -58,7 +86,35 @@
           </v-row>
         </template>
               </v-img>
-            </div>
+            </div></div>
+            <div v-if="dat.thumb">
+            <div
+              v-for="(filelink, index) in dat.thumb"
+              :key="filelink.path"
+              itemscope
+              itemprop="image"
+              itemtype="https://schema.org/ImageObject"
+            >
+              <v-img
+                v-if="index == 0"
+                :src="`/${filelink}`"
+                :lazy-src="`/${filelink}`"
+                height="200px"
+              >
+              <template v-slot:placeholder>
+          <v-row
+            class="fill-height ma-0"
+            align="center"
+            justify="center"
+          >
+            <v-progress-circular
+              indeterminate
+              color="grey lighten-5"
+            ></v-progress-circular>
+          </v-row>
+        </template>
+              </v-img>
+            </div></div>
 
             <v-card-subtitle>
               {{ dat.introtext | truncate(60, '...') }}
@@ -67,6 +123,9 @@
             <v-card-subtitle>
               Тема: {{ dat.tag }}
             </v-card-subtitle>
+            <span class="px-2" v-if="dat.region">
+             <v-icon small>mdi-map-marker</v-icon> {{ dat.region }}
+            </span> <br>
           </nuxt-link><span
             class="px-2"
             style="font-size: 12px;"
@@ -124,8 +183,31 @@ export default {
     return { data1: data }
   },
   data: () => ({
+    closeOnClick: true,
     show: false,
-    pagination: ''
+    pagination: '',
+    regions: [
+      { name: 'г. Липецк', url: 'regions/lipetsk' },
+      { name: 'Липецкий район', url: 'regions/lipetsk-region' },
+      { name: 'г.Елец', url: 'regions/elets' },
+      { name: 'Елецкий район', url: 'regions/eletsky' },
+      { name: 'Воловский район', url: 'regions/volovo' },
+      { name: 'Грязинский район', url: 'regions/gryazi' },
+      { name: 'Данковский район', url: 'regions/dankov' },
+      { name: 'Добринский район', url: 'regions/dobrinka' },
+      { name: 'Добровский район', url: 'regions/dobroe' },
+      { name: 'Долгоруковский район', url: 'regions/dolgorukovo' },
+      { name: 'Задонский район', url: 'regions/zadonsk' },
+      { name: 'Измалковский район', url: 'regions/izmalkovo' },
+      { name: 'Краснинский район', url: 'regions/krasnoe' },
+      { name: 'Лебедянский район', url: 'regions/lebedyan' },
+      { name: 'Лев-Толстовский район', url: 'regions/lev-tolstoy' },
+      { name: 'Становлянский район', url: 'regions/stanovoe' },
+      { name: 'Тербунский район', url: 'regions/terbuni' },
+      { name: 'Усманский район', url: 'regions/usman' },
+      { name: 'Хлевенский район', url: 'regions/hlevnoe' },
+      { name: 'Чаплыгинский район', url: 'regions/chapligin' }
+    ]
   }),
   head () {
     return {

@@ -11,7 +11,7 @@
     <v-btn class="primary my-md-6" small to="/blog/national-projects" nuxt>
       Национальные проекты
     </v-btn>
-    <v-btn class="primary my-md-6" small to="/blog/education" nuxt>
+    <v-btn class="primary my-md-6" small to="/blog" nuxt >
       Образование
     </v-btn>
     <v-btn class="primary my-md-6" small to="/blog/health" nuxt>

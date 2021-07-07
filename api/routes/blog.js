@@ -51,7 +51,7 @@ router.get('/', async function (req, res) {
   const blogsCount = parseInt(Math.ceil(podschet))
   try {
     const blogs = await blog.find()
-      .select('_id h1 title introtext coverImageName url tag createdDate views')
+      .select('_id h1 title introtext coverImageName url tag createdDate views thumb region')
       .sort('-createdDate')
       .skip((page - 1) * pagination)
       .limit(pagination)
@@ -62,12 +62,14 @@ router.get('/', async function (req, res) {
     res.status(500).json({ message: err.message })
   }
 })
+
 router.patch('/:url', getBlog, async (req, res) => {
   res.Blog.h1 = req.body.h1,
   res.Blog.title = req.body.title,
   res.Blog.description = req.body.description,
   res.Blog.introtext = req.body.introtext,
   res.Blog.tag = req.body.tag,
+  res.Blog.region = req.body.region,
   res.Blog.url = req.body.url,
   res.Blog.content = req.body.content,
   res.Blog.coverImageName = req.body.coverImageName
@@ -134,6 +136,41 @@ router.patch('/:url/comment/del', getBlog, async (req, res, next) => {
     console.log(err.message)
   }
 })
+
+router.get('/regions/elets', async function (req, res) {
+  console.log(req)
+  
+  //const blogsCounts = { count: await blog.countDocuments({ region: "Елецкий район" }) }
+  try {
+    const blogs = await blog.find({ region: "Елецкий район" })
+      .select('_id h1 title introtext coverImageName url tag createdDate views thumb region')
+      .sort('-createdDate')
+      .lean()
+      .exec()
+    //blogs.push(blogsCounts)
+    res.json(blogs)
+   // res.json(blogsCounts)
+  } catch (err) {
+    res.status(500).json({ message: err.message })
+  }
+})
+router.get('/regions/chapligin', async function (req, res) {
+  console.log(req)
+  
+  //const blogsCounts = { count: await blog.countDocuments({ region: "Елецкий район" }) }
+  try {
+    const blogs = await blog.find({ region: "Чаплыгинский район" })
+      .select('_id h1 title introtext coverImageName url tag createdDate views thumb region')
+      .sort('-createdDate')
+      .lean()
+      .exec()
+    //blogs.push(blogsCounts)
+    res.json(blogs)
+   // res.json(blogsCounts)
+  } catch (err) {
+    res.status(500).json({ message: err.message })
+  }
+})
 /* router.post("/", upload.single('file'), async (req, res, next) => {
   const fileName = req.file != null ? req.file.filename : null;
    let Blog = new blog({
@@ -156,7 +193,6 @@ router.patch('/:url/comment/del', getBlog, async (req, res, next) => {
 
 /* router.get("/national-projects", async function(req, res) {
   try {
-
       const blogs2 = await blog.find()
       .select("_id h1 title introtext coverImageName url tag created_date")
       .sort("-created_date")

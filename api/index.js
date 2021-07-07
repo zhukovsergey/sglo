@@ -14,6 +14,7 @@ const blog = require('./model/blog')
 const path = require('path')
 const service = require('./model/service')
 const fs = require('fs')
+const sharp = require('sharp')
 const helmet = require("helmet")
 app.use(helmet())
 
@@ -73,7 +74,7 @@ app.post('/contact', async (req, res) => {
 app.get('/blog/national-projects', async function (req, res) {
   try {
     const blogs2 = await blog.find({ tag: 'Национальные проекты' })
-      .select('_id h1 title introtext coverImageName url tag createdDate views')
+      .select('_id h1 title introtext coverImageName url tag createdDate views region')
       .sort('-createdDate')
       .lean()
       .exec()
@@ -98,7 +99,7 @@ app.get('/blog/photos', async function (req, res) {
 app.get('/blog/health', async function (req, res) {
   try {
     const blogs2 = await blog.find({ tag: 'Здравоохранение' })
-      .select('_id h1 title introtext coverImageName url tag createdDate views')
+      .select('_id h1 title introtext coverImageName url tag createdDate views region')
       .sort('-createdDate')
       .lean()
       .exec()
@@ -110,7 +111,7 @@ app.get('/blog/health', async function (req, res) {
 app.get('/blog/education', async function (req, res) {
   try {
     const blogs2 = await blog.find({ tag: 'Образование' })
-      .select('_id h1 title introtext coverImageName url tag createdDate views')
+      .select('_id h1 title introtext coverImageName url tag createdDate views region')
       .sort('-createdDate')
       .lean()
       .exec()
@@ -140,10 +141,11 @@ const storage = multer.diskStorage({
   destination (req, file, cb) {
     cb(null, uploadPath)
   },
-  filename (req, file, cb) {
-    cb(null, Date.now() + file.originalname)
-  }
+  filename(req, file, cb) {
+      cb(null, Date.now() + file.originalname)
+    }
 })
+
 
 const upload = multer({
   storage,
@@ -173,9 +175,20 @@ app.post('/uploadmulti', upload.array('files', 12), async function (req, res, ne
 // req.files - массив файлов `photos`
 // req.body сохранит текстовые поля, если они будут
 
+
 app.post('/blog', upload.array('files'), async (req, res, next) => {
   const fileName = req.file != null ? req.file.filename : null
   const filesName = req.files != null ? req.files : null
+  const thumbnails = []
+  let date = new Date();
+  
+  for (var i = 0; i < req.files.length; i++) {
+    await sharp(req.files[i].path)
+      .resize({ width: 615, height: 350 })
+      .toFile(`static/resizedimg/${date.getMonth()}/${req.files[i].filename}`);
+    thumbnails[i] = `resizedimg/${date.getMonth()}/${req.files[i].filename}`;
+  }
+  
   const Blog = new blog({
     h1: req.body.h1,
     title: req.body.title,
@@ -183,8 +196,10 @@ app.post('/blog', upload.array('files'), async (req, res, next) => {
     introtext: req.body.introtext,
     url: req.body.url,
     tag: req.body.tag,
+    region: req.body.region,
     content: req.body.content,
-    coverImageName: filesName
+    coverImageName: filesName,
+    thumb: thumbnails
 
   })
   try {
@@ -198,7 +213,7 @@ app.post('/blog', upload.array('files'), async (req, res, next) => {
 app.get('/blog/last10', async function (req, res) {
   try {
     const blogs3 = await blog.find()
-      .select('_id h1 title introtext coverImageName url tag created_date')
+      .select('_id h1 title introtext coverImageName url tag created_date thumb region createdDate')
       .sort('-createdDate')
       .limit(6)
       .lean()

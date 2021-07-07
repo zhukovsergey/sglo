@@ -60,7 +60,15 @@
         bullist numlist outdent indent | help'
         }"
       />
-
+      <v-select
+        v-model="region"
+        :rules="[v => !!v || 'Район не выбран']"
+        :items="regions"
+        required
+        label="Выберите район"
+        outlined
+        name="region"
+        />
       <v-select
         v-model="tag"
         :rules="[v => !!v || 'Тэг не выбран']"
@@ -117,6 +125,7 @@ export default {
     description: '',
     url: '',
     tag: '',
+    region: '',
     content: '',
     files: [],
     introtext: '',
@@ -131,6 +140,28 @@ export default {
       'Здравоохранение',
       'Образование',
       'Конкурсы'
+    ],
+    regions: [
+      'г. Липецк',
+      'г. Елец',
+      'Липецкий район',
+      'Елецкий район',
+      'Воловский район',
+      'Грязинский район',
+      'Данковский район',
+      'Добринский район',
+      'Добровский район',
+      'Долгоруковский район',
+      'Задонский район',
+      'Измалковский район',
+      'Краснинский район',
+      'Лебедянский район',
+      'Лев-Толстовский район',
+      'Становлянский район',
+      'Тербунский район',
+      'Усманский район',
+      'Хлевенский район',
+      'Чаплыгинский район'
     ]
   }),
   head () {
@@ -156,6 +187,7 @@ export default {
       formData.append('description', this.description)
       formData.append('url', this.url)
       formData.append('tag', this.tag)
+      formData.append('region', this.region)
       formData.append('content', this.content)
       formData.append('introtext', this.introtext)
       formData.append('file', file)

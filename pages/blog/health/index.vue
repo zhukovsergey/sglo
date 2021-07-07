@@ -14,7 +14,7 @@
     <v-btn class="primary my-md-6" small to="/blog/education" nuxt>
       Образование
     </v-btn>
-    <v-btn class="primary my-md-6" small to="/blog/health" nuxt>
+    <v-btn class="primary my-md-6" small to="/blog" nuxt>
       Здравоохранение
     </v-btn>
     <v-row>

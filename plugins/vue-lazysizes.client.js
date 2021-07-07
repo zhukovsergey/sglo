@@ -1,2 +1,2 @@
-import WebpPlugun from 'vue-webp-plugin';
-Vue.use(WebpPlugun);
+import lazySizes from 'lazysizes'
+export default lazySizes

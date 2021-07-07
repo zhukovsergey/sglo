@@ -119,6 +119,7 @@ export default {
     email: '',
     dialogm1: '',
     dialog: false,
+    permissionGranted: false,
     valid: true,
     nameRules: [
       v => !!v || 'Имя обязательно',
@@ -139,6 +140,15 @@ export default {
       }
       axios.post('https://zabbix.etalon48.com/api/contact', formData)
         .then(alert('Успешно отправлено'))
+    },
+    async requestPermission () {
+      try {
+        const permission = await Notification.requestPermission()
+        console.log(Notification.requestPermission())
+        this.permissionGranted = permission === 'granted'
+      } catch (e) {
+        console.error(e)
+      }
     }
   }
 }
