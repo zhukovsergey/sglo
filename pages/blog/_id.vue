@@ -1,16 +1,16 @@
 <template>
   <div class="container fluid">
-    <div class=" mt-4 h1">
-      <h1 class="text-center py-2">
-        {{ data1.h1 }}
-      </h1>
-      <span
+  <span
       v-if="data1.region"
         style="float:right; font-size: 13px;"
       ><v-icon>mdi-map-marker</v-icon> {{ data1.region }}</span><br>
       <span
         style="float:right; font-size: 13px;"
       ><v-icon>mdi-eye</v-icon>{{ data1.views }}</span>
+    <div class=" mt-2 h1">
+      <h1 class="text-center py-2">
+        {{ data1.h1 }}
+      </h1><br>
     </div> <div class="maincontentofarticle">
     <div class="singlepicture" style="float:left; margin-right: 20px;">
     <picture>

@@ -1,5 +1,13 @@
 <template>
   <div class="container">
+  <h1 class="text-center">Новости Чаплыгинского районного отделения</h1>
+  <div class="float-right mt-4" style="color: green;">
+  Новостей в разделе:
+  <span
+  style="color: green;">
+  {{data1.length}}
+  </span>
+  </div>
     <v-breadcrumbs large>
       <v-breadcrumbs-item to="/" nuxt>
         Главная
@@ -8,16 +16,7 @@
         Блог
       </v-breadcrumbs-item>
     </v-breadcrumbs>
-    <v-btn class="primary my-md-6" small to="/blog/national-projects" nuxt >
-      Национальные проекты
-    </v-btn>
-    <v-btn class="primary my-md-6" small to="/blog/education" nuxt>
-      Образование
-    </v-btn>
-    <v-btn class="primary my-md-6" small to="/blog/health" nuxt>
-      Здравоохранение
-    </v-btn>
-
+    <blogthemes />
     <v-row v-if="data1">
       <v-col v-for="(dat, index) in data1" :key="dat._id">
       <div v-if="index < pageSize">
@@ -81,6 +80,7 @@
         </v-card></div>
       </v-col>
     </v-row>
+    {{this.$store.getters["getSelectedDankov"]}}
     <v-row v-if="data1.length < 1">
     <h3 class="px-4">К сожалению, в этом разделе пока нет новостей</h3>
     </v-row>
@@ -104,13 +104,17 @@
 </template>
 <script>
 import axios from 'axios'
+import blogthemes from '~/components/blogthemes.vue'
 export default {
+  components: {
+    blogthemes
+  },
   filters: {
     truncate (text, length, suffix) {
       return text.substring(0, length) + suffix
     }
   },
-  async asyncData () {
+  async asyncData ({ store }) {
     const { data } = await axios.get(
       'https://zabbix.etalon48.com/api/blog/regions/chapligin'
     )
@@ -126,13 +130,13 @@ export default {
   head () {
     return {
       title:
-        'Статьи Елецкого регионального отделения Союза женщин',
+        'Статьи Чаплыгинского регионального отделения Союза женщин',
       meta: [
         {
           hid: 'description',
           name: 'description',
           content:
-            'Актуальные новости и статьи Елецкого регионального отделения с официального сайта Союза женщин Липецкой области'
+            'Актуальные новости и статьи Чаплыгинского регионального отделения с официального сайта Союза женщин Липецкой области'
         },
         { hid: 'robots', name: 'robots', content: 'index,follow' }
       ]

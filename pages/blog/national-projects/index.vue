@@ -27,7 +27,7 @@
             class="px-2"
           ><v-icon small>mdi-eye</v-icon>{{ dat.views }}</span>
 
-          <nuxt-link :to="`/blog/${dat.url}`">
+          <nuxt-link :to="`/blog/${dat.url}`" style="text-decoration: none;">
             <v-card-title>
               {{ dat.h1 }}
             </v-card-title>
@@ -52,6 +52,9 @@
             <v-card-subtitle>
               {{ dat.tag }}
             </v-card-subtitle>
+            <span class="px-2" v-if="dat.region">
+             <v-icon small>mdi-map-marker</v-icon> {{ dat.region }}
+            </span> <br>
           </nuxt-link><span
             class="px-2"
             style="font-size: 12px;"

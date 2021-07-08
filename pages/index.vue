@@ -107,14 +107,6 @@
             <span class="px-2" v-if="dat.region">
              <v-icon small>mdi-map-marker</v-icon> {{ dat.region }}
             </span> <br>
-              <span
-            class="px-2"
-            style="font-size: 12px;"
-          >Опубликовано:
-            {{
-              $dateFns.format(dat.createdDate, 'dd-MMMM-yyyy', { locale: 'ru' })
-            }}
-          </span>
             <v-card-actions>
               <v-btn
                 color="green"
@@ -123,6 +115,7 @@
               >
                 ПОДРОБНЕЕ...
               </v-btn>
+
               <v-spacer />
             </v-card-actions>
           </v-card>

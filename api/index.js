@@ -224,6 +224,48 @@ app.get('/blog/last10', async function (req, res) {
   }
 })
 
+app.get('/all', async function (req, res) {
+  try {
+    const blogsCounts = [
+      { name: "Всего", kolvo: await blog.countDocuments() },
+      { name: "г. Липецк", kolvo: await blog.countDocuments({ region: "г. Липецк" }) },
+      { name: "Липецкий район", kolvo: await blog.countDocuments({ region: "Липецкий район" }) },
+      { name: "г. Елец", kolvo: await blog.countDocuments({ region: "г. Елец" }) },
+      { name: "Елецкий район", kolvo: await blog.countDocuments({ region: "Елецкий район" }) },
+      { name: "Воловский район", kolvo: await blog.countDocuments({ region: "Воловский район" }) },
+      { name: "Грязинский район", kolvo: await blog.countDocuments({ region: "Грязинский район" }) },
+      { name: "Данковский район", kolvo: await blog.countDocuments({ region: "Данковский район" }) },
+      { name: "Добринский район", kolvo: await blog.countDocuments({ region: "Добринский район" }) },
+      { name: "Добровский район", kolvo: await blog.countDocuments({ region: "Добровский район" }) },
+      { name: "Долгоруковский район", kolvo: await blog.countDocuments({ region: "Долгоруковский район" }) },
+      { name: "Задонский район", kolvo: await blog.countDocuments({ region: "Задонский район" }) },
+      { name: "Измалковский район", kolvo: await blog.countDocuments({ region: "Измалковский район" }) },
+      { name: "Краснинский район", kolvo: await blog.countDocuments({ region: "Краснинский район" }) },
+      { name: "Лебедянский район", kolvo: await blog.countDocuments({ region: "Лебедянский район" }) },
+      { name: "Лев-Толстовский район", kolvo: await blog.countDocuments({ region: "Лев-Толстовский район" }) },
+      { name: "Становлянский район", kolvo: await blog.countDocuments({ region: "Становлянский район" }) },
+      { name: "Тербунский район", kolvo: await blog.countDocuments({ region: "Тербунский район" }) },
+      { name: "Усманский район", kolvo: await blog.countDocuments({ region: "Усманский район" }) },
+      { name: "Хлевенский район", kolvo: await blog.countDocuments({ region: "Хлевенский район" }) },
+      { name: "Чаплыгинский район", kolvo: await blog.countDocuments({ region: "Чаплыгинский район" }) }
+    ]
+    //res.json(blogs)
+   res.json(blogsCounts)
+  } catch (err) {
+    res.status(500).json({ message: err.message })
+  }
+})
+
+app.get('/allblogs', async function (req, res) {
+  try {
+    const blogsCountss = await blog.countDocuments() 
+    //res.json(blogs)
+   res.json(blogsCountss)
+  } catch (err) {
+    res.status(500).json({ message: err.message })
+  }
+})
+
 app.get('/blog/search', async function (req, res) {
   const sText = req.query.searchText
   try {

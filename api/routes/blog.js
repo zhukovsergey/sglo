@@ -53,8 +53,8 @@ router.get('/', async function (req, res) {
     const blogs = await blog.find()
       .select('_id h1 title introtext coverImageName url tag createdDate views thumb region')
       .sort('-createdDate')
-      .skip((page - 1) * pagination)
-      .limit(pagination)
+    //  .skip((page - 1) * pagination)
+    //  .limit(pagination)
       .lean()
       .exec()
     res.json(blogs)
@@ -137,9 +137,7 @@ router.patch('/:url/comment/del', getBlog, async (req, res, next) => {
   }
 })
 
-router.get('/regions/elets', async function (req, res) {
-  console.log(req)
-  
+router.get('/regions/eletsky', async function (req, res) {
   //const blogsCounts = { count: await blog.countDocuments({ region: "Елецкий район" }) }
   try {
     const blogs = await blog.find({ region: "Елецкий район" })
@@ -154,8 +152,52 @@ router.get('/regions/elets', async function (req, res) {
     res.status(500).json({ message: err.message })
   }
 })
+router.get('/regions/lipetsk', async function (req, res) {
+  //const blogsCounts = { count: await blog.countDocuments({ region: "Елецкий район" }) }
+  try {
+    const blogs = await blog.find({ region: "г. Липецк" })
+      .select('_id h1 title introtext coverImageName url tag createdDate views thumb region')
+      .sort('-createdDate')
+      .lean()
+      .exec()
+    //blogs.push(blogsCounts)
+    res.json(blogs)
+   // res.json(blogsCounts)
+  } catch (err) {
+    res.status(500).json({ message: err.message })
+  }
+})
+router.get('/regions/lipetsk-region', async function (req, res) {
+  //const blogsCounts = { count: await blog.countDocuments({ region: "Елецкий район" }) }
+  try {
+    const blogs = await blog.find({ region: "Липецкий район" })
+      .select('_id h1 title introtext coverImageName url tag createdDate views thumb region')
+      .sort('-createdDate')
+      .lean()
+      .exec()
+    //blogs.push(blogsCounts)
+    res.json(blogs)
+   // res.json(blogsCounts)
+  } catch (err) {
+    res.status(500).json({ message: err.message })
+  }
+})
+router.get('/regions/elets', async function (req, res) {
+  //const blogsCounts = { count: await blog.countDocuments({ region: "Елецкий район" }) }
+  try {
+    const blogs = await blog.find({ region: "г. Елец" })
+      .select('_id h1 title introtext coverImageName url tag createdDate views thumb region')
+      .sort('-createdDate')
+      .lean()
+      .exec()
+    //blogs.push(blogsCounts)
+    res.json(blogs)
+   // res.json(blogsCounts)
+  } catch (err) {
+    res.status(500).json({ message: err.message })
+  }
+})
 router.get('/regions/chapligin', async function (req, res) {
-  console.log(req)
   
   //const blogsCounts = { count: await blog.countDocuments({ region: "Елецкий район" }) }
   try {
@@ -171,6 +213,247 @@ router.get('/regions/chapligin', async function (req, res) {
     res.status(500).json({ message: err.message })
   }
 })
+router.get('/regions/dankov', async function (req, res) {
+  
+  //const blogsCounts = { count: await blog.countDocuments({ region: "Елецкий район" }) }
+  try {
+    const blogs = await blog.find({ region: "Данковский район" })
+      .select('_id h1 title introtext coverImageName url tag createdDate views thumb region')
+      .sort('-createdDate')
+      .lean()
+      .exec()
+    //blogs.push(blogsCounts)
+    res.json(blogs)
+   // res.json(blogsCounts)
+  } catch (err) {
+    res.status(500).json({ message: err.message })
+  }
+})
+router.get('/regions/dobrinka', async function (req, res) {
+  
+  //const blogsCounts = { count: await blog.countDocuments({ region: "Елецкий район" }) }
+  try {
+    const blogs = await blog.find({ region: "Добринский район" })
+      .select('_id h1 title introtext coverImageName url tag createdDate views thumb region')
+      .sort('-createdDate')
+      .lean()
+      .exec()
+    //blogs.push(blogsCounts)
+    res.json(blogs)
+   // res.json(blogsCounts)
+  } catch (err) {
+    res.status(500).json({ message: err.message })
+  }
+})
+router.get('/regions/dobroe', async function (req, res) {
+  
+  //const blogsCounts = { count: await blog.countDocuments({ region: "Елецкий район" }) }
+  try {
+    const blogs = await blog.find({ region: "Добровский район" })
+      .select('_id h1 title introtext coverImageName url tag createdDate views thumb region')
+      .sort('-createdDate')
+      .lean()
+      .exec()
+    //blogs.push(blogsCounts)
+    res.json(blogs)
+   // res.json(blogsCounts)
+  } catch (err) {
+    res.status(500).json({ message: err.message })
+  }
+})
+router.get('/regions/volovo', async function (req, res) {
+  
+  //const blogsCounts = { count: await blog.countDocuments({ region: "Елецкий район" }) }
+  try {
+    const blogs = await blog.find({ region: "Воловский район" })
+      .select('_id h1 title introtext coverImageName url tag createdDate views thumb region')
+      .sort('-createdDate')
+      .lean()
+      .exec()
+    //blogs.push(blogsCounts)
+    res.json(blogs)
+   // res.json(blogsCounts)
+  } catch (err) {
+    res.status(500).json({ message: err.message })
+  }
+})
+router.get('/regions/gryazi', async function (req, res) {
+  
+  //const blogsCounts = { count: await blog.countDocuments({ region: "Елецкий район" }) }
+  try {
+    const blogs = await blog.find({ region: "Грязинский район" })
+      .select('_id h1 title introtext coverImageName url tag createdDate views thumb region')
+      .sort('-createdDate')
+      .lean()
+      .exec()
+    //blogs.push(blogsCounts)
+    res.json(blogs)
+   // res.json(blogsCounts)
+  } catch (err) {
+    res.status(500).json({ message: err.message })
+  }
+})
+router.get('/regions/dolgorukovo', async function (req, res) {
+  
+  //const blogsCounts = { count: await blog.countDocuments({ region: "Елецкий район" }) }
+  try {
+    const blogs = await blog.find({ region: "Долгоруковский район" })
+      .select('_id h1 title introtext coverImageName url tag createdDate views thumb region')
+      .sort('-createdDate')
+      .lean()
+      .exec()
+    //blogs.push(blogsCounts)
+    res.json(blogs)
+   // res.json(blogsCounts)
+  } catch (err) {
+    res.status(500).json({ message: err.message })
+  }
+})
+router.get('/regions/zadonsk', async function (req, res) {
+  
+  //const blogsCounts = { count: await blog.countDocuments({ region: "Елецкий район" }) }
+  try {
+    const blogs = await blog.find({ region: "Задонский район" })
+      .select('_id h1 title introtext coverImageName url tag createdDate views thumb region')
+      .sort('-createdDate')
+      .lean()
+      .exec()
+    //blogs.push(blogsCounts)
+    res.json(blogs)
+   // res.json(blogsCounts)
+  } catch (err) {
+    res.status(500).json({ message: err.message })
+  }
+})
+router.get('/regions/izmalkovo', async function (req, res) {
+  
+  //const blogsCounts = { count: await blog.countDocuments({ region: "Елецкий район" }) }
+  try {
+    const blogs = await blog.find({ region: "Измалковский район" })
+      .select('_id h1 title introtext coverImageName url tag createdDate views thumb region')
+      .sort('-createdDate')
+      .lean()
+      .exec()
+    //blogs.push(blogsCounts)
+    res.json(blogs)
+   // res.json(blogsCounts)
+  } catch (err) {
+    res.status(500).json({ message: err.message })
+  }
+})
+router.get('/regions/krasnoe', async function (req, res) {
+  
+  //const blogsCounts = { count: await blog.countDocuments({ region: "Елецкий район" }) }
+  try {
+    const blogs = await blog.find({ region: "Краснинский район" })
+      .select('_id h1 title introtext coverImageName url tag createdDate views thumb region')
+      .sort('-createdDate')
+      .lean()
+      .exec()
+    //blogs.push(blogsCounts)
+    res.json(blogs)
+   // res.json(blogsCounts)
+  } catch (err) {
+    res.status(500).json({ message: err.message })
+  }
+})
+router.get('/regions/lebedyan', async function (req, res) {
+  
+  //const blogsCounts = { count: await blog.countDocuments({ region: "Елецкий район" }) }
+  try {
+    const blogs = await blog.find({ region: "Лебедянский район" })
+      .select('_id h1 title introtext coverImageName url tag createdDate views thumb region')
+      .sort('-createdDate')
+      .lean()
+      .exec()
+    //blogs.push(blogsCounts)
+    res.json(blogs)
+   // res.json(blogsCounts)
+  } catch (err) {
+    res.status(500).json({ message: err.message })
+  }
+})
+router.get('/regions/lev-tolstoy', async function (req, res) {
+  
+  //const blogsCounts = { count: await blog.countDocuments({ region: "Елецкий район" }) }
+  try {
+    const blogs = await blog.find({ region: "Лев-Толстовский район" })
+      .select('_id h1 title introtext coverImageName url tag createdDate views thumb region')
+      .sort('-createdDate')
+      .lean()
+      .exec()
+    //blogs.push(blogsCounts)
+    res.json(blogs)
+   // res.json(blogsCounts)
+  } catch (err) {
+    res.status(500).json({ message: err.message })
+  }
+})
+router.get('/regions/stanovoe', async function (req, res) {
+  
+  //const blogsCounts = { count: await blog.countDocuments({ region: "Елецкий район" }) }
+  try {
+    const blogs = await blog.find({ region: "Становлянский район" })
+      .select('_id h1 title introtext coverImageName url tag createdDate views thumb region')
+      .sort('-createdDate')
+      .lean()
+      .exec()
+    //blogs.push(blogsCounts)
+    res.json(blogs)
+   // res.json(blogsCounts)
+  } catch (err) {
+    res.status(500).json({ message: err.message })
+  }
+})
+router.get('/regions/terbuni', async function (req, res) {
+  
+  //const blogsCounts = { count: await blog.countDocuments({ region: "Елецкий район" }) }
+  try {
+    const blogs = await blog.find({ region: "Тербунский район" })
+      .select('_id h1 title introtext coverImageName url tag createdDate views thumb region')
+      .sort('-createdDate')
+      .lean()
+      .exec()
+    //blogs.push(blogsCounts)
+    res.json(blogs)
+   // res.json(blogsCounts)
+  } catch (err) {
+    res.status(500).json({ message: err.message })
+  }
+})
+router.get('/regions/usman', async function (req, res) {
+  
+  //const blogsCounts = { count: await blog.countDocuments({ region: "Елецкий район" }) }
+  try {
+    const blogs = await blog.find({ region: "Усманский район" })
+      .select('_id h1 title introtext coverImageName url tag createdDate views thumb region')
+      .sort('-createdDate')
+      .lean()
+      .exec()
+    //blogs.push(blogsCounts)
+    res.json(blogs)
+   // res.json(blogsCounts)
+  } catch (err) {
+    res.status(500).json({ message: err.message })
+  }
+})
+router.get('/regions/hlevnoe', async function (req, res) {
+  
+  //const blogsCounts = { count: await blog.countDocuments({ region: "Елецкий район" }) }
+  try {
+    const blogs = await blog.find({ region: "Хлевенский район" })
+      .select('_id h1 title introtext coverImageName url tag createdDate views thumb region')
+      .sort('-createdDate')
+      .lean()
+      .exec()
+    //blogs.push(blogsCounts)
+    res.json(blogs)
+   // res.json(blogsCounts)
+  } catch (err) {
+    res.status(500).json({ message: err.message })
+  }
+})
+
 /* router.post("/", upload.single('file'), async (req, res, next) => {
   const fileName = req.file != null ? req.file.filename : null;
    let Blog = new blog({

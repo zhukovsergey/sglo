@@ -1,5 +1,13 @@
 <template>
   <div class="container">
+  <h1 class="text-center">Новости Добринского районного отделения</h1>
+  <div class="float-right mt-4" style="color: green;">
+  Новостей в разделе:
+  <span
+  style="color: green;">
+  {{data1.length}}
+  </span>
+  </div>
     <v-breadcrumbs large>
       <v-breadcrumbs-item to="/" nuxt>
         Главная
@@ -8,17 +16,8 @@
         Блог
       </v-breadcrumbs-item>
     </v-breadcrumbs>
-    <v-btn class="primary my-md-6" small to="/blog/national-projects" nuxt>
-      Национальные проекты
-    </v-btn>
-    <v-btn class="primary my-md-6" small to="/blog" nuxt >
-      Образование
-    </v-btn>
-    <v-btn class="primary my-md-6" small to="/blog/health" nuxt>
-      Здравоохранение
-    </v-btn>
-
-    <v-row>
+    <blogthemes />
+    <v-row v-if="data1">
       <v-col v-for="(dat, index) in data1" :key="dat._id">
       <div v-if="index < pageSize">
         <v-card class="mx-auto" max-width="300">
@@ -27,7 +26,7 @@
             class="px-2"
           ><v-icon small>mdi-eye</v-icon>{{ dat.views }}</span>
 
-          <nuxt-link :to="`/blog/${dat.url}`" style="text-decoration: none;">
+          <nuxt-link :to="`/blog/${dat.url}`">
             <v-card-title>
               {{ dat.h1 }}
             </v-card-title>
@@ -49,10 +48,12 @@
             <v-card-subtitle>
               {{ dat.introtext | truncate(60, '...') }}
             </v-card-subtitle>
+            <center>
+            <hr size="1" calss="text-center" style="width: 75%; color: #d5e6f7;"></hr></center>
             <v-card-subtitle>
               {{ dat.tag }}
             </v-card-subtitle>
-             <span class="px-2" v-if="dat.region">
+            <span class="px-2" v-if="dat.region">
              <v-icon small>mdi-map-marker</v-icon> {{ dat.region }}
             </span> <br>
           </nuxt-link><span
@@ -79,8 +80,12 @@
         </v-card></div>
       </v-col>
     </v-row>
+    {{this.$store.getters["getSelectedDankov"]}}
+    <v-row v-if="data1.length < 1">
+    <h3 class="px-4">К сожалению, в этом разделе пока нет новостей</h3>
+    </v-row>
     <br>
-    <v-btn
+   <v-btn
       v-if="data1.length > 6"
       depressed
       color="primary"
@@ -99,14 +104,20 @@
 </template>
 <script>
 import axios from 'axios'
+import blogthemes from '~/components/blogthemes.vue'
 export default {
+  components: {
+    blogthemes
+  },
   filters: {
     truncate (text, length, suffix) {
       return text.substring(0, length) + suffix
     }
   },
-  async asyncData () {
-    const { data } = await axios.get('https://zabbix.etalon48.com/api/blog/education')
+  async asyncData ({ store }) {
+    const { data } = await axios.get(
+      'https://zabbix.etalon48.com/api/blog/regions/dobrinka'
+    )
     return { data1: data }
   },
   data: () => ({
@@ -118,13 +129,14 @@ export default {
   }),
   head () {
     return {
-      title: 'Статьи на тему "Образование" Союза женщин Липецкой обалсти',
+      title:
+        'Статьи Добринского регионального отделения Союза женщин',
       meta: [
         {
           hid: 'description',
           name: 'description',
           content:
-            'Актуальные новости и статьи на тему Образования с официального сайта Союза женщин Липецкой области'
+            'Актуальные новости и статьи Добринского регионального отделения с официального сайта Союза женщин Липецкой области'
         },
         { hid: 'robots', name: 'robots', content: 'index,follow' }
       ]

@@ -194,7 +194,7 @@ export default {
       axios.post('https://zabbix.etalon48.com/api/blog', formData, {
         headers: { 'Content-Type': 'multipart/form-data' }
       })
-        .then(this.$toast.success('Статья добавлена', { duration: 3000 }), this.$router.push('/blog'))
+        .then(this.$toast.success('Статья добавлена', { duration: 3000 }) /* , this.$router.push('/blog') */)
     },
     translite () {
       this.url = scripts.translite(this.h1)

@@ -95,7 +95,12 @@
           >
             mdi-newspaper-variant-multiple
           </v-icon>
+          <v-badge
+          color="green"
+          :content="counts"
+        >
           Новости
+          </v-badge>
         </v-btn>
         <v-divider vertical />
 
@@ -233,11 +238,14 @@ export default {
     drawer: false,
     group: null,
     search: '',
+    counts: '',
+    dat: '',
     dataSearch: '',
     searchError: ''
   }),
   mounted () {
     setTimeout(this.destroySearch(), 4000)
+    this.count()
   },
   methods: {
     async searchWiki () {
@@ -262,6 +270,13 @@ export default {
           this.$refs.error.style.display = 'block'
         }
       }
+    },
+    async count () {
+      const res = await axios.get(
+        'https://zabbix.etalon48.com/api/allblogs'
+      )
+      this.counts = res.data
+      console.log(res.data.count)
     },
     destroySearch () {
       const v = this

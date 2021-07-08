@@ -105,7 +105,19 @@
         <v-divider></v-divider>
       </v-card>
     </v-dialog>
-    <br>
+    <br><center>
+    <span class="text-md-center" style="font-size:20px; font-family: 'Asessorc';">Кол-во статей районов</span></center>
+    <div
+    class="ml-2"
+    v-for="(kol, index) in kolvo"
+    :key="kol"
+    ><div v-if="index>=1">
+    <span v-if="index<=3" style="color:red; font-weight:bold;">
+    №{{index}}-{{kol.name}} - {{kol.kolvo}}</span>
+    <span v-if="index>3" style="font-size: 14px;">
+    №{{index}}-{{kol.name}} - {{kol.kolvo}}</span>
+    </div><v-divider></v-divider>
+    </div>
     </v-sheet>
   </v-col>
 </template>
@@ -113,11 +125,19 @@
 <script>
 import axios from 'axios'
 export default {
+  async asyncData () {
+    const { data } = await axios.get(
+      'https://zabbix.etalon48.com/api/all'
+    )
+    return { data1: data }
+  },
   data: () => ({
     mailtext: '',
     namefio: '',
+    dankov: '',
     email: '',
     dialogm1: '',
+    kolvo: '',
     dialog: false,
     permissionGranted: false,
     valid: true,
@@ -131,7 +151,19 @@ export default {
     ],
     select: null
   }),
+  beforeMount () {
+    this.kolichestvo()
+  },
   methods: {
+    async kolichestvo () {
+      const res = await axios.get(
+        'https://zabbix.etalon48.com/api/all'
+      )
+      this.kolvo = res.data
+      this.kolvo.sort(function (a, b) {
+        return b.kolvo - a.kolvo
+      })
+    },
     sendForm () {
       const formData = {
         email: this.email,

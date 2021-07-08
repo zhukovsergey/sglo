@@ -50,7 +50,9 @@
     </v-menu></div>
     <v-row no-gutters>
       <v-col v-for="dat in data1" :key="dat._id">
-        <v-card class="mx-auto my-4" max-width="320">
+       <v-lazy
+        transition="fade-transition"
+       > <v-card class="mx-auto my-4" max-width="320">
           <span
             style="float:right; font-size: 12px;"
             class="px-2"
@@ -118,7 +120,8 @@
 
             <v-card-subtitle>
               {{ dat.introtext | truncate(60, '...') }}
-            </v-card-subtitle><center>
+            </v-card-subtitle>
+            <center>
             <hr size="1" calss="text-center" style="width: 75%; color: #d5e6f7;"></hr></center>
             <v-card-subtitle>
               Тема: {{ dat.tag }}
@@ -147,11 +150,11 @@
               <v-spacer />
             </v-card-actions>
           </nuxt-link>
-        </v-card>
+        </v-card></v-lazy>
       </v-col>
     </v-row>
     <br>
-    <v-btn
+   <!-- <v-btn
       v-if="$nuxt.$route.query.page > 1"
       class="pagination-button primary"
       @click="prevPagination($nuxt)"
@@ -160,7 +163,7 @@
     </v-btn>
     <v-btn class="pagination-button primary" @click="nextPagination($nuxt)">
       Далее
-    </v-btn>
+    </v-btn> -->
     <div
       class="ya-share2"
       data-curtain
