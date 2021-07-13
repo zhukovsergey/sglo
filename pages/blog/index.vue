@@ -1,25 +1,5 @@
 <template>
   <div class="container">
-    <v-breadcrumbs large>
-      <v-breadcrumbs-item to="/" nuxt>
-        Главная
-      </v-breadcrumbs-item>
-      <v-breadcrumbs-item to="/blog" disabled nuxt>
-        Блог
-      </v-breadcrumbs-item>
-    </v-breadcrumbs>
-     <v-btn class="primary my-md-6 my-sm-2 mt-2" small to="/blog" nuxt>
-      Все
-    </v-btn>
-    <v-btn class="primary my-md-6 my-sm-2 mt-2" small to="/blog/national-projects" nuxt>
-      Национальные проекты
-    </v-btn>
-    <v-btn class="primary my-md-6 my-sm-2 mt-2" small to="/blog/education" nuxt>
-      Образование
-    </v-btn>
-    <v-btn class="primary my-md-6 my-sm-2 mt-2" small to="/blog/health" nuxt>
-      Здравоохранение
-    </v-btn>
     <div>
     <v-menu
     auto
@@ -29,6 +9,7 @@
     >
       <template v-slot:activator="{ on, attrs }">
         <v-btn
+         style="float:right; margin-top: 21px;"
           color="teal"
           dark
           v-bind="attrs"
@@ -48,6 +29,15 @@
         </v-list-item>
       </v-list>
     </v-menu></div>
+    <v-breadcrumbs large>
+      <v-breadcrumbs-item to="/" nuxt>
+        Главная
+      </v-breadcrumbs-item>
+      <v-breadcrumbs-item to="/blog" disabled nuxt>
+        Блог
+      </v-breadcrumbs-item>
+    </v-breadcrumbs>
+     <blogthemes />
     <v-row no-gutters>
       <v-col v-for="dat in data1" :key="dat._id">
        <v-lazy
@@ -175,7 +165,11 @@
 </template>
 <script>
 import axios from 'axios'
+import blogthemes from '~/components/blogthemes.vue'
 export default {
+  components: {
+    blogthemes
+  },
   filters: {
     truncate (text, length, suffix) {
       return text.substring(0, length) + suffix

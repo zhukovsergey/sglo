@@ -8,19 +8,12 @@
         Блог
       </v-breadcrumbs-item>
     </v-breadcrumbs>
-    <v-btn class="primary my-md-6" small to="/blog" nuxt >
-      Национальные проекты
-    </v-btn>
-    <v-btn class="primary my-md-6" small to="/blog/education" nuxt>
-      Образование
-    </v-btn>
-    <v-btn class="primary my-md-6" small to="/blog/health" nuxt>
-      Здравоохранение
-    </v-btn>
+    <blogthemes />
 
     <v-row>
-      <v-col v-for="(dat, index) in data1" :key="dat._id">
-      <div v-if="index < pageSize">
+      <v-col v-for="dat in data1" :key="dat._id">
+        <div>
+        <v-lazy transition="fade-transition">
         <v-card class="mx-auto" max-width="300">
           <span
             style="float:right; font-size: 12px;"
@@ -62,32 +55,26 @@
             {{
               $dateFns.format(dat.createdDate, 'dd-MMMM-yyyy', { locale: 'ru' })
             }}
-          </span>
-          <nuxt-link :to="`/blog/${dat.url}`">
-            <v-card-actions>
-              <v-btn
-                color="green"
-                danger
-                style="font-size: 16px; text-decoration: none;"
-              >
-                ПОДРОБНЕЕ...
-              </v-btn>
+              </span>
+              <nuxt-link :to="`/blog/${dat.url}`">
+                <v-card-actions>
+                  <v-btn
+                    color="green"
+                    danger
+                    style="font-size: 16px; text-decoration: none;"
+                  >
+                    ПОДРОБНЕЕ...
+                  </v-btn>
 
-              <v-spacer />
-            </v-card-actions>
-          </nuxt-link>
-        </v-card></div>
+                  <v-spacer />
+                </v-card-actions>
+              </nuxt-link>
+            </v-card>
+          </v-lazy>
+        </div>
       </v-col>
     </v-row>
     <br>
-   <v-btn
-      v-if="data1.length > 6"
-      depressed
-      color="primary"
-      @click="pageSize += pageSize"
-    >
-      Показать еще...
-    </v-btn>
     <div
       class="ya-share2"
       data-curtain
@@ -99,7 +86,11 @@
 </template>
 <script>
 import axios from 'axios'
+import blogthemes from '~/components/blogthemes.vue'
 export default {
+  components: {
+    blogthemes
+  },
   filters: {
     truncate (text, length, suffix) {
       return text.substring(0, length) + suffix
@@ -114,9 +105,7 @@ export default {
   data: () => ({
     show: false,
     pagination: '',
-    loadMore: true, // прокрутка комментов
-    page: 1, // прокрутка комментов
-    pageSize: 6 // прокрутка комментов
+    loadMore: true // прокрутка комментов
   }),
   head () {
     return {

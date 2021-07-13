@@ -58,7 +58,7 @@
           </v-col>
           <v-col class="pt-2 mx-2 float: right;" md="3">
             <div class="weather">
-              <p style="font-family:'font'; font-size: 18px;" solo>
+              <p style="font-family:'font'; font-size: 18px; min-width: 235px;" solo>
                 Погода в Липецке:
 
                 {{ temperature }}

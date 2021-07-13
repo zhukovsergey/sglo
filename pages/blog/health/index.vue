@@ -8,15 +8,7 @@
         Блог
       </v-breadcrumbs-item>
     </v-breadcrumbs>
-    <v-btn class="primary my-md-6" small to="/blog/national-projects" nuxt>
-      Национальные проекты
-    </v-btn>
-    <v-btn class="primary my-md-6" small to="/blog/education" nuxt>
-      Образование
-    </v-btn>
-    <v-btn class="primary my-md-6" small to="/blog" nuxt>
-      Здравоохранение
-    </v-btn>
+    <blogthemes />
     <v-row>
       <v-col v-for="(dat, index) in data1" :key="dat._id">
          <div v-if="index < pageSize">
@@ -98,7 +90,11 @@
 </template>
 <script>
 import axios from 'axios'
+import blogthemes from '~/components/blogthemes.vue'
 export default {
+  components: {
+    blogthemes
+  },
   filters: {
     truncate (text, length, suffix) {
       return text.substring(0, length) + suffix

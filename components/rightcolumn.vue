@@ -105,7 +105,11 @@
         <v-divider></v-divider>
       </v-card>
     </v-dialog>
-    <br><center>
+    </v-sheet><br>
+      <v-sheet
+      elevation="20"
+      rounded="lg"
+      ><br><center>
     <span class="text-md-center" style="font-size:20px; font-family: 'Asessorc';">Кол-во статей районов</span></center>
     <div
     class="ml-2"
@@ -113,13 +117,19 @@
     :key="kol"
     ><div v-if="index>=1">
     <span v-if="index<=3" style="color:red; font-weight:bold;">
-    №{{index}}-{{kol.name}} - {{kol.kolvo}}</span>
-    <span v-if="index>3" style="font-size: 14px;">
+    №{{index}}-{{kol.name}} - <v-avatar
+      color="teal"
+      size="24"
+    >
+      <span class="white--text" style="font-size: 0.9em;">{{kol.kolvo}}</span>
+    </v-avatar></span>
+    <span v-if="index>3" style="font-size: 0.9em;">
     №{{index}}-{{kol.name}} - {{kol.kolvo}}</span>
     </div><v-divider></v-divider>
     </div>
-    </v-sheet>
+      </v-sheet>
   </v-col>
+
 </template>
 
 <script>

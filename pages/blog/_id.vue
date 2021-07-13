@@ -185,6 +185,7 @@
       </div>
     </div>
     <div class="comments">
+    <br>
     <v-badge
     v-if="data1.comments.length > 0"
      color="green"
@@ -192,20 +193,26 @@
     >
       <h3>Комментарии</h3></v-badge>
       <h3 v-if="data1.comments.length == 0">Комментарии</h3>
-      <form>
-        <v-text-field v-model="fio" name="fio" label="Ваше имя" required />
+      <v-form v-model="valid">
+        <v-text-field
+        :rules="[value => value.length >= 3 || 'Длина текста меньше 3 символов']"
+        v-model="fio"
+        name="fio"
+        label="Ваше имя"
+        required />
 
         <v-textarea
+        :rules="[value => value.length >= 10 || 'Длина текста меньше 10 символов']"
           v-model="comment"
           name="comment"
           label="Ваш комментарий"
           required
         />
 
-        <v-btn color="warning" @click="newComment">
+        <v-btn color="warning" @click="newComment" :disabled="!valid">
           Опубликовать
         </v-btn>
-      </form>
+      </v-form>
       <div
         v-for="(comm, index) in data1.comments"
         :key="comm._id"
@@ -303,6 +310,7 @@ export default {
     return { data1: data }
   },
   data: () => ({
+    valid: true,
     adminShow: true,
     h1: '',
     title: '',
@@ -330,7 +338,8 @@ export default {
       'Национальные проекты',
       'Здравоохранение',
       'Образование',
-      'Конкурсы'
+      'Культура',
+      'Волна памяти'
     ],
     regions: [
       'г. Липецк',
