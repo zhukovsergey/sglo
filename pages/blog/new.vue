@@ -2,6 +2,7 @@
   <div class="container">
     <v-form ref="service" v-model="valid">
       <v-text-field
+      @change=copy
         v-model="h1"
         :rules="nameRules"
         label="Заголовок статьи"
@@ -11,26 +12,14 @@
         @keyup="translite()"
       />
       <v-text-field
-        id="title"
-        v-model="title"
-        :rules="nameRules"
-        label="Заголовк для поисковика"
-        name="title"
-        />
-      <v-text-field
         v-model="introtext"
         :rules="nameRules"
         label="Короткое описание"
         name="introtext"
         required
+        @change=copy
       />
 
-      <v-text-field
-        v-model="description"
-        :rules="nameRules"
-        label="Описание для поисковика"
-        name="description"
-        />
       <v-text-field
         id="url"
         v-model="url"
@@ -184,8 +173,8 @@ export default {
         formData.append('files', file1)
       }
       formData.append('h1', this.h1)
-      formData.append('title', this.title)
-      formData.append('description', this.description)
+      formData.append('title', this.h1)
+      formData.append('description', this.introtext)
       formData.append('url', this.url)
       formData.append('tag', this.tag)
       formData.append('region', this.region)
@@ -199,6 +188,10 @@ export default {
     },
     translite () {
       this.url = scripts.translite(this.h1)
+    },
+    copy () {
+      this.title = this.h1
+      this.description = this.introtext
     },
     handleFileUpload () {
       this.file = this.$refs.file.files[0]

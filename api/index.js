@@ -36,7 +36,7 @@ db.once('open', () => console.log('connected444 to database'))
 app.use(bodyParser.json())
 app.use(express.json())
 
-app.post('/contact', async(req, res) => {
+app.post('/contact', async (req, res) => {
     const namefio = req.body.namefio;
     const mailtext = req.body.mailtext;
     const email = req.body.email;
@@ -45,7 +45,7 @@ app.post('/contact', async(req, res) => {
     sendMail(namefio, mailtext, email, url);
     await res.status(201).json('Сообщение отправлено');
 });
-const sendMail = async(namefio, mailtext, email, url) => {
+const sendMail = async (namefio, mailtext, email, url) => {
     let transporter = await nodemailer.createTransport({
         host: "smtp.yandex.ru",
         port: 465,
@@ -70,7 +70,7 @@ const sendMail = async(namefio, mailtext, email, url) => {
     });
 
 }
-app.get('/blog/national-projects', async function(req, res) {
+app.get('/blog/national-projects', async function (req, res) {
     try {
         const blogs2 = await blog.find({ tag: 'Национальные проекты' })
             .select('_id h1 title introtext coverImageName url tag createdDate views region')
@@ -83,7 +83,7 @@ app.get('/blog/national-projects', async function(req, res) {
     }
 })
 
-app.get('/blog/photos', async function(req, res) {
+app.get('/blog/photos', async function (req, res) {
     try {
         const blogs2 = await blog.find()
             .select('_id h1 coverImageName createdDate')
@@ -95,7 +95,7 @@ app.get('/blog/photos', async function(req, res) {
         res.status(500).json({ message: err.message })
     }
 })
-app.get('/blog/health', async function(req, res) {
+app.get('/blog/health', async function (req, res) {
     try {
         const blogs2 = await blog.find({ tag: 'Здравоохранение' })
             .select('_id h1 title introtext coverImageName url tag createdDate views region')
@@ -107,7 +107,7 @@ app.get('/blog/health', async function(req, res) {
         res.status(500).json({ message: err.message })
     }
 })
-app.get('/blog/education', async function(req, res) {
+app.get('/blog/education', async function (req, res) {
     try {
         const blogs2 = await blog.find({ tag: 'Образование' })
             .select('_id h1 title introtext coverImageName url tag createdDate views region')
@@ -119,7 +119,7 @@ app.get('/blog/education', async function(req, res) {
         res.status(500).json({ message: err.message })
     }
 })
-app.get('/blog/culture', async function(req, res) {
+app.get('/blog/culture', async function (req, res) {
     try {
         const blogs2 = await blog.find({ tag: 'Культура' })
             .select('_id h1 title introtext coverImageName url tag createdDate views region')
@@ -131,7 +131,7 @@ app.get('/blog/culture', async function(req, res) {
         res.status(500).json({ message: err.message })
     }
 })
-app.get('/blog/waveofmemory', async function(req, res) {
+app.get('/blog/waveofmemory', async function (req, res) {
     try {
         const blogs2 = await blog.find({ tag: 'Волна памяти' })
             .select('_id h1 title introtext coverImageName url tag createdDate views region')
@@ -144,12 +144,12 @@ app.get('/blog/waveofmemory', async function(req, res) {
     }
 })
 
-app.get('/blog/sitemap', async(req, res) => {
+app.get('/blog/sitemap', async (req, res) => {
     try {
         const blogs = await blog.find()
             .select('_id url')
             .lean()
-        blogs.forEach(function(element) {
+        blogs.forEach(function (element) {
             element.path = '/blog/'
         })
         await res.json(blogs)
@@ -177,7 +177,7 @@ const upload = multer({
     }
 })
 
-app.post('/upload', upload.single('file'), async function(req, res, next) {
+app.post('/upload', upload.single('file'), async function (req, res, next) {
     const newFileName = req.file != null ? req.file : null
     try {
         await res.json(newFileName)
@@ -186,7 +186,7 @@ app.post('/upload', upload.single('file'), async function(req, res, next) {
     }
 })
 
-app.post('/uploadmulti', upload.array('files', 12), async function(req, res, next) {
+app.post('/uploadmulti', upload.array('files', 12), async function (req, res, next) {
     const newFileName = req.files != null ? req.files : null
     try {
         await res.json(newFileName)
@@ -199,7 +199,7 @@ app.post('/uploadmulti', upload.array('files', 12), async function(req, res, nex
 // req.body сохранит текстовые поля, если они будут
 
 
-app.post('/blog', upload.array('files'), async(req, res, next) => {
+app.post('/blog', upload.array('files'), async (req, res, next) => {
     const fileName = req.file != null ? req.file.filename : null
     const filesName = req.files != null ? req.files : null
     const thumbnails = []
@@ -233,7 +233,7 @@ app.post('/blog', upload.array('files'), async(req, res, next) => {
     }
 })
 
-app.get('/blog/last10', async function(req, res) {
+app.get('/blog/last10', async function (req, res) {
     try {
         const blogs3 = await blog.find()
             .select('_id h1 title introtext coverImageName url tag created_date thumb region createdDate')
@@ -247,54 +247,54 @@ app.get('/blog/last10', async function(req, res) {
     }
 })
 
-app.get('/all', async function(req, res) {
+app.get('/all', async function (req, res) {
     try {
         const blogsCounts = [
-                { name: "Всего", kolvo: await blog.countDocuments() },
-                { name: "г. Липецк", kolvo: await blog.countDocuments({ region: "г. Липецк" }) },
-                { name: "Липецкий район", kolvo: await blog.countDocuments({ region: "Липецкий район" }) },
-                { name: "г. Елец", kolvo: await blog.countDocuments({ region: "г. Елец" }) },
-                { name: "Елецкий район", kolvo: await blog.countDocuments({ region: "Елецкий район" }) },
-                { name: "Воловский район", kolvo: await blog.countDocuments({ region: "Воловский район" }) },
-                { name: "Грязинский район", kolvo: await blog.countDocuments({ region: "Грязинский район" }) },
-                { name: "Данковский район", kolvo: await blog.countDocuments({ region: "Данковский район" }) },
-                { name: "Добринский район", kolvo: await blog.countDocuments({ region: "Добринский район" }) },
-                { name: "Добровский район", kolvo: await blog.countDocuments({ region: "Добровский район" }) },
-                { name: "Долгоруковский район", kolvo: await blog.countDocuments({ region: "Долгоруковский район" }) },
-                { name: "Задонский район", kolvo: await blog.countDocuments({ region: "Задонский район" }) },
-                { name: "Измалковский район", kolvo: await blog.countDocuments({ region: "Измалковский район" }) },
-                { name: "Краснинский район", kolvo: await blog.countDocuments({ region: "Краснинский район" }) },
-                { name: "Лебедянский район", kolvo: await blog.countDocuments({ region: "Лебедянский район" }) },
-                { name: "Лев-Толстовский район", kolvo: await blog.countDocuments({ region: "Лев-Толстовский район" }) },
-                { name: "Становлянский район", kolvo: await blog.countDocuments({ region: "Становлянский район" }) },
-                { name: "Тербунский район", kolvo: await blog.countDocuments({ region: "Тербунский район" }) },
-                { name: "Усманский район", kolvo: await blog.countDocuments({ region: "Усманский район" }) },
-                { name: "Хлевенский район", kolvo: await blog.countDocuments({ region: "Хлевенский район" }) },
-                { name: "Чаплыгинский район", kolvo: await blog.countDocuments({ region: "Чаплыгинский район" }) }
-            ]
-            //res.json(blogs)
+            { name: "Всего", kolvo: await blog.countDocuments() },
+            { name: "г. Липецк", kolvo: await blog.countDocuments({ region: "г. Липецк" }), url: 'regions/lipetsk' },
+            { name: "Липецкий район", kolvo: await blog.countDocuments({ region: "Липецкий район" }), url: 'regions/lipetsk-region' },
+            { name: "г. Елец", kolvo: await blog.countDocuments({ region: "г. Елец" }), url: 'regions/elets' },
+            { name: "Елецкий район", kolvo: await blog.countDocuments({ region: "Елецкий район" }), url: 'regions/eletsky' },
+            { name: "Воловский район", kolvo: await blog.countDocuments({ region: "Воловский район" }), url: 'regions/volovo' },
+            { name: "Грязинский район", kolvo: await blog.countDocuments({ region: "Грязинский район" }), url: 'regions/gryazi' },
+            { name: "Данковский район", kolvo: await blog.countDocuments({ region: "Данковский район" }), url: 'regions/dankov' },
+            { name: "Добринский район", kolvo: await blog.countDocuments({ region: "Добринский район" }), url: 'regions/dobrinka' },
+            { name: "Добровский район", kolvo: await blog.countDocuments({ region: "Добровский район" }), url: 'regions/dobroe' },
+            { name: "Долгоруковский район", kolvo: await blog.countDocuments({ region: "Долгоруковский район" }), url: 'regions/dolgorukovo' },
+            { name: "Задонский район", kolvo: await blog.countDocuments({ region: "Задонский район" }), url: 'regions/zadonsk' },
+            { name: "Измалковский район", kolvo: await blog.countDocuments({ region: "Измалковский район" }), url: 'regions/izmalkovo' },
+            { name: "Краснинский район", kolvo: await blog.countDocuments({ region: "Краснинский район" }), url: 'regions/krasnoe' },
+            { name: "Лебедянский район", kolvo: await blog.countDocuments({ region: "Лебедянский район" }), url: 'regions/lebedyan' },
+            { name: "Лев-Толстовский район", kolvo: await blog.countDocuments({ region: "Лев-Толстовский район" }), url: 'regions/lev-tolstoy' },
+            { name: "Становлянский район", kolvo: await blog.countDocuments({ region: "Становлянский район" }), url: 'regions/stanovoe' },
+            { name: "Тербунский район", kolvo: await blog.countDocuments({ region: "Тербунский район" }), url: 'regions/terbuni' },
+            { name: "Усманский район", kolvo: await blog.countDocuments({ region: "Усманский район" }), url: 'regions/usman' },
+            { name: "Хлевенский район", kolvo: await blog.countDocuments({ region: "Хлевенский район" }), url: 'regions/hlevnoe' },
+            { name: "Чаплыгинский район", kolvo: await blog.countDocuments({ region: "Чаплыгинский район" }), url: 'regions/chapligin' }
+        ]
+        //res.json(blogs)
         res.json(blogsCounts)
     } catch (err) {
         res.status(500).json({ message: err.message })
     }
 })
 
-app.get('/allblogs', async function(req, res) {
+app.get('/allblogs', async function (req, res) {
     try {
         const blogsCountss = await blog.countDocuments()
-            //res.json(blogs)
+        //res.json(blogs)
         res.json(blogsCountss)
     } catch (err) {
         res.status(500).json({ message: err.message })
     }
 })
 
-app.get('/blog/search', async function(req, res) {
+app.get('/blog/search', async function (req, res) {
     const sText = req.query.searchText
     try {
         const blogs4 = await blog.find({
-                h1: { $regex: `${sText}`, $options: 'i' }
-            })
+            h1: { $regex: `${sText}`, $options: 'i' }
+        })
             .select('h1 url')
             .sort('-createdDate')
             .limit(6)

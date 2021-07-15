@@ -27,6 +27,10 @@ const blogSchema = new mongoose.Schema({
     type: Number,
     default: 0
   },
+  rating: {
+    type: Number,
+    default: 0
+  },
   introtext: {
     type: String,
     required: true
@@ -36,13 +40,13 @@ const blogSchema = new mongoose.Schema({
     required: true
   },
   region: {
-    type: String  
+    type: String
   },
   content: {
     type: String,
     required: true
   },
-  comments:[
+  comments: [
     {
       fio: String,
       comment: String,

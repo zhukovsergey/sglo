@@ -29,12 +29,12 @@
               <div id="searchresults" class="search-results">
                 <v-card v-if="dataSearch.length">
                   <div
-                    v-for="wiki in dataSearch"
+                    v-for="(wiki,index) in dataSearch"
                     :key="wiki._id"
                     class="search-result"
                   >
                     <nuxt-link :to="`/blog/${wiki.url}`">
-                      {{ wiki.h1 }}
+                      {{index+1}}-{{ wiki.h1 }}
                     </nuxt-link>
                   </div>
                 </v-card>
