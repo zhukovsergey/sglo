@@ -129,7 +129,8 @@ export default {
       'Здравоохранение',
       'Образование',
       'Культура',
-      'Волна памяти'
+      'Волна памяти',
+      'Экология'
     ],
     regions: [
       'г. Липецк',
@@ -181,7 +182,7 @@ export default {
       formData.append('content', this.content)
       formData.append('introtext', this.introtext)
       formData.append('file', file)
-      axios.post('https://zabbix.etalon48.com/api/blog', formData, {
+      axios.post('https://xn--48-mlcdei8abd3a7g9b.xn--p1ai/api/blog', formData, {
         headers: { 'Content-Type': 'multipart/form-data' }
       })
         .then(this.$toast.success('Статья добавлена', { duration: 3000 }) /* , this.$router.push('/blog') */)
@@ -208,7 +209,7 @@ export default {
       const file = this.file
       formData.append('file', file)
       axios
-        .post('https://zabbix.etalon48.com/api/upload', formData, {
+        .post('https://xn--48-mlcdei8abd3a7g9b.xn--p1ai/api/upload', formData, {
           headers: {
             'Content-Type': 'multipart/form-data'
           }
@@ -222,7 +223,7 @@ export default {
         formData.append('files', file)
       }
       axios
-        .post('https://zabbix.etalon48.com/api/uploadmulti', formData, {
+        .post('https://xn--48-mlcdei8abd3a7g9b.xn--p1ai/api/uploadmulti', formData, {
           headers: {
             'Content-Type': 'multipart/form-data'
           }

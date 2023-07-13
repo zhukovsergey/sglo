@@ -101,7 +101,7 @@ export default {
     }
   },
   async asyncData () {
-    const { data } = await axios.get('https://zabbix.etalon48.com/api/blog/health')
+    const { data } = await axios.get('https://xn--48-mlcdei8abd3a7g9b.xn--p1ai/api/blog/health')
     return { data1: data }
   },
   data: () => ({

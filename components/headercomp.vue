@@ -32,10 +32,11 @@
                     v-for="(wiki,index) in dataSearch"
                     :key="wiki._id"
                     class="search-result"
-                  >
+                    style="padding: 10px"
+                  ><img style="width: 50px;" :src="`/uploads/blog/${wiki.coverImageName[0].filename}`">
                     <nuxt-link :to="`/blog/${wiki.url}`">
-                      {{index+1}}-{{ wiki.h1 }}
-                    </nuxt-link>
+                      <b>{{index+1}}</b>-{{ wiki.h1 }}
+                    </nuxt-link><br>
                   </div>
                 </v-card>
                 <v-card v-else>
@@ -47,7 +48,7 @@
                     <div
                       :v-model="searchError"
                       class="search-result"
-                      style="padding: 10px"
+                      style="padding: 10px; width: 250px;"
                     >
                       {{ searchError }}
                     </div>
@@ -63,15 +64,10 @@
 
                 {{ temperature }}
               </p>
-    <img
-    class="px-4 py-2"
-    style="padding-top: -20px;"
-    :src="`/uploads/weathericons/${weathericon}@2x.png`"
-    :lazy-src="`/uploads/weathericons/${weathericon}@2x.png`"
-    alt="Погода"
-    height="90"
-    contain
-    >
+             <v-img
+                :src="this.weathericon"
+                max-width="50"
+              ></v-img>
             </div>
           </v-col>
         </v-row>
@@ -114,7 +110,8 @@ export default {
     searchError: '',
     temperature: '',
     mainweather: '',
-    weathericon: ''
+    weathericon: '',
+    weatherall: ''
   }),
   head () {
     return {
@@ -132,7 +129,7 @@ export default {
   },
   mounted () {
     this.weather()
-    console.log(this.temperature)
+    console.log(this.weathericon)
   },
   methods: {
     async searchWiki () {
@@ -142,7 +139,7 @@ export default {
           params: { searchText: this.search }
         }
         await axios
-          .get('https://zabbix.etalon48.com/api/blog/search', config)
+          .get('https://xn--48-mlcdei8abd3a7g9b.xn--p1ai/api/blog/search', config)
           .then(response => (this.dataSearch = response.data))
       } else if (this.search.length > 0 && this.search.length < 3) {
         this.dataSearch = []
@@ -160,12 +157,12 @@ export default {
     },
     async weather () {
       const res = await axios.get(
-        'https://api.openweathermap.org/data/2.5/weather?q=Lipetsk,ru&appid=375b5b72defecfdfccfa090d50f49db4'
-      )
-      this.temperature = Math.round(res.data.main.temp - 273) + '°C'
-      this.mainweather = res.data.weather[0].description
-      this.weathericon = res.data.weather[0].icon
+        'https://api.weatherapi.com/v1/current.json?key=306b2ec2708845c1998123330222305&q=Lipetsk&aqi=no'
+      ).then(response => (this.weatherall = response))
       console.log(res)
+      this.temperature = res.data.current.temp_c + '°C'
+      this.weathericon = res.data.current.condition.icon
+      console.log(res.data.current.condition.icon)
     },
 
     destroySearch () {
@@ -179,3 +176,11 @@ export default {
   }
 }
 </script>
+
+<style>
+.search-results {
+  position: absolute;
+  z-index: 999999;
+}
+
+</style>

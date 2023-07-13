@@ -59,9 +59,9 @@
       <img
       id="my-svg"
       width="150"
-      src="https://zabbix.etalon48.com/uploads/blog/SGLOnew_animated.svg?data"
-      lazy-src="https://zabbix.etalon48.com/uploads/blog/SGLOnew_animated.svg?data"
-      data-src="https://zabbix.etalon48.com/uploads/blog/SGLOnew_animated.svg?data"
+      src="https://xn--48-mlcdei8abd3a7g9b.xn--p1ai/uploads/blog/SGLOnew_animated.svg?data"
+      lazy-src="https://xn--48-mlcdei8abd3a7g9b.xn--p1ai/uploads/blog/SGLOnew_animated.svg?data"
+      data-src="https://xn--48-mlcdei8abd3a7g9b.xn--p1ai/uploads/blog/SGLOnew_animated.svg?data"
       alt="Логотип Союза женщин Липецкой области"
       >
       </img></nuxt-link></span>
@@ -75,7 +75,7 @@
         </v-toolbar-title>
       </nuxt-link>
       <nuxt-link to="/">
-        <span class="subheading"> <img id="my-svg1" width="135" src="https://zabbix.etalon48.com/uploads/blog/wuor_animated.svg?data" alt="Логотип Союза женщин России"></span>
+        <span class="subheading"> <img id="my-svg1" width="135" src="https://xn--48-mlcdei8abd3a7g9b.xn--p1ai/uploads/blog/wuor_animated.svg?data" alt="Логотип Союза женщин России"></span>
       </nuxt-link>
       <v-spacer />
       <v-toolbar-items color="#ad6262">
@@ -202,6 +202,7 @@
                   v-for="wiki in dataSearch"
                   :key="wiki._id"
                   class="search-result"
+                  style="padding: 10px;"
                 >
                   <nuxt-link :to="`/blog/${wiki.url}`">
                     {{ wiki.h1 }}
@@ -217,7 +218,7 @@
                   <div
                     :v-model="searchError"
                     class="search-result"
-                    style="padding: 10px"
+                    style="padding: 10px; width: 250px;"
                   >
                     {{ searchError }}
                   </div>
@@ -255,7 +256,7 @@ export default {
           params: { searchText: this.search }
         }
         await axios
-          .get('https://zabbix.etalon48.com/api/blog/search', config)
+          .get('https://xn--48-mlcdei8abd3a7g9b.xn--p1ai/api/blog/search', config)
           .then(response => (this.dataSearch = response.data))
       } else if (this.search.length > 0 && this.search.length < 3) {
         this.dataSearch = []
@@ -273,7 +274,7 @@ export default {
     },
     async count () {
       const res = await axios.get(
-        'https://zabbix.etalon48.com/api/allblogs'
+        'https://xn--48-mlcdei8abd3a7g9b.xn--p1ai/api/allblogs'
       )
       this.counts = res.data
       console.log(res.data.count)

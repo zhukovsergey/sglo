@@ -116,7 +116,7 @@ export default {
   },
   async asyncData ({ store }) {
     const { data } = await axios.get(
-      'https://zabbix.etalon48.com/api/blog/regions/chapligin'
+      'https://xn--48-mlcdei8abd3a7g9b.xn--p1ai/api/blog/regions/chapligin'
     )
     return { data1: data }
   },

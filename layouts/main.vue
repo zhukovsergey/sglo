@@ -15,7 +15,7 @@ export default {
   head () {
     return {
       link: [
-        { rel: 'canonical', href: 'http://zabbix.etalon48.com' + this.$route.path }
+        { rel: 'canonical', href: 'http://xn--48-mlcdei8abd3a7g9b.xn--p1ai' + this.$route.path }
       ]
     }
   }

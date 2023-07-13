@@ -1,5 +1,6 @@
 <template>
-  <div class="container fluid">
+  <div itemscope itemtype="https://schema.org/BlogPosting" class="container fluid">
+        <meta :content="`https://союзженщин48.рф/blog/${data1.url}`" itemprop="mainEntityOfPage"></meta>
   <span
       v-if="data1.region"
         style="float:right; font-size: 13px;"
@@ -8,32 +9,32 @@
         style="float:right; font-size: 13px;"
       ><v-icon>mdi-eye</v-icon>{{ data1.views }}</span>
     <div class=" mt-2 h1">
-      <h1 class="text-center py-2">
+      <h1 itemprop="headline" class="text-center py-2">
         {{ data1.h1 }}
       </h1><br>
     </div> <div class="maincontentofarticle">
     <div class="singlepicture" style="float:left; margin-right: 20px;">
-    <picture>
-    <source type="image/webp" :srcset="`/uploads/blog/${data1.coverImageName[0].filename.split('.')[0] }.webp`">
-     <source type="image/jpeg" :srcset="`/uploads/blog/${data1.coverImageName[0].filename}`">
-    <img
-    class="px-2 py-2"
-    style="width: 300px;"
-    :src="`/uploads/blog/${data1.coverImageName[0].filename}`"
-    :data-src="`/uploads/blog/${data1.coverImageName[0].filename}`"
-    :lazy-src="`/uploads/blog/${data1.coverImageName[0].filename}`"
-    v-lazy="`/uploads/blog/${data1.coverImageName[0].filename}`"
-    :alt="data1.h1"
-    />
-</picture></div>
-<div class="contentarticle px-4" v-html="data1.content" /></div>
+      <meta itemprop="image" :content="`https://союзженщин48.рф/uploads/blog/${data1.coverImageName[0].filename}`"></meta>
+<nuxt-img
+
+style="border-radius: 8px;"
+quality="75"
+sizes="sm:60% md:200px lg:270px"
+fit="cover"
+format="webp"
+:src="`/uploads/blog/${data1.coverImageName[0].filename}`"
+:alt="data1.h1"
+/>
+  </div>
+<div itemprop="articleBody"  class="contentarticle px-4" v-html="data1.content" /></div>
     <span
+    itemprop="datePublished"
       class="px-2"
       style="font-size: 12px;"
     >Опубликовано:
       {{ $dateFns.format(data1.createdDate, 'dd-MMMM-yyyy', { locale: 'ru' }) }}
     </span>
- <br>
+ <br><meta itemprop="articleSection" :content="`${data1.tag}`"></meta>
     <div class="galleriglobal">
       <h2 class="text-center py-2">
         Фотогалерея
@@ -61,23 +62,24 @@
     <v-col
       v-for="(src, index) in data1.coverImageName"
       :key="index"
-      class="d-flex child-flex"
+      class="child-flex"
       cols="6"
       sm="3"
       md="3"
       xs="6"
-    >
-        <picture>
-    <source type="image/webp" :srcset="`/uploads/blog/${src.filename.slice(0,-4) }.webp`">
-     <source type="image/jpeg" :srcset="`/uploads/blog/${src.filename}`">
-    <v-img
-    v-pswp="`/uploads/blog/${src.filename}`"
-    :lazy-src="`/uploads/blog/${src.filename}`"
-    :src="`/uploads/blog/${src.filename}`"
-    :data-src="`/uploads/blog/${src.filename}`"
-    style="width: 150px"
-    v-lazy="`/uploads/blog/${src.filename}`"
-    class="px-2 py-8 photogallery"> <template v-slot:placeholder>
+>
+<nuxt-img
+v-pswp="`/uploads/blog/${src.filename}`"
+style="border-radius: 8px; min-width:150px;"
+quality="85"
+sizes="sm:100px md:200px lg:270px"
+format="webp"
+:src="`/uploads/blog/${src.filename}`"
+:data-src="`/uploads/blog/${src.filename}`"
+:alt="data1.h1"
+class="px-2 py-8 photogallery"
+>
+<template v-slot:placeholder>
           <v-row
             class="fill-height ma-0"
             align="center"
@@ -88,7 +90,9 @@
               color="grey lighten-5"
             ></v-progress-circular>
           </v-row>
-        </template></v-img></picture></v-col>
+        </template>
+</nuxt-img>
+</v-col>
   </v-row>
         </Photoswipe>
         </div>
@@ -305,7 +309,7 @@ export default {
   },
   async asyncData ({ params }) {
     const { data } = await axios.get(
-      `https://zabbix.etalon48.com/api/blog/${params.id}`
+      `https://xn--48-mlcdei8abd3a7g9b.xn--p1ai/api/blog/${params.id}`
     )
     return { data1: data }
   },
@@ -339,7 +343,8 @@ export default {
       'Здравоохранение',
       'Образование',
       'Культура',
-      'Волна памяти'
+      'Волна памяти',
+      'Экология'
     ],
     regions: [
       'г. Липецк',
@@ -381,7 +386,7 @@ export default {
         {
           hid: 'og:url',
           property: 'og:url',
-          content: `https://zabbix.etalon48.com/blog/${this.data1.url}`
+          content: `https://xn--48-mlcdei8abd3a7g9b.xn--p1ai/blog/${this.data1.url}`
         },
         {
           hid: 'og:description',
@@ -391,7 +396,7 @@ export default {
         {
           hid: 'og:image',
           property: 'og:image',
-          content: `https://zabbix.etalon48.com/uploads/blog/${this.data1.coverImageName[0].filename}`
+          content: `https://xn--48-mlcdei8abd3a7g9b.xn--p1ai/uploads/blog/${this.data1.coverImageName[0].filename}`
         }
       ]
     }
@@ -431,7 +436,7 @@ export default {
         description: this.description
       }
       axios
-        .patch(`https://zabbix.etalon48.com/api/blog/${this.data1.url}`, formData, {
+        .patch(`https://xn--48-mlcdei8abd3a7g9b.xn--p1ai/api/blog/${this.data1.url}`, formData, {
           headers: {
             Authorization: this.$auth.$storage._state['_token.local']
           }
@@ -448,7 +453,7 @@ export default {
       }
       axios
         .patch(
-          `https://zabbix.etalon48.com/api/blog/${this.data1.url}/comment`,
+          `https://xn--48-mlcdei8abd3a7g9b.xn--p1ai/api/blog/${this.data1.url}/comment`,
           formData
         )
         .then(alert('Статья обновлена'))
@@ -456,7 +461,7 @@ export default {
 
     blogDelete () {
       axios
-        .delete(`https://zabbix.etalon48.com/api/blog/${this.data1.url}`)
+        .delete(`https://xn--48-mlcdei8abd3a7g9b.xn--p1ai/api/blog/${this.data1.url}`)
         .then(
           alert(`Статья ${this.data1.h1} удалена`),
           this.$router.push('/blog')
@@ -467,7 +472,7 @@ export default {
 
       axios
         .patch(
-          `https://zabbix.etalon48.com/api/blog/${this.data1.url}/comment/del`,
+          `https://xn--48-mlcdei8abd3a7g9b.xn--p1ai/api/blog/${this.data1.url}/comment/del`,
           formData
         )
         .then(alert('Комментарий удален'))
@@ -480,7 +485,7 @@ export default {
       }
 
       axios.post(
-        `https://zabbix.etalon48.com/api/blog/${this.data1.url}/comment`,
+        `https://xn--48-mlcdei8abd3a7g9b.xn--p1ai/api/blog/${this.data1.url}/comment`,
         formData
       )
       this.sendNoticeComment()
@@ -492,7 +497,7 @@ export default {
         namefio: this.fio,
         mailtext: this.comment
       }
-      axios.post('https://zabbix.etalon48.com/api/contact', formData)
+      axios.post('https://xn--48-mlcdei8abd3a7g9b.xn--p1ai/api/contact', formData)
         .then(alert('Успешно отправлено'))
     },
     addFiles () {
@@ -502,7 +507,7 @@ export default {
         formData.append('files', file)
       }
       axios
-        .post('https://zabbix.etalon48.com/api/uploadmulti', formData, {
+        .post('https://xn--48-mlcdei8abd3a7g9b.xn--p1ai/api/uploadmulti', formData, {
           headers: {
             'Content-Type': 'multipart/form-data'
           }

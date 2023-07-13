@@ -9,10 +9,11 @@
       elevation="20"
       rounded="lg"
       min-height="268"
+      class="pb-5"
     >
       <center>
         <span class="text-md-center" style="font-size:23px; font-family: 'Asessorc';">Председатель</span>
-        <v-lazy><v-img src="https://zabbix.etalon48.com/uploads/viprofile.jpg" lazy-src="https://zabbix.etalon48.com/uploads/viprofile.jpg" class="mt-4" style="border-radius: 8px; width: 100%;" /></v-lazy>     <span class="text-md-center" style="font-size:18px;">Урываева В.И.</span>
+        <v-lazy><v-img src="https://xn--48-mlcdei8abd3a7g9b.xn--p1ai/uploads/viprofile.jpg" lazy-src="https://xn--48-mlcdei8abd3a7g9b.xn--p1ai/uploads/viprofile.jpg" class="mt-4" style="border-radius: 8px; width: 100%;" /></v-lazy>     <span class="text-md-center" style="font-size:18px;">Урываева В.И.</span>
         <v-divider /><br>
         <span class="text-md-center" style="font-size:23px; font-family: 'Asessorc';">Наши контакты</span>
       </center><br>
@@ -20,15 +21,19 @@
         <v-icon color="red">
           mdi-phone-outline
         </v-icon>
-        <span class="text-md-center" style="font-size:16px;">+7 (4742) 28-12-21</span>
+        <span class="text-md-center" style="font-size:16px;"><a href="tel:+74742281221">+7 (4742) 28-12-21</a></span>
         <br></v-icon><v-icon color="red">
           mdi-map-marker
         </v-icon><span class="text-md-center" style="font-size:16px;">г. Липецк, ул. Плеханова, д. 33Б</span>
-        <br><a style="text-decoration:none;" href="https://vk.com/sglo48"><v-icon large color="red">
-          mdi-vk
-        </v-icon></a><a style="text-decoration:none;" href="https://www.instagram.com/sglo48/"><v-icon large color="red">
-          mdi-instagram
-        </v-icon></a>
+        <br>
+        <v-icon color="red">
+          mdi-email
+        </v-icon><span class="text-md-center" style="font-size:16px;"><a href="mailto:sglo48@mail.ru"> sglo48@mail.ru</a></span>
+        <br><br>
+        <a style="text-decoration:none;" href="https://vk.com/sglo48">
+        <nuxt-img style="padding-right: 15px;" class="vksoc" format="webp" sizes="sm:45px md:45px lg:45px" src="/assets/vk.png"/>
+        </a><!--<a style="text-decoration:none;" href="https://www.instagram.com/sglo48/">
+        <nuxt-img class="inst" format="webp" sizes="sm:45px md:45px lg:45px" src="/assets/inst.png"/></a>-->
       </div>
       <v-divider /><br>
       <center><span class="text-md-center" style="font-size:23px; font-family: 'Asessorc';">Информация</span></center>
@@ -109,6 +114,7 @@
       <v-sheet
       elevation="20"
       rounded="lg"
+      class="pb-8"
       ><br><center>
     <span class="text-md-center" style="font-size:20px; font-family: 'Asessorc';">Новости районов</span></center>
     <div
@@ -139,7 +145,7 @@ import axios from 'axios'
 export default {
   async asyncData () {
     const { data } = await axios.get(
-      'https://zabbix.etalon48.com/api/all'
+      'https://xn--48-mlcdei8abd3a7g9b.xn--p1ai/api/all'
     )
     return { data1: data }
   },
@@ -155,7 +161,7 @@ export default {
     valid: true,
     nameRules: [
       v => !!v || 'Имя обязательно',
-      v => (v && v.length <= 10) || 'Имя должно быть меньше 10 символов'
+      v => (v && v.length <= 30) || 'Имя должно быть меньше 10 символов'
     ],
     emailRules: [
       v => !!v || 'E-mail обязателен',
@@ -169,7 +175,7 @@ export default {
   methods: {
     async kolichestvo () {
       const res = await axios.get(
-        'https://zabbix.etalon48.com/api/all'
+        'https://xn--48-mlcdei8abd3a7g9b.xn--p1ai/api/all'
       )
       this.kolvo = res.data
       this.kolvo.sort(function (a, b) {
@@ -182,7 +188,7 @@ export default {
         namefio: this.namefio,
         mailtext: this.mailtext
       }
-      axios.post('https://zabbix.etalon48.com/api/contact', formData)
+      axios.post('https://xn--48-mlcdei8abd3a7g9b.xn--p1ai/api/contact', formData)
         .then(alert('Успешно отправлено'))
     },
     async requestPermission () {

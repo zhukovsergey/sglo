@@ -4,14 +4,57 @@
       <center>
         <br>
         <v-divider />
+        <v-col>
         <span class="px-4" style="font-size:14px;" primary color="primary">
           Липецкая областная общественная организация "Союз Женщин Липецкой
-          области" (ЛООО "Союз Женщин Липецкой области"). Цель организации-
-          повысить статус женщин в обществе, защита положения и интересов
-          женщин, повышение их роли в общественно-политической, экономической и
-          культурной жизни в Липецкой области.
-        </span>
+          области" (ЛООО "Союз Женщин Липецкой области"). Цели организации:
+          повышение статуса женщин в обществе, защита положения и интересов женщин в обществе, повышение их роли
+          в общественно-политической, экономической и культурной жизни Липецкой области.
+        </span></v-col>
         <v-divider /><br>
+
+         <span
+          class="text-md-center"
+          style="font-size:23px; font-family: 'Asessorc';"
+        >
+          <v-icon medium color="light-blue darken-1">
+            mdi-calendar-text-outline
+          </v-icon>
+          Предстоящие события
+        </span>
+        <v-card
+    class="mx-auto"
+    color="white"
+    light
+    max-width="230"
+  >
+    <v-card-text class="subheading mr-2 font-weight-bold">
+     <v-icon
+        small
+        left
+      >
+        mdi-arrow-right-bold
+      </v-icon>
+      22.10 Состоится Форум предпринимателей в Омске
+    </v-card-text>
+  </v-card><br>
+  <v-card
+    class="mx-auto"
+    color="white"
+    light
+    max-width="230"
+  >
+    <v-card-text class="subheading mr-2 font-weight-bold">
+     <v-icon
+        small
+        left
+      >
+        mdi-arrow-right-bold
+      </v-icon>
+      26.10 Состоится Собрание СЖЛО
+    </v-card-text>
+  </v-card>
+        <v-devider/><br>
         <span
           class="text-md-center"
           style="font-size:23px; font-family: 'Asessorc';"

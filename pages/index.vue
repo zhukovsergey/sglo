@@ -1,13 +1,12 @@
 <template>
   <div class="container">
     <v-carousel hide-delimiters>
-      <div v-for="dat2 in sliders.slice(0, 2)" :key="dat2.src">
+      <div v-for="dat2 in sliders.slice(0, 3)" :key="dat2.src">
         <v-lazy>
         <nuxt-link :to="dat2.kuda">
         <v-carousel-item :src="dat2.src" :lazy-src="dat2.src">
             <v-row
               align-items="end"
-              justify="center"
               align-content="end"
             >
               <div
@@ -21,6 +20,10 @@
       </div>
     </v-carousel>
     <center>
+     <h3 class="mt-6 mapreg">
+        Карта районов Липецкой области
+      </h3>
+    <Mapreg />
       <h3 class="mt-6">
         Последние новости
       </h3>
@@ -37,57 +40,25 @@
               v-for="(filelink, index) in dat.coverImageName"
               :key="filelink.path"
             >
-             <!--<v-img
+<div style="text-align:center;" v-if="index == 0">
+<!--<nuxt-img
+style="border-radius: 8px;"
+quality="75"
+sizes="200px md:200px lg:270px"
+fit="contain"
+format="webp"
+:src="`/uploads/blog/${filelink.filename}`"
+/>-->
+<v-img
+               class="resized"
                 v-if="index == 0"
                 :src="`/uploads/blog/${filelink.filename}`"
                 :lazy-src="`/uploads/blog/${filelink.filename}`"
                 height="200px"
-              /> -->
-             <picture v-if="index == 0 && !dat.thumb">
-    <source type="image/webp" :srcset="`/uploads/blog/${filelink.filename.split('.')[0] }.webp`">
-     <source type="image/jpeg" :srcset="`/uploads/blog/${filelink.filename}`">
-    <img
-    style="object-fit:cover; width:100%; height: 200px; min-width: 250px;"
-    class="px-2 py-2"
-    :src="`/uploads/blog/${filelink.filename}`"
-    :data-src="`/uploads/blog/${filelink.filename}`"
-    :lazy-src="`/uploads/blog/${filelink.filename}`"
-    v-lazy="`/uploads/blog/${filelink.filename}`"
-    :alt="data1.h1"
-    /></picture>
-
-   <!-- <v-img
-    height="200px"
-    v-if="index == 0"
-    :src="`/uploads/blog/${filelink.filename}`">
-  <template #sources>
-    <source :srcset="`/uploads/blog/${filelink.filename.slice(0,-4) }.webp`">
-  </template>
-</v-img>-->
-            </div>
-            <div
-              v-for="(filelink, index) in dat.thumb"
-              :key="filelink"
-            >
-             <!--<v-img
-                v-if="index == 0"
-                :src="`/uploads/blog/${filelink.filename}`"
-                :lazy-src="`/uploads/blog/${filelink.filename}`"
-                height="200px"
-              /> -->
-             <picture v-if="index == 0 && dat.thumb">
-    <source type="image/webp" :srcset="`/${filelink.split('.')[0] }.webp`">
-     <source type="image/jpeg" :srcset="`/${filelink}`">
-    <img
-    style="object-fit:cover; width:100%; height: 200px; min-width: 250px;"
-    class="px-2 py-2"
-    :src="`/${filelink}`"
-    :data-src="`/${filelink}`"
-    :lazy-src="`/${filelink}`"
-    v-lazy="`/${filelink}`"
-    :alt="data1.h1"
-    /></picture>
-
+                contain
+                style="border-radius: 8px;"
+              ></v-img>
+</div>
    <!-- <v-img
     height="200px"
     v-if="index == 0"
@@ -129,9 +100,14 @@
 <script>
 import YandexShare from '@cookieseater/vue-yandex-share'
 import axios from 'axios'
+import $ from 'jquery'
+import Mapreg from '~/components/mapreg.vue'
+//  import jquery from 'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'
+
 export default {
   components: {
-    YandexShare
+    YandexShare,
+    Mapreg
   },
   filters: {
     truncate (text, length, suffix) {
@@ -139,23 +115,39 @@ export default {
     }
   },
   async asyncData () {
-    const { data } = await axios.get('https://zabbix.etalon48.com/api/blog/last10')
+    const { data } = await axios.get('https://xn--48-mlcdei8abd3a7g9b.xn--p1ai/api/blog/last10')
     return { data1: data }
+  },
+  mounted () {
+    $('.part').hover(
+      function () {
+        $('.description').html($(this).attr('description-data'))
+        $('.description').fadeIn(0.1)
+      },
+      function () {
+        $('.description').fadeOut(0.1)
+      }
+    )
   },
   data: () => ({
     model: 0,
     colors: ['primary', 'secondary', 'yellow darken-2', 'red', 'orange'],
     sliders: [
       {
-        src: '/uploads/slider/1.png',
-        text: 'Информирование жителей Воловского района о вакцинации',
-        kuda: '/blog/vakcina-edinstvennyi-nadezhnyi-sposob-izbezhat-zarazheniya'
+        src: '/uploads/slider/1.jpg',
+        text: 'Когда забота и ответственность в душе',
+        kuda: '/blog/kogda-zabota-i-otvetstvennost-v-dushe'
       },
       {
-        src: '/uploads/slider/2.png',
+        src: '/uploads/slider/5.jpg',
         text:
-          'Вокруг света без билета',
-        kuda: 'blog/vokrug-sveta-bez-bileta'
+          'На очередной 27 сессии Липецкого горсовета состоялось торжественное собрание к 100-летию парламента"',
+        kuda: '/blog/na-ocherednoi-27-sessii-lipeckogo-gorsoveta-sostoyalos-torzhestvennoe-sobranie-k-100-letiyu-parlamenta'
+      },
+      {
+        src: '/uploads/slider/4.jpg',
+        text: '3 октября ежегодно отмечается День ОМОН',
+        kuda: 'blog/3-oktyabrya-ezhegodno-otmechaetsya-den-omon'
       }
     ]
   }),
@@ -176,4 +168,53 @@ export default {
 }
 </script>
 
-<style></style>
+<style>
+#map {
+  margin: 0 auto; width: 100%;
+  transition: all 0.1s;
+  position: relative;
+}
+#map svg {
+  width: 50%;
+  margin-left: 5%;
+  height: 450px;
+}
+.part:hover {fill: red;}
+#two:hover {fill: deepskyblue; transition: all 0.5s;}
+.win__one {width: 120px; height: 40px; background: red; transition: all 0.5s;}
+.win__two {width: 150px; height: 300px; background: deepskyblue; transition: all 0.5s;}
+path {cursor: pointer; transition: all 0.1s;}
+path:hover {transform: scale(1.01);}
+foreignobject {
+  display: none; opacity: 0;
+  transition: all 0.5s;
+}
+.part {
+fill: #d0e4f8;
+}
+.part:hover {
+transition: opacity .1s ease;
+cursor: pointer;
+}
+.description {
+display: none;
+position: absolute;
+padding: 20px;
+box-sizing: border-box;
+width: 28%;
+height: auto;
+box-shadow: 0 0 32px 10px #ccc;
+left: 10px;
+font-family: sans-serif;
+margin-top: 30px;
+bottom: calc(45% - 200px);
+z-index: 99999999999999;
+background: white;
+opacity: 1;
+font-size: 12px;
+}
+.description img {
+width: 60%;
+margin-bottom: 20px;
+}
+</style>

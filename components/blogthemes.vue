@@ -18,5 +18,8 @@
     <v-btn class="primary my-md-6 mt-2" small to="/blog/waveofmemory" nuxt>
       Волна Памяти
     </v-btn>
+    <v-btn class="primary my-md-6 mt-2" small to="/blog/ecology" nuxt>
+      Экология
+    </v-btn>
     </div>
 </template>

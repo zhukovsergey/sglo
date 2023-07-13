@@ -30,9 +30,9 @@ const scripts = {
       ч: 'ch',
       ш: 'sh',
       щ: 'sh',
-      ъ: '-',
+      ъ: '',
       ы: 'y',
-      ь: '-',
+      ь: '',
       э: 'e',
       ю: 'yu',
       я: 'ya'
@@ -43,7 +43,9 @@ const scripts = {
       .replace(/й/g, 'i')
       .replace(/- /g, '')
       .replace(/ -/g, '')
-      .replace(/[ _.,!?№&;:#%()*"'«»]/g, '-')
+      .replace(/–/g, '')
+      .replace(/[_.,!?№&;@$:#%()*"'{}«»]/g, '')
+      .replace(/[ _]/g, '-')
     for (let i = 0; i < str.length; i++) {
       nStr.push(
         ru[str[i]] ||

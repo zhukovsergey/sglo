@@ -91,10 +91,13 @@
               itemtype="https://schema.org/ImageObject"
             >
               <v-img
+               class="resized"
                 v-if="index == 0"
                 :src="`/${filelink}`"
                 :lazy-src="`/${filelink}`"
                 height="200px"
+                contain
+                style="border-radius: 8px;"
               >
               <template v-slot:placeholder>
           <v-row
@@ -183,7 +186,7 @@ export default {
     }
   },
   async asyncData () {
-    const { data } = await axios.get('https://zabbix.etalon48.com/api/blog')
+    const { data } = await axios.get('https://xn--48-mlcdei8abd3a7g9b.xn--p1ai/api/blog')
     return { data1: data }
   },
   data: () => ({
@@ -234,7 +237,7 @@ export default {
       const config = {
         headers: { page: this.page }
       }
-      const res = await fetch('https://zabbix.etalon48.com/api/blog', config)
+      const res = await fetch('https://xn--48-mlcdei8abd3a7g9b.xn--p1ai/api/blog', config)
       if (this.page > 1) {
         this.$router.push(`/blog?page=${
         this.page
