@@ -54,7 +54,7 @@ const sendMail = async(namefio, mailtext, email, url) => {
         secure: true,
         auth: {
             user: "zhukov@etalon48.com",
-            pass: "asgdvyqbsqumiymx"
+            
         }
     });
     transporter.sendMail({
